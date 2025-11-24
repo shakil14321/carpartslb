@@ -1,0 +1,402 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\CarPart;
+use App\Models\CarBrand;
+use App\Models\CarPartBrand;
+use App\Models\SiteSetting;
+use App\Models\CarPartType;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Artisan;
+
+class PageController extends Controller
+{
+    // Home page functionality
+    public function index(){
+        $carParts = CarPart::where('fav_product', 1)->latest()->take(10)->get();
+        $latestParts = CarPart::latest()->get();
+        
+        $setting = SiteSetting::first();
+        $carBrandQuantity = $setting ? $setting->brand_quantity : 0;
+        
+        $carPartTypes = CarPartType::withCount('carPart')->get();
+        $carBrands = CarBrand::take($carBrandQuantity)->get();
+        $carPartBrands = CarPartBrand::take($carBrandQuantity)->get();
+
+        $partType10 =  CarPartType::withCount('carPart')->skip(0)->take(10)->get();
+        $partType20 =  CarPartType::withCount('carPart')->skip(11)->take(10)->get();
+        $partType30 =  CarPartType::withCount('carPart')->skip(21)->take(10)->get();
+        $partType40 =  CarPartType::withCount('carPart')->skip(31)->take(10)->get();
+        $partType50 =  CarPartType::withCount('carPart')->skip(41)->take(10)->get();
+        $partType60 =  CarPartType::withCount('carPart')->skip(51)->take(10)->get();
+        $partType70 =  CarPartType::withCount('carPart')->skip(61)->take(9)->get();
+        $partType80 =  CarPartType::withCount('carPart')->skip(70)->take(10)->get();
+
+        return view('front.pages.home', compact('carParts', 'latestParts', 'carPartTypes', 'carBrands', 'carPartBrands', 'partType10', 'partType20', 'partType30', 'partType40', 'partType50', 'partType60', 'partType70', 'partType80'));
+    }
+
+    // About us page
+    public function aboutPage(){
+        return view('front.pages.about');
+    }
+
+    // Contact us page.
+    public function contactPage(){
+        return view('front.pages.contact');
+    }
+    
+    // terms and condtitions page
+    public function termsConditions(){
+        return view('front.pages.terms-conditions');
+    }
+    
+    // Car part type page means category
+    public function partType(){
+        $partTypes = CarPartType::latest()->paginate(100);
+        
+        return view('front.pages.types', compact('partTypes'));
+    }
+    
+    // All part brands page
+    public function partBrand(){
+        $partBrands = CarPartBrand::latest()->paginate(100);
+        
+        return view('front.pages.part-brands', compact('partBrands'));
+    }
+    
+    // All car brands page
+    public function carBrands(){
+        $carBrands = CarBrand::latest()->paginate(100);
+        
+        return view('front.pages.brands', compact('carBrands'));
+    }
+
+    // It is shop page.
+    public function shop(Request $request){
+        $carPartTypes = CarPartType::withCount('carPart')->get();
+        $carPartsFav = CarPart::latest()->where('fav_product', 1)->get();
+
+        $query = CarPart::query();
+
+        // --- Price Filter ---
+        $minPrice = $request->input('min_price');
+        $maxPrice = $request->input('max_price');
+
+        if ($minPrice) {
+            $query->where('sale_price', '>=', $minPrice);
+        }
+        if ($maxPrice) {
+            $query->where('sale_price', '<=', $maxPrice);
+        }
+
+        // --- Sorting ---
+        $sort = (int) $request->query('sort', 1);
+        if ($sort === 2) {
+            $query->orderBy('sale_price', 'asc');
+        } elseif ($sort === 3) {
+            $query->orderBy('sale_price', 'desc');
+        } elseif ($sort === 4) {
+            $query->orderBy('rating', 'desc');
+        } else {
+            $query->orderBy('created_at', 'desc');
+        }
+
+        // --- Pagination ---
+        $carParts = $query->paginate(90)->appends($request->only(['sort', 'min_price', 'max_price']));
+        $carParts->load(['carBrand', 'carModel', 'carPartType']);
+
+        // --- AJAX support ---
+        if ($request->ajax()) {
+            return view('front.partials.car_parts_list', compact('carParts'))->render();
+        }
+
+        return view('front.pages.shop', compact('carParts', 'carPartTypes', 'carPartsFav'));
+    }
+
+    // Product show by categories. It is carPart archive page.
+    public function shopType(Request $request, $slug) {
+        $carPartTypes = CarPartType::withCount('carPart')->get();
+        $carPartsFav = CarPart::where('fav_product', 10)->get();
+
+        $partType = CarPartType::where('slug', $slug)->firstOrFail();
+
+        $query = CarPart::where('part_type_id', $partType->id);
+
+        // Price filter logic
+        if ($request->filled('min_price')) {
+            $query->where('sale_price', '>=', $request->min_price);
+        }
+        if ($request->filled('max_price')) {
+            $query->where('sale_price', '<=', $request->max_price);
+        }
+
+        // Sorting
+        $sort = $request->query('sort', '1');
+        if ($sort === '2') {
+            $query->orderBy('sale_price', 'asc');
+        } elseif ($sort === '3') {
+            $query->orderBy('sale_price', 'desc');
+        } elseif ($sort === '4') {
+            $query->orderBy('rating', 'desc');
+        } else {
+            $query->latest();
+        }
+
+        $carParts = $query->paginate(12)->appends($request->all());
+
+        if ($request->ajax()) {
+            return view('front.partials.car_parts_list', compact('carParts'))->render();
+        }
+
+        return view('front.pages.type', compact('partType', 'carParts', 'carPartTypes', 'carPartsFav'));
+    }
+
+    // Product show by car brand. It is brand archive page.
+    public function brandBy(Request $request, $slug) {
+        $carPartTypes = CarPartType::withCount('carPart')->get();
+        $carPartsFav = CarPart::where('fav_product', 10)->get();
+
+        $carBrand = CarBrand::where('slug', $slug)->firstOrFail();
+
+        $query = CarPart::where('car_brand_id', $carBrand->id);
+
+        // Price filter logic
+        if ($request->filled('min_price')) {
+            $query->where('sale_price', '>=', $request->min_price);
+        }
+        if ($request->filled('max_price')) {
+            $query->where('sale_price', '<=', $request->max_price);
+        }
+
+        // Sorting
+        $sort = $request->query('sort', '1');
+        if ($sort === '2') {
+            $query->orderBy('sale_price', 'asc');
+        } elseif ($sort === '3') {
+            $query->orderBy('sale_price', 'desc');
+        } elseif ($sort === '4') {
+            $query->orderBy('rating', 'desc');
+        } else {
+            $query->latest();
+        }
+
+        $carParts = $query->paginate(12)->appends($request->all());
+
+        if ($request->ajax()) {
+            return view('front.partials.car_parts_list', compact('carParts'))->render();
+        }
+
+        return view('front.pages.brand', compact('carBrand', 'carParts', 'carPartTypes', 'carPartsFav'));
+    }
+    
+    // Product show by part brands
+    public function partBrandBy(Request $request, $slug) {
+        $carPartTypes = CarPartType::withCount('carPart')->get();
+        $carPartsFav = CarPart::where('fav_product', 10)->get();
+
+        $partBrand = CarPartBrand::where('slug', $slug)->firstOrFail();
+
+        $query = CarPart::where('part_brand_id', $partBrand->id);
+
+        // Price filter logic
+        if ($request->filled('min_price')) {
+            $query->where('sale_price', '>=', $request->min_price);
+        }
+        if ($request->filled('max_price')) {
+            $query->where('sale_price', '<=', $request->max_price);
+        }
+
+        // Sorting
+        $sort = $request->query('sort', '1');
+        if ($sort === '2') {
+            $query->orderBy('sale_price', 'asc');
+        } elseif ($sort === '3') {
+            $query->orderBy('sale_price', 'desc');
+        } elseif ($sort === '4') {
+            $query->orderBy('rating', 'desc');
+        } else {
+            $query->latest();
+        }
+
+        $carParts = $query->paginate(12)->appends($request->all());
+
+        if ($request->ajax()) {
+            return view('front.partials.car_parts_list', compact('carParts'))->render();
+        }
+
+        return view('front.pages.part-brand', compact('partBrand', 'carParts', 'carPartTypes', 'carPartsFav'));
+    }
+
+    //It is refund policy page.
+    public function refundPolicyPage(){
+        return view('front.pages.refund_policy');
+    }
+
+    //It is privacy policy page.
+    public function privacyPolicyPage(){
+        return view('front.pages.privacy_policy');
+    }
+
+    // It is faq's page.
+    public function faqPage(){
+        return view('front.pages.faq');
+    }
+
+    // Search results Blade page
+    public function searchPage(Request $request) {
+        $carPartTypes = CarPartType::withCount('carPart')->get();
+        $carPartsFav = CarPart::where('fav_product', 10)->get();
+
+        $query = CarPart::query();
+
+        // --- Search filter ---
+        $search = $request->input('query');
+        if ($search) {
+            $query->where(function($q) use ($search) {
+                $q->where('title', 'like', "%{$search}%")
+                ->orWhere('part_number', 'like', "%{$search}%")
+                ->orWhere('vin_code', 'like', "%{$search}%")
+                ->orWhereHas('carPartType', function($sub) use ($search) {
+                    $sub->where('title', 'like', "%{$search}%");
+                })
+                ->orWhereHas('carBrand', function($sub) use ($search) {
+                    $sub->where('title', 'like', "%{$search}%");
+                });
+            });
+        }
+
+        // --- Price Filter ---
+        $minPrice = $request->input('min_price');
+        $maxPrice = $request->input('max_price');
+
+        if ($minPrice) {
+            $query->where('sale_price', '>=', $minPrice);
+        }
+        if ($maxPrice) {
+            $query->where('sale_price', '<=', $maxPrice);
+        }
+
+        // --- Sorting ---
+        $sort = (int) $request->query('sort', 1);
+        if ($sort === 2) {
+            $query->orderBy('sale_price', 'asc');
+        } elseif ($sort === 3) {
+            $query->orderBy('sale_price', 'desc');
+        } elseif ($sort === 4) {
+            $query->orderBy('rating', 'desc');
+        } else {
+            $query->orderBy('created_at', 'desc');
+        }
+
+        // --- Pagination ---
+        $carParts = $query->paginate(12)->appends(
+            $request->only(['query','sort','min_price','max_price'])
+        );
+        $carParts->load(['carBrand', 'carModel', 'carPartType']);
+
+        // --- AJAX support ---
+        if ($request->ajax()) {
+            return view('front.partials.car_parts_list', compact('carParts'))->render();
+        }
+
+        return view('front.pages.search', compact('carParts', 'carPartTypes', 'carPartsFav', 'search'));
+    }
+
+     // JSON search API
+     public function search(Request $request){
+         $query = $request->input('query');
+         if(!$query) {
+             return response()->json([]);
+         }
+
+         $results = CarPart::query()
+             ->where('title', 'like', "%{$query}%")
+             ->orWhere('part_number', 'like', "%{$query}%")
+             ->orWhere('vin_code', 'like', "%{$query}%")
+             ->orWhereHas('carPartType', function($q) use ($query) {
+                 $q->where('title', 'like', "%{$query}%");
+             })
+             ->orWhereHas('carBrand', function($q) use ($query) {
+                 $q->where('title', 'like', "%{$query}%");
+             })
+             ->with(['carBrand', 'carPartType'])
+             ->paginate(5);
+
+         // Highlight matches
+         $results->getCollection()->transform(function($item) use ($query) {
+             $highlight = fn($text) => preg_replace("/($query)/i", '<mark>$1</mark>', $text);
+             $item->title = $highlight($item->title);
+             $item->part_number = $highlight($item->part_number);
+             $item->vin_code = $highlight($item->vin_code);
+             $item->car_brand_name = $item->carBrand ? $highlight($item->carBrand->title) : '-';
+             $item->car_part_type_name = $item->carPartType ? $highlight($item->carPartType->title) : '-';
+             return $item;
+         });
+
+         return response()->json($results);
+     }
+
+     // Cache page in admin dashboard
+    public function cache(){
+         return view('admin.cache.index');
+    }
+
+    // Route cache clear
+    public function routeCache(Request $request){
+        Artisan::call('route:clear');
+        Artisan::call('route:cache');
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Route cache cleared successfully!'
+        ]);
+    }
+
+     // View cache clear
+    public function viewCache(){
+        Artisan::call('view:clear');
+
+        return response()->json([
+        "status" => "success",
+        "message" => "View cache cleared successfully!"
+        ]);
+    }
+
+     // Config cache clear
+    public function configCache(){
+        Artisan::call('config:clear');
+
+        return response()->json([
+        "status" => "success",
+        "message" => "Config cache cleared successfully!"
+        ]);
+    }
+
+     // Simple cache clear
+    public function simpleCache(){
+        Artisan::call('cache:clear');
+
+        return response()->json([
+        "status" => "success",
+        "message" => "Simple cache cleared successfully!"
+        ]);
+    }
+
+     // All cache clear
+    public function allCache(){
+        Artisan::call('route:clear');
+        Artisan::call('route:cache');
+        Artisan::call('view:clear');
+        Artisan::call('cache:clear');
+        Artisan::call('config:clear');
+        Artisan::call('optimize:clear');
+
+        return response()->json([
+        "status" => "success",
+        "message" => "All cache cleared successfully!"
+        ]);
+    }
+}

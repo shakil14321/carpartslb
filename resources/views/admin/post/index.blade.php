@@ -1,0 +1,1 @@
+this is all posts file

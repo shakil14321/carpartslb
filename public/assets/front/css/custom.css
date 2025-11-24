@@ -1,0 +1,279 @@
+@import url('https://fonts.googleapis.com/css2?family=Cabin:ital,wght@0,400..700;1,400..700&display=swap');
+.custom-submenu {
+    width: 50rem !important;
+}
+
+.custom-submenu-items {
+    width: 45% !important;
+}
+
+.dropdown__categories--menu {
+    width: 110% !important;
+}
+
+.brand-tab-btn {
+    font-size: clamp(10px, 2vw, 12px) !important;
+}
+
+.footer_social_icons_container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.oth_p_m {
+    margin: -15px 0 0 0;
+}
+
+.oth_p {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.oth_p_part {
+    margin: -13px 0 0 0 !important;
+}
+
+.price_pro {
+    margin: 10px 0 0 0;
+}
+
+.whatapp_btn_container {
+    position: fixed;
+    bottom: 51px;
+    right: 20px;
+    z-index: 9999;
+}
+
+#scroll__top {
+    left: 20px !important;
+    bottom: 50px !important;
+}
+
+.seach_form_container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px 0;
+}
+
+@media only screen and (min-width:600px) {
+    .seach_form_container {
+        display: none;
+    }
+}
+
+@media only screen and (min-width:600px) {
+    .custom_mobile_icon {
+        display: none;
+    }
+}
+
+.custom_price_field {
+    width: 80px;
+}
+
+.shipping__icon {
+    border: 1px solid #ddd !important;
+    width: 50px;
+    height: 50px;
+    display: grid;
+    place-items: center;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.main__logo--img {
+    max-width: 175px !important;
+}
+
+.notic_content {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.custom-gap-mobile {
+    display: flex;
+    justify-content: space-between !important;
+    align-items: center !important;
+}
+
+@media only screen and (max-width:600px) {
+    .last_ship_icon {
+        margin: 0 0 0 12px !important;
+    }
+
+    .custom-gap-mobile {
+        gap: 10px !important;
+    }
+
+    .notic_content .break {
+        display: block;
+        padding: 7px 0 0 0px;
+    }
+}
+
+.old__price {
+    text-decoration: line-through;
+}
+
+.custom-card {
+    border-radius: 5px !important;
+    padding: 22px 24px;
+}
+
+.confirmatio_part_sec {
+    padding: 50px 0 70px 0;
+}
+.account_section{
+    display: none;
+}
+.logout_btn{
+    background:none;
+    border:none;
+    outline:none;
+    font-size:16px;
+    font-weight:600
+}
+.slide_wrapper{
+    display: flex !important;
+    justify-content: start !important;
+    align-items: center !important;
+    margin: 0 0 0 25px;
+}
+.brand_bar_wrapper{
+    width: 100%;
+    background-color: #ed1d24;
+}
+
+.bar_brands_names a{
+    /* border-right: 1px solid #ffffff; */
+    font-family: "Cabin", sans-serif;;
+    font-weight: 400;
+    letter-spacing: 0.5px;
+    padding: 0 10px 0 10px;
+    color: #fff;
+    font-size: 15px;
+    position: relative;
+    transition: all linear 0.3s;
+    z-index: 1;
+    word-spacing: 0.7px;
+}
+.bar_brands_names a::before{
+    content: '';
+    position: absolute;
+    width: 0%;
+    height: 100%;
+    background-color: white;
+    top: 0;
+    left: 0;
+    transition: all linear 0.3s;
+    z-index: -1;
+    transform: skew(-25deg);
+}
+
+.bar_brands_names a:hover::before{
+    width: 100%;
+}
+.bar_brands_names:hover > a{
+    color: #ed1d24;
+}
+.bar_brands_names a.active {
+    color: #ed1d24 !important;
+}
+
+.bar_brands_names a.active::before {
+    width: 100%;
+}
+
+.swiper-button-next::after, .swiper-button-prev::after{
+    display: none;
+}
+.swiper__nav{
+    width: 3.3rem;
+    height: 3.3rem;
+    background-color: #fff;
+    border: 1px solid #ed1d24;
+    border-radius: 50px;
+}
+.swiper__nav svg{
+    width: 20px;
+    height: 20px;
+}
+@media only screen and (max-width:600px){
+    .bar_brands_names a{
+        font-size: 12px;
+    }
+    .swiper__nav{
+        width: 3rem;
+        height: 3rem;
+    }
+    .swiper__nav{
+        width: 18px;
+        height: 18px;
+    }
+}
+@media only screen and (max-width:1000px){
+    .brand_bar_wrapper{
+        display: none;
+    }
+    .shipping__inner{
+        justify-content: flex-start !important;
+        padding: 10px 20px !important;
+    }
+    .last_ship_icon{
+        margin: 0 0 0 -1px !important;
+    }
+}
+.brands_section{
+    padding: 30px 0 50px 0;
+}
+.brand_heading{
+    position: relative;
+    z-index: 1;
+    color: #fff;
+    font-weight: 500;
+    padding: 7px 0 10px 0;
+    margin: 0 0 40px 0;
+}
+.brand_heading::after{
+    content: '';
+    position: absolute;
+    width:100%;
+    height: 100%;
+    background-color: #ed1d24;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    transform: skew(-25deg);
+}
+.c_btn{
+    transition: all linear 0.3s;
+}
+.c_btn:hover{
+    color:#ed1d24;
+    border: 1px solid #ed1d24 !important;
+}
+.toggleClass{
+    display: none;
+}
+#new_checkbox, #default_checkbox{
+    pointer-events: none;
+}
+.product_detail_name:hover{
+    text-decoration: underline;
+}
+.offcanvas__menu_ul{
+    height: 450px !important;
+    max-height: 450px !important;
+}
+@media only screen and (max-width: 479px){
+    .product__card--title{
+        font-size: 1.4rem !important;
+    }
+    .oth_brand_title, .oth_p_m, .oth_p_part{
+        font-size: 12px !important;
+    }
+}
