@@ -170,9 +170,5 @@
     <!-- End serch box area -->
 
 </header>
-<<<<<<<< HEAD:storage/framework/views/10703f37e6d55b3f65081a15f2df0849.php
-<!-- End header area --><?php /**PATH F:\laragon\www\carpartslb.com\resources\views/components/Front/header.blade.php ENDPATH**/ ?>
-========
 <!-- End header area -->
-<?php /**PATH E:\sajjel\laragon\www\carpartslb.com\resources\views/components/Front/header.blade.php ENDPATH**/ ?>
->>>>>>>> 111d9aad5c681fcad64fc7e1745777f4ca95bd73:storage/framework/views/0047beb6518c3c5355f495c7e2676af6.php
+<?php /**PATH F:\laragon\www\carpartslb.com\resources\views/components/Front/header.blade.php ENDPATH**/ ?>

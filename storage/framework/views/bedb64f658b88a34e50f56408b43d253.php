@@ -52,8 +52,4 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 </script>
 
-<<<<<<<< HEAD:storage/framework/views/bedb64f658b88a34e50f56408b43d253.php
 <?php /**PATH F:\laragon\www\carpartslb.com\resources\views/components/front/brands-bar.blade.php ENDPATH**/ ?>
-========
-<?php /**PATH E:\sajjel\laragon\www\carpartslb.com\resources\views/components/front/brands-bar.blade.php ENDPATH**/ ?>
->>>>>>>> 111d9aad5c681fcad64fc7e1745777f4ca95bd73:storage/framework/views/8746a5193cd60e646e460576fad4731a.php

@@ -10,8 +10,4 @@
 
 <!-- Customscript js -->
 <script src="<?php echo e(asset('public/assets/front/js/script.js')); ?>"></script>
-<<<<<<<< HEAD:storage/framework/views/9e470c800ef3e6b7d1f1d957a4104630.php
 <?php /**PATH F:\laragon\www\carpartslb.com\resources\views/components/Front/script.blade.php ENDPATH**/ ?>
-========
-<?php /**PATH E:\sajjel\laragon\www\carpartslb.com\resources\views/components/Front/script.blade.php ENDPATH**/ ?>
->>>>>>>> 111d9aad5c681fcad64fc7e1745777f4ca95bd73:storage/framework/views/5eb77f16cda7f0f6d5a9115b0b645633.php

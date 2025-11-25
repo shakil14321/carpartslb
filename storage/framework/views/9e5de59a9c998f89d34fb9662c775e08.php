@@ -26,8 +26,4 @@
         }
     }
 </script>
-<<<<<<<< HEAD:storage/framework/views/9e5de59a9c998f89d34fb9662c775e08.php
 <?php /**PATH F:\laragon\www\carpartslb.com\resources\views/components/Front/announcement_bar.blade.php ENDPATH**/ ?>
-========
-<?php /**PATH E:\sajjel\laragon\www\carpartslb.com\resources\views/components/Front/announcement_bar.blade.php ENDPATH**/ ?>
->>>>>>>> 111d9aad5c681fcad64fc7e1745777f4ca95bd73:storage/framework/views/fbcff8b130a5438ba8939635736b6736.php

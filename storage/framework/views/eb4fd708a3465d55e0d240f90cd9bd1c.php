@@ -27,8 +27,4 @@
             </div>
         </div>
     </div>
-<<<<<<<< HEAD:storage/framework/views/eb4fd708a3465d55e0d240f90cd9bd1c.php
 </div><?php /**PATH F:\laragon\www\carpartslb.com\resources\views/components/Front/header_menu.blade.php ENDPATH**/ ?>
-========
-</div><?php /**PATH E:\sajjel\laragon\www\carpartslb.com\resources\views/components/Front/header_menu.blade.php ENDPATH**/ ?>
->>>>>>>> 111d9aad5c681fcad64fc7e1745777f4ca95bd73:storage/framework/views/c548f9b124f9f48cbff953a0dee09aaf.php

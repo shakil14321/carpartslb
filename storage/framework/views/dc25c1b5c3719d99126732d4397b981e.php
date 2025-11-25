@@ -97,8 +97,4 @@
 
 
 </div>
-<<<<<<<< HEAD:storage/framework/views/dc25c1b5c3719d99126732d4397b981e.php
 <?php /**PATH F:\laragon\www\carpartslb.com\resources\views/front/partials/car_parts_list.blade.php ENDPATH**/ ?>
-========
-<?php /**PATH E:\sajjel\laragon\www\carpartslb.com\resources\views/front/partials/car_parts_list.blade.php ENDPATH**/ ?>
->>>>>>>> 111d9aad5c681fcad64fc7e1745777f4ca95bd73:storage/framework/views/9ae595b54446c753935e83e8b982b13e.php

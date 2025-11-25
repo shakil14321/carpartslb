@@ -90,8 +90,4 @@
     </div>
 </footer>
 <!-- End footer section -->
-<<<<<<<< HEAD:storage/framework/views/322db3c9f2fa748f8d24e960c183b24e.php
 <?php /**PATH F:\laragon\www\carpartslb.com\resources\views/components/front/footer.blade.php ENDPATH**/ ?>
-========
-<?php /**PATH E:\sajjel\laragon\www\carpartslb.com\resources\views/components/front/footer.blade.php ENDPATH**/ ?>
->>>>>>>> 111d9aad5c681fcad64fc7e1745777f4ca95bd73:storage/framework/views/8e53d568af5314f48715a7964791890d.php

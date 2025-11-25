@@ -191,8 +191,4 @@
 
 </body>
 
-<<<<<<<< HEAD:storage/framework/views/7cfbd4c25fcb5883a9b2001bd5a39b47.php
 </html><?php /**PATH F:\laragon\www\carpartslb.com\resources\views/layouts/front/front-layout.blade.php ENDPATH**/ ?>
-========
-</html><?php /**PATH E:\sajjel\laragon\www\carpartslb.com\resources\views/layouts/front/front-layout.blade.php ENDPATH**/ ?>
->>>>>>>> 111d9aad5c681fcad64fc7e1745777f4ca95bd73:storage/framework/views/c8f40f714b11b5bd26375a846528597b.php

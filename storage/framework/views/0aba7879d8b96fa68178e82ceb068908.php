@@ -35,8 +35,4 @@
         <a class="primary__btn minicart__button--link text-center" id="checkout_cart_btn" href="<?php echo e(route('checkout.page')); ?>" style="width:100% !important;">Checkout</a>
     </div>
 </div>
-<<<<<<<< HEAD:storage/framework/views/0aba7879d8b96fa68178e82ceb068908.php
 <?php /**PATH F:\laragon\www\carpartslb.com\resources\views/components/Front/offcanvas_cart.blade.php ENDPATH**/ ?>
-========
-<?php /**PATH E:\sajjel\laragon\www\carpartslb.com\resources\views/components/Front/offcanvas_cart.blade.php ENDPATH**/ ?>
->>>>>>>> 111d9aad5c681fcad64fc7e1745777f4ca95bd73:storage/framework/views/b4bcb141c7b04bd8b1fbc5690dbb81b5.php

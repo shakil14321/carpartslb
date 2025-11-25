@@ -44,8 +44,4 @@
         </ul>
     </nav>
 <?php endif; ?>
-<<<<<<<< HEAD:storage/framework/views/0b650b6283be701945debaf83254c04c.php
 <?php /**PATH F:\laragon\www\carpartslb.com\vendor\laravel\framework\src\Illuminate\Pagination/resources/views/bootstrap-4.blade.php ENDPATH**/ ?>
-========
-<?php /**PATH E:\sajjel\laragon\www\carpartslb.com\vendor\laravel\framework\src\Illuminate\Pagination/resources/views/bootstrap-4.blade.php ENDPATH**/ ?>
->>>>>>>> 111d9aad5c681fcad64fc7e1745777f4ca95bd73:storage/framework/views/c2a02119f6eb5aa975298a88d2152eee.php

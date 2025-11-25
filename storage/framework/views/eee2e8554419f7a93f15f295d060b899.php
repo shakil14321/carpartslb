@@ -23,9 +23,5 @@
 <!-- Custom Style CSS -->
 <link rel="stylesheet" href="<?php echo e(asset('public/assets/front/css/style.css')); ?>">
 <!-- My custom Style CSS -->
-<<<<<<<< HEAD:storage/framework/views/eee2e8554419f7a93f15f295d060b899.php
-<link rel="stylesheet" href="<?php echo e(asset('public/assets/front/css/custom.css')); ?>"><?php /**PATH F:\laragon\www\carpartslb.com\resources\views/components/front/head.blade.php ENDPATH**/ ?>
-========
 <link rel="stylesheet" href="<?php echo e(asset('public/assets/front/css/custom.css')); ?>">
-<?php /**PATH E:\sajjel\laragon\www\carpartslb.com\resources\views/components/front/head.blade.php ENDPATH**/ ?>
->>>>>>>> 111d9aad5c681fcad64fc7e1745777f4ca95bd73:storage/framework/views/1a743d96a6cfef982b334011a4674a3e.php
+<?php /**PATH F:\laragon\www\carpartslb.com\resources\views/components/front/head.blade.php ENDPATH**/ ?>

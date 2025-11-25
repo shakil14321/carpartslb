@@ -65,8 +65,4 @@
         </nav>
     </div>
 </div>
-<<<<<<<< HEAD:storage/framework/views/6b361d011016c5dcf48aa8cf1d5ce01a.php
 <?php /**PATH F:\laragon\www\carpartslb.com\resources\views/components/Front/offcanvas_menu.blade.php ENDPATH**/ ?>
-========
-<?php /**PATH E:\sajjel\laragon\www\carpartslb.com\resources\views/components/Front/offcanvas_menu.blade.php ENDPATH**/ ?>
->>>>>>>> 111d9aad5c681fcad64fc7e1745777f4ca95bd73:storage/framework/views/a54314c8f203747fb1835d23bf2c06e0.php

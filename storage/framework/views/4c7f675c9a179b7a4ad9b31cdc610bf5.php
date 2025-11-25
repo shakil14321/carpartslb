@@ -32,8 +32,4 @@
             </div>
         </div>
     </div>
-<<<<<<<< HEAD:storage/framework/views/4c7f675c9a179b7a4ad9b31cdc610bf5.php
 </div><?php /**PATH F:\laragon\www\carpartslb.com\resources\views/components/Front/notice_bar.blade.php ENDPATH**/ ?>
-========
-</div><?php /**PATH E:\sajjel\laragon\www\carpartslb.com\resources\views/components/Front/notice_bar.blade.php ENDPATH**/ ?>
->>>>>>>> 111d9aad5c681fcad64fc7e1745777f4ca95bd73:storage/framework/views/db2e721b57c1a7507091796c6638c4ad.php

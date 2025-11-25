@@ -38,8 +38,4 @@
         <div class="loader-section section-right"></div>
     </div>
 </div>
-<<<<<<<< HEAD:storage/framework/views/01b89e7fc562b20cdc11f348b447e592.php
 <!-- End preloader --><?php /**PATH F:\laragon\www\carpartslb.com\resources\views/components/Front/loader.blade.php ENDPATH**/ ?>
-========
-<!-- End preloader --><?php /**PATH E:\sajjel\laragon\www\carpartslb.com\resources\views/components/Front/loader.blade.php ENDPATH**/ ?>
->>>>>>>> 111d9aad5c681fcad64fc7e1745777f4ca95bd73:storage/framework/views/a1143d857739d3afea2e8b275d20d13d.php

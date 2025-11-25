@@ -71,8 +71,4 @@
             </div>
         </div>
     </div>
-<<<<<<<< HEAD:storage/framework/views/99362c9e773860bf471fc9c1bd8fbd39.php
 </section><?php /**PATH F:\laragon\www\carpartslb.com\resources\views/front/partials/shipping_sec.blade.php ENDPATH**/ ?>
-========
-</section><?php /**PATH E:\sajjel\laragon\www\carpartslb.com\resources\views/front/partials/shipping_sec.blade.php ENDPATH**/ ?>
->>>>>>>> 111d9aad5c681fcad64fc7e1745777f4ca95bd73:storage/framework/views/8eb168f91cdb52ab18f4ab8d57ffd4bb.php
