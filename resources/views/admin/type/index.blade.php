@@ -25,7 +25,8 @@
 
                 @foreach ($types as $type)
                     <!-- Delete confirmation modal -->
-                    <div class="modal fade" id="deleteModal{{ $type->id }}" tabindex="-1" role="dialog" aria-hidden="true">
+                    <div class="modal fade" id="deleteModal{{ $type->id }}" tabindex="-1" role="dialog"
+                        aria-hidden="true">
                         <div class="modal-dialog modal-danger" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
@@ -110,7 +111,11 @@
                                                     <div class="action-container">
                                                         <a href="{{ route('type.edit', $type->id) }}" class="edit-icon"><i
                                                                 class="fa fa-edit"></i></a>
-                                                        <span class="delete-icon fa fa-trash-o" data-toggle="modal" data-target="#deleteModal{{ $type->id }}" data-id="{{ $type->id }}"><i></i></span>
+                                                        <a href="javascript:void(0)" class="">
+                                                            <span class="delete-icon fa fa-trash-o" data-toggle="modal"
+                                                                data-target="#deleteModal{{ $type->id }}"
+                                                                data-id="{{ $type->id }}"><i></i></span>
+                                                        </a>
                                                         <a href="{{ route('type.view', $type->slug) }}"
                                                             class="view-icon"><i class="fa fa-eye"></i></a>
                                                     </div>

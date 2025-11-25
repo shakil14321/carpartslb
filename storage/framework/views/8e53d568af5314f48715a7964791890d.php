@@ -32,19 +32,19 @@
                             </svg>
                         </h2>
                         <div class="footer__widget--inner">
-                            <ul
-                                class="footer__widget--menu footer__widget--inner d-flex justify-content-between align-items-center">
-
-                                <li class="footer__widget--menu__list"><a class="footer__widget--menu__text"
-                                        href="<?php echo e(auth()->check() ? route('customerDashboard') : route('login.form')); ?>"><?php echo e(auth()->check() ? 'My Account' : 'My Account'); ?></a>
-                                </li>
-                                <li class="footer__widget--menu__list"><a class="footer__widget--menu__text"
-                                        href="<?php echo e(route('shop')); ?>">Shop</a></li>
-                                <li class="footer__widget--menu__list"><a class="footer__widget--menu__text"
-                                        href="<?php echo e(route('login.form')); ?>">Login</a></li>
-                                <li class="footer__widget--menu__list"><a class="footer__widget--menu__text"
-                                        href="<?php echo e(route('register.form')); ?>">Register</a></li>
+                            <ul class="footer__widget--menu footer__widget--inner flex-column"
+                                style="display:block !important;">
+                                <li><a href="<?php echo e(auth()->check() ? route('customerDashboard') : route('login.form')); ?>"
+                                        class="" style="color: var(--foreground-sub-color);">My
+                                        Account</a></li>
+                                <li><a href="<?php echo e(route('shop')); ?>" class="mt-3"
+                                        style="color: var(--foreground-sub-color);">Shop</a></li>
+                                <li><a href="<?php echo e(route('login.form')); ?>" class="mt-3"
+                                        style="color: var(--foreground-sub-color);">Login</a></li>
+                                <li><a href="<?php echo e(route('register.form')); ?>" class="mt-3"
+                                        style="color: var(--foreground-sub-color);">Register</a></li>
                             </ul>
+                            
                         </div>
                     </div>
                 </div>

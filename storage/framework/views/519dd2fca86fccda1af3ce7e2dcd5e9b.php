@@ -1,31 +1,31 @@
-@extends('layouts.admin.admin-layout')
-
-@section('content')
+<?php $__env->startSection('content'); ?>
 
     <!-- Main content -->
     <section class="content">
         <div class="row">
-            @if (session('success'))
+            <?php if(session('success')): ?>
                 <div class="alert alert-success alert-dismissible notic_bar" style="margin:20px;">
                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                    {{ session('success') }}
-                </div>
-            @endif
+                    <?php echo e(session('success')); ?>
 
-            @if (session('error'))
+                </div>
+            <?php endif; ?>
+
+            <?php if(session('error')): ?>
                 <div class="alert alert-danger alert-dismissible notic_bar" style="margin:20px;">
                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                    {{ session('error') }}
+                    <?php echo e(session('error')); ?>
+
                 </div>
-            @endif
+            <?php endif; ?>
 
             <!-- Search form -->
             <div class="container-fluid" style="margin:0 0 10px 0;">
                 <div class="row">
                     <div class="col-10 col-sm-8 col-md-6 col-offset-1 col-sm-offset-2 col-md-offset-3">
-                        <form action="{{ route('orderReviewSearch.admin') }}" method="GET" class="w-100">
+                        <form action="<?php echo e(route('orderCancelSearch.admin')); ?>" method="GET" class="w-100">
                             <div class="input-group">
-                                <input type="text" name="q" class="form-control" value="{{ $q ?? '' }}"
+                                <input type="text" name="q" class="form-control" value="<?php echo e($q ?? ''); ?>"
                                     placeholder="Search...">
                                 <span class="input-group-btn">
                                     <button type="submit" class="btn btn-primary">
@@ -42,13 +42,13 @@
 
                 <div class="box">
                     <div class="main-flex">
-                        <h3 class="box-title">All Review(New) Orders</h3>
+                        <h3 class="box-title">All Cancel Orders</h3>
                     </div><!-- /.box-header -->
                     <div class="box-body">
 
-                        {{-- Delete Confirmation Modal --}}
-                        @foreach ($orders as $order)
-                            <div class="modal fade" id="deleteModal{{ $order->id }}" tabindex="-1" role="dialog"
+                        
+                        <?php $__currentLoopData = $orders; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $order): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <div class="modal fade" id="deleteModal<?php echo e($order->id); ?>" tabindex="-1" role="dialog"
                                 aria-hidden="true">
                                 <div class="modal-dialog modal-danger" role="document">
                                     <div class="modal-content">
@@ -64,9 +64,9 @@
                                         <div class="modal-footer modal-buttons">
                                             <button type="button" class="btn btn-secondary"
                                                 data-dismiss="modal">Cancel</button>
-                                            <form action="{{ route('order.destroy', $order->id) }}" method="POST">
-                                                @csrf
-                                                @method('DELETE')
+                                            <form action="<?php echo e(route('order.destroy', $order->id)); ?>" method="POST">
+                                                <?php echo csrf_field(); ?>
+                                                <?php echo method_field('DELETE'); ?>
                                                 <button type="submit" class="btn btn-danger"
                                                     id="confirmDelete">Delete</button>
                                             </form>
@@ -74,12 +74,12 @@
                                     </div>
                                 </div>
                             </div>
-                        @endforeach
-                        {{-- End Delete Confirmation Modal --}}
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                        
 
-                        <form action="{{ route('orders.deleteSelected') }}" method="POST">
-                            @csrf
-                            @method('DELETE')
+                        <form action="<?php echo e(route('orders.deleteSelected')); ?>" method="POST">
+                            <?php echo csrf_field(); ?>
+                            <?php echo method_field('DELETE'); ?>
 
                             <button type="submit" class="btn btn-danger" style="margin-bottom:10px;">Delete
                                 Selected</button>
@@ -101,56 +101,58 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @if ($orders->count() > 0)
-                                        @foreach ($orders as $order)
+                                    <?php if($orders->count() > 0): ?>
+                                        <?php $__currentLoopData = $orders; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $order): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                             <tr class="account__table--body__child">
                                                 <td>
-                                                    <input type="checkbox" name="ids[]" value="{{ $order->id }}"
+                                                    <input type="checkbox" name="ids[]" value="<?php echo e($order->id); ?>"
                                                         class="checkbox">
                                                 </td>
-                                                <td class="account__table--body__child--items">{{ $loop->iteration }}</td>
+                                                <td class="account__table--body__child--items"><?php echo e($loop->iteration); ?></td>
                                                 <td class="account__table--body__child--items">
                                                     <a
-                                                        href="{{ route('order.view', $order->id) }}">{{ $order->order_number ?? '' }}</a>
+                                                        href="<?php echo e(route('order.view', $order->id)); ?>"><?php echo e($order->order_number ?? ''); ?></a>
                                                 </td>
                                                 <td class="account__table--body__child--items">
-                                                    {{ ucwords(trim(($order->first_name ?? '') . ' ' . ($order->last_name ?? ''))) }}
+                                                    <?php echo e(ucwords(trim(($order->first_name ?? '') . ' ' . ($order->last_name ?? '')))); ?>
+
                                                 </td>
                                                 <td class="account__table--body__child--items">
-                                                    {{ $order->updated_at ?? '' }}</td>
+                                                    <?php echo e($order->updated_at ?? ''); ?></td>
                                                 <td class="account__table--body__child--items">
-                                                    {{ strtoupper($order->payment_method) ?? '' }}</td>
+                                                    <?php echo e(strtoupper($order->payment_method) ?? ''); ?></td>
                                                 <td class="account__table--body__child--items">
-                                                    {{ ucwords($order->status) ?? '' }}</td>
+                                                    <?php echo e(ucwords($order->status) ?? ''); ?></td>
                                                 <td class="account__table--body__child--items">
-                                                    {{ $order->total ? $order->total : '' }}</td>
+                                                    <?php echo e($order->total ? $order->total : ''); ?></td>
                                                 <td>
                                                     <div class="action-container">
-                                                        <a href="{{ route('order.edit', $order->id) }}"
+                                                        <a href="<?php echo e(route('order.edit', $order->id)); ?>"
                                                             class="edit-icon"><i class="fa fa-edit"></i></a>
                                                         <a href="javascript:void(0)">
                                                             <span class="delete-icon fa fa-trash-o" data-toggle="modal"
-                                                                data-target="#deleteModal{{ $order->id }}"
-                                                                data-id="{{ $order->id }}"><i></i></span>
+                                                                data-target="#deleteModal<?php echo e($order->id); ?>"
+                                                                data-id="<?php echo e($order->id); ?>"><i></i></span>
                                                         </a>
-                                                        <a href="{{ route('order.view', $order->id) }}"
+                                                        <a href="<?php echo e(route('order.view', $order->id)); ?>"
                                                             class="view-icon"><i class="fa fa-eye"></i></a>
                                                     </div>
                                                 </td>
                                             </tr>
-                                        @endforeach
-                                    @else
+                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                    <?php else: ?>
                                         <tr class="account__table--body__child">
                                             <td colspan="9" class="account__table--body__child--items text-center">
                                                 Orders not found.</td>
                                         </tr>
-                                    @endif
+                                    <?php endif; ?>
                                 </tbody>
                             </table>
                         </form>
 
                         <!-- Pagination Links -->
-                        {{ $orders->links('pagination::bootstrap-4') }}
+                        <?php echo e($orders->links('pagination::bootstrap-4')); ?>
+
                     </div><!-- /.box-body -->
                 </div><!-- /.box -->
             </div><!-- /.col -->
@@ -182,4 +184,6 @@
 
     </section><!-- /.content -->
 
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.admin.admin-layout', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH E:\sajjel\laragon\www\carpartslb.com\resources\views/admin/order/cancel.blade.php ENDPATH**/ ?>

@@ -20,9 +20,10 @@
             <?php endif; ?>
 
             <div class="col-xs-12">
-                <?php $__currentLoopData = $carParts; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $carPart): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+
+                <?php $__currentLoopData = $carModels; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $carModel): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                     <!-- Delete confirmation modal -->
-                    <div class="modal fade" id="deleteModal<?php echo e($carPart->id); ?>" tabindex="-1" role="dialog"
+                    <div class="modal fade" id="deleteModal<?php echo e($carModel->id); ?>" tabindex="-1" role="dialog"
                         aria-hidden="true">
                         <div class="modal-dialog modal-danger" role="document">
                             <div class="modal-content">
@@ -33,11 +34,11 @@
                                     </button>
                                 </div>
                                 <div class="modal-body">
-                                    <p>Do you want to delete this product?</p>
+                                    <p>Do you want to delete this model?</p>
                                 </div>
                                 <div class="modal-footer modal-buttons">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                                    <form action="<?php echo e(route('product.destroy', $carPart->id)); ?>" method="POST">
+                                    <form action="<?php echo e(route('model.destroy', $carModel->id)); ?>" method="POST">
                                         <?php echo csrf_field(); ?>
                                         <?php echo method_field('DELETE'); ?>
                                         <button type="submit" class="btn btn-danger" id="confirmDelete">Delete</button>
@@ -68,14 +69,13 @@
                     </div>
                 </div>
 
-
                 <div class="box">
                     <div class="main-flex">
-                        <h3 class="box-title">All Product</h3>
-                        <a href="<?php echo e(route('product.create')); ?>" class="btn btn-primary btn-sm">Add New Product</a>
+                        <h3 class="box-title">All Models</h3>
+                        <a href="<?php echo e(route('model.create')); ?>" class="btn btn-primary btn-sm">Add New Model</a>
                     </div><!-- /.box-header -->
                     <div class="box-body">
-                        <form action="<?php echo e(route('product.deleteSelected')); ?>" method="POST">
+                        <form action="<?php echo e(route('model.deleteSelected')); ?>" method="POST">
                             <?php echo csrf_field(); ?>
 
                             <button type="submit" class="btn btn-danger" style="margin-bottom:10px;">Delete
@@ -88,63 +88,51 @@
                                             <input type="checkbox" id="selectAll"> All
                                         </th>
                                         <th>Sr #</th>
-                                        <th>Image</th>
-                                        <th>Name</th>
-                                        <th>Category</th>
-                                        <th>Stock</th>
-                                        <th>Part Brand</th>
-                                        <th>Part Number</th>
+                                        <th>Model Image</th>
+                                        <th>Model Name</th>
+                                        <th>Brand</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <?php if($carParts->count() > 0): ?>
-                                        <?php $__currentLoopData = $carParts; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $carPart): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <?php if($carModels->count() > 0): ?>
+                                        <?php $__currentLoopData = $carModels; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $carModel): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                             <tr>
                                                 <td>
-                                                    <input type="checkbox" name="ids[]" value="<?php echo e($carPart->id); ?>"
+                                                    <input type="checkbox" name="ids[]" value="<?php echo e($carModel->id); ?>"
                                                         class="checkbox">
                                                 </td>
                                                 <td><?php echo e($loop->iteration); ?></td>
-                                                <td><img src="<?php echo e($carPart->feature_image ? asset('public/images/parts/feature/' . $carPart->feature_image) : asset('public/images/brands/demo.png')); ?>"
-                                                        alt="<?php echo e($carPart->feature_image); ?>" class="table-brand-image"></td>
-                                                <td><a href="<?php echo e(route('product.view', $carPart->slug)); ?>"
-                                                        class="all-title"><?php echo e($carPart->title); ?></a></td>
-                                                <td><?php echo e($carPart->part_type_id ? $carPart->carPartType->title : 'None'); ?>
-
-                                                </td>
-                                                <td><?php echo e($carPart->stock_type == 'in' ? 'In Stock' : 'Out of Stock'); ?></td>
-                                                <td><?php echo e($carPart->part_brand_id ? $carPart->carPartBrand->title : 'None'); ?>
-
-                                                </td>
-                                                <td><?php echo e($carPart->part_number ?? 'None'); ?>
-
-                                                </td>
+                                                <td><img src="<?php echo e($carModel->model_image ? asset('public/images/models/' . $carModel->model_image) : asset('public/images/brands/demo.png')); ?>"
+                                                        alt="<?php echo e($carModel->model_image); ?>" class="table-brand-image"></td>
+                                                <td><a href="#" class="all-title"><?php echo e($carModel->title); ?></a></td>
+                                                <td><?php echo e($carModel->carBrand ? $carModel->carBrand->title : ''); ?></td>
                                                 <td>
                                                     <div class="action-container">
-                                                        <a href="<?php echo e(route('product.edit', $carPart->id)); ?>"
+                                                        <a href="<?php echo e(route('model.edit', $carModel->id)); ?>"
                                                             class="edit-icon"><i class="fa fa-edit"></i></a>
-                                                        <a href="javascript:void(0)" class="edit-icon">
+                                                        <a href="javascript:void(0)">
                                                             <span class="delete-icon fa fa-trash-o" data-toggle="modal"
-                                                                data-target="#deleteModal<?php echo e($carPart->id); ?>"
-                                                                data-id="<?php echo e($carPart->id); ?>"><i></i></span>
+                                                                data-target="#deleteModal<?php echo e($carModel->id); ?>"
+                                                                data-id="<?php echo e($carModel->id); ?>"><i></i></span>
                                                         </a>
-                                                        <a href="<?php echo e(route('product.view', $carPart->slug)); ?>"
+                                                        <a href="<?php echo e(route('brand.show', $carModel->id)); ?>"
                                                             class="view-icon"><i class="fa fa-eye"></i></a>
                                                     </div>
                                                 </td>
                                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                     <?php else: ?>
                                         <tr>
-                                            <td colspan="9" class="text-center">No products found.</td>
+                                            <td colspan="6" class="text-center">No models found.</td>
                                         </tr>
                                     <?php endif; ?>
                                 </tbody>
                                 
                             </table>
+
                         </form>
                         <!-- Pagination Links -->
-                        <?php echo e($carParts->links('pagination::bootstrap-4')); ?>
+                        <?php echo e($carModels->links('pagination::bootstrap-4')); ?>
 
                     </div><!-- /.box-body -->
                 </div><!-- /.box -->
@@ -179,4 +167,4 @@
 
 <?php $__env->stopSection(); ?>
 
-<?php echo $__env->make('layouts.admin.admin-layout', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH E:\sajjel\laragon\www\carpartslb.com\resources\views/admin/product/index.blade.php ENDPATH**/ ?>
+<?php echo $__env->make('layouts.admin.admin-layout', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH E:\sajjel\laragon\www\carpartslb.com\resources\views/admin/model/index.blade.php ENDPATH**/ ?>

@@ -21,7 +21,8 @@
 
             @foreach ($carBrands as $carBrand)
                 <!-- Delete confirmation modal -->
-                <div class="modal fade" id="deleteModal{{ $carBrand->id }}" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal fade" id="deleteModal{{ $carBrand->id }}" tabindex="-1" role="dialog"
+                    aria-hidden="true">
                     <div class="modal-dialog modal-danger" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
@@ -102,12 +103,17 @@
                                                 <td>{{ $loop->iteration }}</td>
                                                 <td><img src="{{ $carBrand->brand_image ? asset('public/images/brands/' . $carBrand->brand_image) : asset('public/images/brands/demo.png') }}"
                                                         alt="{{ $carBrand->brand_image }}" class="table-brand-image"></td>
-                                                <td><a href="#" class="all-title">{{ $carBrand->title }}</a></td>
+                                                <td><a href="{{ route('brand.view', $carBrand->slug) }}"
+                                                        class="all-title">{{ $carBrand->title }}</a></td>
                                                 <td>
                                                     <div class="action-container">
                                                         <a href="{{ route('brand.edit', $carBrand->id) }}"
                                                             class="edit-icon"><i class="fa fa-edit"></i></a>
-                                                        <span class="delete-icon fa fa-trash-o" data-toggle="modal" data-target="#deleteModal{{ $carBrand->id }}" data-id="{{ $carBrand->id }}"><i></i></span>
+                                                        <a href="javascript:void(0)">
+                                                            <span class="delete-icon fa fa-trash-o" data-toggle="modal"
+                                                                data-target="#deleteModal{{ $carBrand->id }}"
+                                                                data-id="{{ $carBrand->id }}"><i></i></span>
+                                                        </a>
                                                         <a href="{{ route('brand.view', $carBrand->slug) }}"
                                                             class="view-icon"><i class="fa fa-eye"></i></a>
                                                     </div>

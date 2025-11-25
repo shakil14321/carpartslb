@@ -32,9 +32,19 @@
                             </svg>
                         </h2>
                         <div class="footer__widget--inner">
-                            <ul
-                                class="footer__widget--menu footer__widget--inner d-flex justify-content-between align-items-center">
-
+                            <ul class="footer__widget--menu footer__widget--inner flex-column"
+                                style="display:block !important;">
+                                <li><a href="{{ auth()->check() ? route('customerDashboard') : route('login.form') }}"
+                                        class="" style="color: var(--foreground-sub-color);">My
+                                        Account</a></li>
+                                <li><a href="{{ route('shop') }}" class="mt-3"
+                                        style="color: var(--foreground-sub-color);">Shop</a></li>
+                                <li><a href="{{ route('login.form') }}" class="mt-3"
+                                        style="color: var(--foreground-sub-color);">Login</a></li>
+                                <li><a href="{{ route('register.form') }}" class="mt-3"
+                                        style="color: var(--foreground-sub-color);">Register</a></li>
+                            </ul>
+                            {{-- <ul class="footer__widget--menu footer__widget--inner d-flex justify-content-between align-items-center">
                                 <li class="footer__widget--menu__list"><a class="footer__widget--menu__text"
                                         href="{{ auth()->check() ? route('customerDashboard') : route('login.form') }}">{{ auth()->check() ? 'My Account' : 'My Account' }}</a>
                                 </li>
@@ -44,7 +54,7 @@
                                         href="{{ route('login.form') }}">Login</a></li>
                                 <li class="footer__widget--menu__list"><a class="footer__widget--menu__text"
                                         href="{{ route('register.form') }}">Register</a></li>
-                            </ul>
+                            </ul> --}}
                         </div>
                     </div>
                 </div>

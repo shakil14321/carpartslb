@@ -111,7 +111,7 @@ class AuthController extends Controller
         }
 
         $user->update($data);
-        
+
         if(auth()->user()->role === 'author'){
         return redirect()->route('authorDashboard.view')->with('success', 'User updated successfully.');
         }
@@ -171,51 +171,51 @@ class AuthController extends Controller
         return redirect()->route('customerDashboard')
                         ->with('success', 'Update successfully');
     }
-    
+
     // Multiple user delete functionality
     public function deleteSelected(Request $request)
     {
         $ids = $request->input('ids');
-    
+
         if (empty($ids)) {
             return redirect()->route('user.index')
                 ->with('error', 'Please select at least one user to delete.');
         }
-    
+
         // Get users
         $users = User::whereIn('id', $ids)->get();
-    
+
         foreach ($users as $user) {
             if (!empty($user->user_image)) {
                 $imagePath = public_path('images/users/' . $user->user_image);
-    
+
                 if (file_exists($imagePath)) {
                     @unlink($imagePath);
                 }
             }
         }
-    
+
         // Delete from database
         User::whereIn('id', $ids)->delete();
-    
+
         return redirect()->route('cutomers.view')
             ->with('success', 'Selected Customers Deleted Successfully!');
     }
-    
+
     public function authorView(){
         $users = User::whereIn('role', ['author'])->paginate(20);
 
         return view('admin.user.author', compact('users'));
     }
-    
+
     public function customerSearch(Request $request)
     {
         $q = trim($request->input('q', ''));
-    
+
         if ($q === '') {
             return redirect()->back()->with('error', 'Write something in search box.');
         }
-    
+
         $users = User::query()
             ->where('role', 'customer') // 👈 sirf customer role filter
             ->where(function ($query) use ($q) {
@@ -225,7 +225,7 @@ class AuthController extends Controller
             ->latest()
             ->paginate(100)
             ->appends(['q' => $request->query('q')]);
-    
+
         return view('admin.customer.search', compact('users', 'q'));
     }
 }
