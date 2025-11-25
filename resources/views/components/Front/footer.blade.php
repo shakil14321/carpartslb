@@ -14,7 +14,10 @@
                             </svg>
                         </h2>
                         <div class="footer__widget--inner">
-                            <p class="footer__widget--desc">At CarPartsLB, we specialize in providing genuine and high-quality spare parts for BMW, MINI, and BMW Motorrad. As trusted auto parts resellers in Lebanon, we focus on reliability, affordability, and performance to keep your vehicle running at its best.</p>
+                            <p class="footer__widget--desc">At CarPartsLB, we specialize in providing genuine and
+                                high-quality spare parts for BMW, MINI, and BMW Motorrad. As trusted auto parts
+                                resellers in Lebanon, we focus on reliability, affordability, and performance to keep
+                                your vehicle running at its best.</p>
                         </div>
                     </div>
                 </div>
@@ -28,17 +31,21 @@
                                     transform="translate(-6 -8.59)" fill="currentColor"></path>
                             </svg>
                         </h2>
-                        <ul class="footer__widget--menu footer__widget--inner d-flex justify-content-between align-items-center">
+                        <div class="footer__widget--inner">
+                            <ul
+                                class="footer__widget--menu footer__widget--inner d-flex justify-content-between align-items-center">
 
-                            <li class="footer__widget--menu__list"><a class="footer__widget--menu__text"
-                                    href="{{ auth()->check() ? route('customerDashboard') : route('login.form') }}">{{ auth()->check() ? 'My Account' : 'My Account' }}</a></li>
-                            <li class="footer__widget--menu__list"><a class="footer__widget--menu__text"
-                                    href="{{ route('shop') }}">Shop</a></li>
-                            <li class="footer__widget--menu__list"><a class="footer__widget--menu__text"
-                                    href="{{ route('login.form') }}">Login</a></li>
-                            <li class="footer__widget--menu__list"><a class="footer__widget--menu__text"
-                                    href="{{ route('register.form') }}">Register</a></li>
-                        </ul>
+                                <li class="footer__widget--menu__list"><a class="footer__widget--menu__text"
+                                        href="{{ auth()->check() ? route('customerDashboard') : route('login.form') }}">{{ auth()->check() ? 'My Account' : 'My Account' }}</a>
+                                </li>
+                                <li class="footer__widget--menu__list"><a class="footer__widget--menu__text"
+                                        href="{{ route('shop') }}">Shop</a></li>
+                                <li class="footer__widget--menu__list"><a class="footer__widget--menu__text"
+                                        href="{{ route('login.form') }}">Login</a></li>
+                                <li class="footer__widget--menu__list"><a class="footer__widget--menu__text"
+                                        href="{{ route('register.form') }}">Register</a></li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
 
@@ -46,8 +53,7 @@
             <div class="footer_social_icons_container">
                 <ul class="social__share footer__social d-flex">
                     <li class="social__share--list">
-                        <a class="social__share--icon__style2" target="_blank"
-                            href="https://www.facebook.com">
+                        <a class="social__share--icon__style2" target="_blank" href="https://www.facebook.com">
                             <svg width="11" height="17" viewBox="0 0 9 15" fill="none"
                                 xmlns="http://www.w3.org/2000/svg">
                                 <path
@@ -58,8 +64,7 @@
                         </a>
                     </li>
                     <li class="social__share--list">
-                        <a class="social__share--icon__style2" target="_blank"
-                            href="https://www.instagram.com">
+                        <a class="social__share--icon__style2" target="_blank" href="https://www.instagram.com">
                             <svg width="16" height="15" viewBox="0 0 14 13" fill="none"
                                 xmlns="http://www.w3.org/2000/svg">
                                 <path

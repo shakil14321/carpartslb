@@ -5,9 +5,10 @@
 <!-- Google site verification -->
 @php
     $setting = \App\Models\SiteSetting::first();
-    $carParts
+    $carParts;
 @endphp
-<meta name="google-site-verification" content="{{ $setting && $setting->google_verification ? $setting->google_verification : '' }}" />
+<meta name="google-site-verification"
+    content="{{ $setting && $setting->google_verification ? $setting->google_verification : '' }}" />
 
 <!-- ======= All CSS Plugins here ======== -->
 <link rel="stylesheet" href="{{ asset('public/assets/front/css/plugins/swiper-bundle.min.css') }}">

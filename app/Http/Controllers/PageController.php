@@ -18,10 +18,10 @@ class PageController extends Controller
     public function index(){
         $carParts = CarPart::where('fav_product', 1)->latest()->take(10)->get();
         $latestParts = CarPart::latest()->get();
-        
+
         $setting = SiteSetting::first();
         $carBrandQuantity = $setting ? $setting->brand_quantity : 0;
-        
+
         $carPartTypes = CarPartType::withCount('carPart')->get();
         $carBrands = CarBrand::take($carBrandQuantity)->get();
         $carPartBrands = CarPartBrand::take($carBrandQuantity)->get();
@@ -47,30 +47,30 @@ class PageController extends Controller
     public function contactPage(){
         return view('front.pages.contact');
     }
-    
+
     // terms and condtitions page
     public function termsConditions(){
         return view('front.pages.terms-conditions');
     }
-    
+
     // Car part type page means category
     public function partType(){
         $partTypes = CarPartType::latest()->paginate(100);
-        
+
         return view('front.pages.types', compact('partTypes'));
     }
-    
+
     // All part brands page
     public function partBrand(){
         $partBrands = CarPartBrand::latest()->paginate(100);
-        
+
         return view('front.pages.part-brands', compact('partBrands'));
     }
-    
+
     // All car brands page
     public function carBrands(){
         $carBrands = CarBrand::latest()->paginate(100);
-        
+
         return view('front.pages.brands', compact('carBrands'));
     }
 
@@ -81,9 +81,15 @@ class PageController extends Controller
 
         $query = CarPart::query();
 
+        $rawMinPrice = CarPart::min('sale_price') ?? 0;
+        $rawMaxPrice = CarPart::max('sale_price');
+
+        $globalMinPrice = floor($rawMinPrice); // round down
+        $globalMaxPrice = ceil($rawMaxPrice);  // round up
+
         // --- Price Filter ---
-        $minPrice = $request->input('min_price');
-        $maxPrice = $request->input('max_price');
+        $minPrice = $request->input('min_price', $globalMinPrice);
+        $maxPrice = $request->input('max_price', $globalMaxPrice);
 
         if ($minPrice) {
             $query->where('sale_price', '>=', $minPrice);
@@ -113,7 +119,7 @@ class PageController extends Controller
             return view('front.partials.car_parts_list', compact('carParts'))->render();
         }
 
-        return view('front.pages.shop', compact('carParts', 'carPartTypes', 'carPartsFav'));
+        return view('front.pages.shop', compact('carParts', 'carPartTypes', 'carPartsFav', 'globalMinPrice', 'globalMaxPrice', 'minPrice', 'maxPrice'));
     }
 
     // Product show by categories. It is carPart archive page.
@@ -191,7 +197,7 @@ class PageController extends Controller
 
         return view('front.pages.brand', compact('carBrand', 'carParts', 'carPartTypes', 'carPartsFav'));
     }
-    
+
     // Product show by part brands
     public function partBrandBy(Request $request, $slug) {
         $carPartTypes = CarPartType::withCount('carPart')->get();
