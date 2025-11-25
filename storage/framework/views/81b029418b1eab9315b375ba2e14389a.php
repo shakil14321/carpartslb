@@ -1,6 +1,4 @@
-@extends('layouts.admin.admin-layout')
-
-@section('content')
+<?php $__env->startSection('content'); ?>
     <!-- Main content -->
     <section class="content">
         <div class="row">
@@ -8,38 +6,38 @@
             <div class="col-md-12">
                 <!-- general form elements -->
                 <div class="box box-primary">
-                    @if ($errors->any())
+                    <?php if($errors->any()): ?>
                         <div class="alert alert-danger main-danger notic_bar">
                             <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
                             <ul>
-                                @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
+                                <?php $__currentLoopData = $errors->all(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $error): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <li><?php echo e($error); ?></li>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             </ul>
                         </div>
-                    @endif
+                    <?php endif; ?>
                     <div class="main-flex">
                         <h3 class="box-title">Edit Car Product</h3>
-                        <a href="{{ route('product.index') }}" class="btn btn-primary btn-sm">All Products</a>
+                        <a href="<?php echo e(route('product.index')); ?>" class="btn btn-primary btn-sm">All Products</a>
                     </div><!-- /.box-header -->
                     <!-- form start -->
-                    <form role="form" action="{{ route('product.update', $product->id) }}" method="POST"
+                    <form role="form" action="<?php echo e(route('product.update', $product->id)); ?>" method="POST"
                         enctype="multipart/form-data">
-                        @csrf
-                        @method('PUT')
+                        <?php echo csrf_field(); ?>
+                        <?php echo method_field('PUT'); ?>
                         <div class="box-body">
                             <!-- product name input -->
                             <div class="form-group">
                                 <label for="input-title">Product Name*</label>
                                 <input type="text" class="form-control brand-name" id="input-title"
                                     placeholder="Enter car product name" name="title"
-                                    value="{{ old('title', $product->title) }}">
+                                    value="<?php echo e(old('title', $product->title)); ?>">
                             </div>
 
                             <!-- product slug input -->
                             <div class="input-group">
                                 <input type="text" class="form-control" id="input-slug" placeholder="Slug will generate"
-                                    name="slug" value="{{ old('slug', $product->slug) }}" readonly>
+                                    name="slug" value="<?php echo e(old('slug', $product->slug)); ?>" readonly>
                                 <div class="input-group-btn">
                                     <button type="button" class="btn btn-warning" id="slug-edit-button">Edit</button>
                                     <button type="button" class="btn btn-success" id="slug-edit-save-button">Save</button>
@@ -61,7 +59,7 @@
                                             </div>
                                             <div class='box-body pad'>
 
-                                                <textarea class="textarea summernote" name="description">{{ old('description', $product->description) }}</textarea>
+                                                <textarea class="textarea summernote" name="description"><?php echo e(old('description', $product->description)); ?></textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -83,7 +81,7 @@
                                             </div>
                                             <div class='box-body pad'>
 
-                                                <textarea class="textarea summernote" name="description">{{ old('short_description', $product->short_description) }}</textarea>
+                                                <textarea class="textarea summernote" name="description"><?php echo e(old('short_description', $product->short_description)); ?></textarea>
 
                                             </div>
                                         </div>
@@ -100,7 +98,7 @@
                                         <input type="hidden" name="fav_product" value="0">
 
                                         <input type="checkbox" id="fav-product" name="fav_product" value="1"
-                                            {{ old('fav_product', $product->fav_product ?? 0) ? 'checked' : '' }}>
+                                            <?php echo e(old('fav_product', $product->fav_product ?? 0) ? 'checked' : ''); ?>>
                                         Top / Favourite
                                     </label>
                                 </div>
@@ -111,7 +109,7 @@
                             <div class="form-group">
                                 <label for="input-sku">Product SKU*</label>
                                 <input type="text" class="form-control pro-sku" id="input-sku"
-                                    placeholder="Enter stock unit" name="sku" value="{{ old('sku', $product->sku) }}">
+                                    placeholder="Enter stock unit" name="sku" value="<?php echo e(old('sku', $product->sku)); ?>">
                             </div>
 
                             <!-- Part Number input -->
@@ -119,7 +117,7 @@
                                 <label for="input-partNumber">Product Part Number*</label>
                                 <input type="text" class="form-control part-number" id="input-partNumber"
                                     placeholder="Enter part number" name="part_number"
-                                    value="{{ old('part_number', $product->part_number) }}">
+                                    value="<?php echo e(old('part_number', $product->part_number)); ?>">
                             </div>
 
                             <!-- Vin code input -->
@@ -127,7 +125,7 @@
                                 <label for="input-vinCode">Product Vin Code</label>
                                 <input type="text" class="form-control vin-code" id="input-vinCode"
                                     placeholder="Enter vin code" name="vin_code"
-                                    value="{{ old('vin_code', $product->vin_code) }}">
+                                    value="<?php echo e(old('vin_code', $product->vin_code)); ?>">
                             </div>
 
                             <!-- Product original price input -->
@@ -135,7 +133,7 @@
                                 <label for="input-originalPrice">Product Price*</label>
                                 <input type="number" class="form-control original-price" id="input-originalPrice"
                                     placeholder="Enter product price" name="original_price"
-                                    value="{{ old('original_price', $product->original_price) }}">
+                                    value="<?php echo e(old('original_price', $product->original_price)); ?>">
                             </div>
 
                             <!-- Product sale price input -->
@@ -143,7 +141,7 @@
                                 <label for="input-salePrice">Product Sale Price*</label>
                                 <input type="number" class="form-control sale-price" id="input-salePrice"
                                     placeholder="Enter product sale price" name="sale_price"
-                                    value="{{ old('sale_price', $product->sale_price) }}">
+                                    value="<?php echo e(old('sale_price', $product->sale_price)); ?>">
                             </div>
 
                             <!-- Types dropdown -->
@@ -151,12 +149,13 @@
                                 <label for="car-brands">Choose Category</label>
                                 <select class="form-control" name="part_type_id" id="car-brands">
                                     <option selected disabled>Choose one Category</option>
-                                    @foreach ($partTypes as $partType)
-                                        <option value="{{ $partType->id }}"
-                                            {{ old('part_type_id', $product->part_type_id) == $partType->id ? 'selected' : '' }}>
-                                            {{ $partType->title ?? '' }}
+                                    <?php $__currentLoopData = $partTypes; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $partType): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                        <option value="<?php echo e($partType->id); ?>"
+                                            <?php echo e(old('part_type_id', $product->part_type_id) == $partType->id ? 'selected' : ''); ?>>
+                                            <?php echo e($partType->title ?? ''); ?>
+
                                         </option>
-                                    @endforeach
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                 </select>
                             </div>
 
@@ -165,12 +164,13 @@
                                 <label for="partBrand_id">Part Brand</label>
                                 <select class="form-control" id="partBrand_id" name="part_brand_id">
                                     <option selected disabled>Select Part Brand</option>
-                                    @foreach ($partBrands as $partBrand)
-                                        <option value="{{ $partBrand->id }}"
-                                            {{ old('part_brand_id', $product->part_brand_id) == $partBrand->id ? 'selected' : '' }}>
-                                            {{ $partBrand->title }}
+                                    <?php $__currentLoopData = $partBrands; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $partBrand): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                        <option value="<?php echo e($partBrand->id); ?>"
+                                            <?php echo e(old('part_brand_id', $product->part_brand_id) == $partBrand->id ? 'selected' : ''); ?>>
+                                            <?php echo e($partBrand->title); ?>
+
                                         </option>
-                                    @endforeach
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                 </select>
                             </div>
 
@@ -179,12 +179,13 @@
                                 <label for="brand_id">Car Brand</label>
                                 <select class="form-control" id="brand_id" name="car_brand_id">
                                     <option selected disabled>Select Car Brand</option>
-                                    @foreach ($carBrands as $carBrand)
-                                        <option value="{{ $carBrand->id }}"
-                                            {{ old('car_brand_id', $product->car_brand_id) == $carBrand->id ? 'selected' : '' }}>
-                                            {{ $carBrand->title }}
+                                    <?php $__currentLoopData = $carBrands; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $carBrand): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                        <option value="<?php echo e($carBrand->id); ?>"
+                                            <?php echo e(old('car_brand_id', $product->car_brand_id) == $carBrand->id ? 'selected' : ''); ?>>
+                                            <?php echo e($carBrand->title); ?>
+
                                         </option>
-                                    @endforeach
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                 </select>
                             </div>
 
@@ -193,12 +194,13 @@
                                 <label for="model_id">Model</label>
                                 <select class="form-control" id="model_id" name="car_model_id">
                                     <option selected disabled>Select Brand First</option>
-                                    @foreach ($modelsByBrand[$product->car_brand_id] ?? [] as $model)
-                                        <option value="{{ $model->id }}" data-year="{{ $model->year }}"
-                                            {{ $product->car_model_id == $model->id ? 'selected' : '' }}>
-                                            {{ $model->title }}
+                                    <?php $__currentLoopData = $modelsByBrand[$product->car_brand_id] ?? []; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $model): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                        <option value="<?php echo e($model->id); ?>" data-year="<?php echo e($model->year); ?>"
+                                            <?php echo e($product->car_model_id == $model->id ? 'selected' : ''); ?>>
+                                            <?php echo e($model->title); ?>
+
                                         </option>
-                                    @endforeach
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                 </select>
                             </div>
 
@@ -206,7 +208,7 @@
                             <div class="form-group">
                                 <label>Model Year</label>
                                 <input type="number" class="form-control" id="year_input" name="year"
-                                    value="{{ old('year', $product->year) }}" readonly>
+                                    value="<?php echo e(old('year', $product->year)); ?>" readonly>
                             </div>
 
                             <!-- Stock radio in/out -->
@@ -217,14 +219,14 @@
                                         <div class="radio">
                                             <label>
                                                 <input type="radio" name="stock_type" value="in"
-                                                    {{ old('stock_type', $product->stock_type) == 'in' ? 'checked' : '' }} />
+                                                    <?php echo e(old('stock_type', $product->stock_type) == 'in' ? 'checked' : ''); ?> />
                                                 Available
                                             </label>
                                         </div>
                                         <div class="radio">
                                             <label>
                                                 <input type="radio" name="stock_type" value="out"
-                                                    {{ old('stock_type', $product->stock_type) == 'out' ? 'checked' : '' }} />
+                                                    <?php echo e(old('stock_type', $product->stock_type) == 'out' ? 'checked' : ''); ?> />
                                                 Out
                                             </label>
                                         </div>
@@ -237,7 +239,7 @@
                                 <label>Stock Quantity</label>
                                 <input type="number" class="form-control" id="stock_quantity_input"
                                     name="stock_quantity" placeholder="Enter stock quantity"
-                                    value="{{ old('stock_quantity', $product->stock_quantity) }}">
+                                    value="<?php echo e(old('stock_quantity', $product->stock_quantity)); ?>">
                             </div>
 
                             <!-- Product image Input -->
@@ -245,7 +247,7 @@
                                 <label for="imageFile">Product Image (Optional)</label>
                                 <input type="file" id="imageFile" name="feature_image">
                                 <br>
-                                <img src="{{ $product->feature_image ? asset('public/images/parts/feature/' . $product->feature_image) : asset('public/images/brands/demo.png') }}"
+                                <img src="<?php echo e($product->feature_image ? asset('public/images/parts/feature/' . $product->feature_image) : asset('public/images/brands/demo.png')); ?>"
                                     alt="" class="edit-add-image" id="brandImagePreview">
                             </div>
 
@@ -255,9 +257,9 @@
                                 <input type="file" id="imageGalleryFile" name="gallery_images[]" multiple
                                     accept="image/*">
 
-                                <div id="galleryPreview" data-delete-url="{{ route('product.gallery.delete') }}"
-                                    data-product-id="{{ $product->id }}">
-                                    @php
+                                <div id="galleryPreview" data-delete-url="<?php echo e(route('product.gallery.delete')); ?>"
+                                    data-product-id="<?php echo e($product->id); ?>">
+                                    <?php
                                         $galleryImages = [];
                                         if (!empty($product->gallery_images)) {
                                             $decoded = json_decode($product->gallery_images, true);
@@ -265,21 +267,21 @@
                                                 $galleryImages = $decoded;
                                             }
                                         }
-                                    @endphp
+                                    ?>
 
-                                    @foreach ($galleryImages as $galleryImage)
+                                    <?php $__currentLoopData = $galleryImages; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $galleryImage): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                         <div class="galleryImagesWrap">
-                                            <img src="{{ asset('public/images/parts/gallery/' . $galleryImage) }}"
+                                            <img src="<?php echo e(asset('public/images/parts/gallery/' . $galleryImage)); ?>"
                                                 class="galleryPreviewImages" width="120">
-                                            <span class="imageClose" data-image="{{ $galleryImage }}">
+                                            <span class="imageClose" data-image="<?php echo e($galleryImage); ?>">
                                                 <i class="fa fa-times"></i>
                                             </span>
                                         </div>
-                                    @endforeach
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                 </div>
 
 
-                                <meta name="csrf-token" content="{{ csrf_token() }}">
+                                <meta name="csrf-token" content="<?php echo e(csrf_token()); ?>">
                             </div>
 
                             <script>
@@ -335,13 +337,13 @@
                                 <label for="seoTitle">Seo Title</label>
                                 <input type="text" class="form-control seo_title" id="seoTitle"
                                     placeholder="Enter seo title" name="meta_title"
-                                    value="{{ old('meta_title', $product->meta_title) }}">
+                                    value="<?php echo e(old('meta_title', $product->meta_title)); ?>">
                             </div>
 
                             <!-- seo description input -->
                             <div class="form-group">
                                 <label for="seoDescription">Seo Description</label>
-                                <textarea class="form-control seo_description" id="seoDescription" name="meta_description">{{ old('meta_description', $product->meta_description) }}</textarea>
+                                <textarea class="form-control seo_description" id="seoDescription" name="meta_description"><?php echo e(old('meta_description', $product->meta_description)); ?></textarea>
                             </div>
 
                         </div><!-- /.box-body -->
@@ -356,7 +358,7 @@
 
     <script>
         // Models grouped by brand from controller
-        const modelsByBrand = @json($modelsByBrand);
+        const modelsByBrand = <?php echo json_encode($modelsByBrand, 15, 512) ?>;
 
         const brandDropdown = document.getElementById('brand_id');
         const modelDropdown = document.getElementById('model_id');
@@ -384,4 +386,6 @@
             yearInput.value = selectedOption.getAttribute('data-year') || '';
         });
     </script>
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.admin.admin-layout', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH E:\sajjel\laragon\www\carpartslb.com\resources\views/admin/product/edit.blade.php ENDPATH**/ ?>

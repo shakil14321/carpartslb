@@ -1,28 +1,26 @@
-@extends('layouts.front.front-layout')
+<?php $__env->startSection('seo'); ?>
+    <title><?php echo e($carPart->meta_title ?? ''); ?></title>
+    <meta name="description" content="<?php echo e($carPart->meta_description ?? ''); ?>">
 
-@section('seo')
-    <title>{{ $carPart->meta_title ?? '' }}</title>
-    <meta name="description" content="{{ $carPart->meta_description ?? '' }}">
-
-    <link rel="canonical" href="{{ url()->current() }}">
+    <link rel="canonical" href="<?php echo e(url()->current()); ?>">
 
     <!-- Open Graph (for Facebook, WhatsApp etc.) -->
-    <meta property="og:title" content="{{ $carPart->meta_title ?? '' }}">
-    <meta property="og:description" content="{{ $carPart->meta_description ?? '' }}">
+    <meta property="og:title" content="<?php echo e($carPart->meta_title ?? ''); ?>">
+    <meta property="og:description" content="<?php echo e($carPart->meta_description ?? ''); ?>">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="{{ url()->current() }}">
+    <meta property="og:url" content="<?php echo e(url()->current()); ?>">
     <meta property="og:image"
-        content="{{ $carPart->feature_image ? asset('public/images/parts/feature/' . $carPart->feature_image) : '' }}">
+        content="<?php echo e($carPart->feature_image ? asset('public/images/parts/feature/' . $carPart->feature_image) : ''); ?>">
 
     <!-- Twitter Card (for Twitter share) -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="{{ $carPart->meta_title ?? '' }}">
-    <meta name="twitter:description" content="{{ $carPart->meta_description ?? '' }}">
+    <meta name="twitter:title" content="<?php echo e($carPart->meta_title ?? ''); ?>">
+    <meta name="twitter:description" content="<?php echo e($carPart->meta_description ?? ''); ?>">
     <meta name="twitter:image"
-        content="{{ $carPart->feature_image ? asset('public/images/parts/feature/' . $carPart->feature_image) : '' }}">
-@endsection
+        content="<?php echo e($carPart->feature_image ? asset('public/images/parts/feature/' . $carPart->feature_image) : ''); ?>">
+<?php $__env->stopSection(); ?>
 
-@section('content')
+<?php $__env->startSection('content'); ?>
     <!-- Start breadcrumb section -->
     <section class="breadcrumb__section breadcrumb__bg">
         <div class="container">
@@ -30,7 +28,7 @@
                 <div class="col">
                     <div class="breadcrumb__content text-center">
                         <ul class="breadcrumb__content--menu d-flex justify-content-center">
-                            <li class="breadcrumb__content--menu__items"><a href="{{ route('home') }}">Home</a></li>
+                            <li class="breadcrumb__content--menu__items"><a href="<?php echo e(route('home')); ?>">Home</a></li>
                             <li class="breadcrumb__content--menu__items"><span>Product</span></li>
                         </ul>
                     </div>
@@ -40,30 +38,31 @@
     </section>
     <!-- End breadcrumb section -->
 
-    @if ($errors->any())
+    <?php if($errors->any()): ?>
         <div class="alert alert-danger alert-dismissible fade show shadow-sm border-0 main-danger notic_bar" role="alert"
             style="margin:20px; border-radius:8px;">
             <i class="bi bi-exclamation-triangle-fill me-2"></i>
             <strong>Whoops! Something went wrong:</strong>
             <ul class="mt-2 mb-0 ps-3">
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
+                <?php $__currentLoopData = $errors->all(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $error): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                    <li><?php echo e($error); ?></li>
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
             </ul>
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
-    @endif
+    <?php endif; ?>
 
 
 
-    @if (session('success'))
+    <?php if(session('success')): ?>
         <div class="alert alert-success alert-dismissible fade show shadow-sm border-0 notic_bar" role="alert"
             style="margin:20px; border-radius:8px;">
             <i class="bi bi-check-circle-fill me-2"></i>
-            {{ session('success') }}
+            <?php echo e(session('success')); ?>
+
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
-    @endif
+    <?php endif; ?>
 
     <!-- Start product details section -->
     <section class="product__details--section section--padding">
@@ -74,20 +73,20 @@
                         <div class="single__product--preview swiper mb-25">
                             <div class="swiper-wrapper">
 
-                                {{-- Feature image first --}}
-                                @if ($carPart->feature_image)
+                                
+                                <?php if($carPart->feature_image): ?>
                                     <div class="swiper-slide">
                                         <div class="product__media--preview__items">
                                             <a class="product__media--preview__items--link glightbox"
                                                 data-gallery="product-media-preview"
-                                                href="{{ asset('public/images/parts/feature/' . $carPart->feature_image) }}">
+                                                href="<?php echo e(asset('public/images/parts/feature/' . $carPart->feature_image)); ?>">
                                                 <img class="product__media--preview__items--img product-feature-img"
-                                                    src="{{ asset('public/images/parts/feature/' . $carPart->feature_image) }}"
+                                                    src="<?php echo e(asset('public/images/parts/feature/' . $carPart->feature_image)); ?>"
                                                     alt="product-feature-img">
                                             </a>
                                             <div class="product__media--view__icon">
                                                 <a class="product__media--view__icon--link glightbox"
-                                                    href="{{ asset('public/images/parts/feature/' . $carPart->feature_image) }}"
+                                                    href="<?php echo e(asset('public/images/parts/feature/' . $carPart->feature_image)); ?>"
                                                     data-gallery="product-media-zoom">
                                                     <svg class="product__items--action__btn--svg"
                                                         xmlns="http://www.w3.org/2000/svg" width="22.51" height="22.443"
@@ -106,22 +105,22 @@
                                             </div>
                                         </div>
                                     </div>
-                                @endif
+                                <?php endif; ?>
 
-                                {{-- Gallery images --}}
-                                @foreach ($carPart->gallery_images as $img)
+                                
+                                <?php $__currentLoopData = $carPart->gallery_images; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $img): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                     <div class="swiper-slide">
                                         <div class="product__media--preview__items">
                                             <a class="product__media--preview__items--link glightbox"
                                                 data-gallery="product-media-preview"
-                                                href="{{ asset('public/images/parts/gallery/' . $img) }}">
+                                                href="<?php echo e(asset('public/images/parts/gallery/' . $img)); ?>">
                                                 <img class="product__media--preview__items--img"
-                                                    src="{{ asset('public/images/parts/gallery/' . $img) }}"
+                                                    src="<?php echo e(asset('public/images/parts/gallery/' . $img)); ?>"
                                                     alt="product-gallery-img">
                                             </a>
                                             <div class="product__media--view__icon">
                                                 <a class="product__media--view__icon--link glightbox"
-                                                    href="{{ asset('public/images/parts/gallery/' . $img) }}"
+                                                    href="<?php echo e(asset('public/images/parts/gallery/' . $img)); ?>"
                                                     data-gallery="product-media-zoom">
                                                     <svg class="product__items--action__btn--svg"
                                                         xmlns="http://www.w3.org/2000/svg" width="22.51" height="22.443"
@@ -140,32 +139,32 @@
                                             </div>
                                         </div>
                                     </div>
-                                @endforeach
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
                             </div>
                         </div>
 
-                        {{-- Thumbnails --}}
+                        
                         <div class="single__product--nav swiper">
                             <div class="swiper-wrapper">
-                                @if ($carPart->feature_image)
+                                <?php if($carPart->feature_image): ?>
                                     <div class="swiper-slide">
                                         <div class="product__media--nav__items">
                                             <img class="product__media--nav__items--img"
-                                                src="{{ asset('public/images/parts/feature/' . $carPart->feature_image) }}"
+                                                src="<?php echo e(asset('public/images/parts/feature/' . $carPart->feature_image)); ?>"
                                                 alt="product-nav-img">
                                         </div>
                                     </div>
-                                @endif
-                                @foreach ($carPart->gallery_images as $img)
+                                <?php endif; ?>
+                                <?php $__currentLoopData = $carPart->gallery_images; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $img): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                     <div class="swiper-slide">
                                         <div class="product__media--nav__items">
                                             <img class="product__media--nav__items--img"
-                                                src="{{ asset('public/images/parts/gallery/' . $img) }}"
+                                                src="<?php echo e(asset('public/images/parts/gallery/' . $img)); ?>"
                                                 alt="product-nav-img">
                                         </div>
                                     </div>
-                                @endforeach
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             </div>
 
                             <div class="swiper__nav--btn swiper-button-next">
@@ -189,51 +188,48 @@
                 <div class="col">
                     <div class="product__details--info">
                         <form action="#">
-                            <h2 class="product__details--info__title mb-15">{{ ucwords($carPart->title ?? '') }}</h2>
-                            {{-- <p>{{ $carPart->carPartBrand->title }}</p>
-                        <div>
-                            <img src="#" alt="" />
-                        </div> --}}
+                            <h2 class="product__details--info__title mb-15"><?php echo e(ucwords($carPart->title ?? '')); ?></h2>
+                            
                             <div class="product__details--info__price mb-12">
                                 <span
-                                    class="current__price">{{ $carPart->sale_price ? '$' . $carPart->sale_price : '' }}</span>
+                                    class="current__price"><?php echo e($carPart->sale_price ? '$' . $carPart->sale_price : ''); ?></span>
                                 <span
-                                    class="old__price">{{ $carPart->original_price ? '$' . $carPart->original_price : '' }}</span>
+                                    class="old__price"><?php echo e($carPart->original_price ? '$' . $carPart->original_price : ''); ?></span>
                             </div>
                             <ul class="rating product__card--rating mb-15 d-flex">
-                                @for ($i = 1; $i <= 5; $i++)
+                                <?php for($i = 1; $i <= 5; $i++): ?>
                                     <li class="rating__list">
                                         <span class="rating__icon">
                                             <svg width="14" height="13" viewBox="0 0 14 13" fill="none"
                                                 xmlns="http://www.w3.org/2000/svg">
                                                 <path
                                                     d="M6.08398 0.921875L4.56055 4.03906L1.11523 4.53125C0.505859 4.625 0.271484 5.375 0.716797 5.82031L3.17773 8.23438L2.5918 11.6328C2.49805 12.2422 3.1543 12.7109 3.69336 12.4297L6.76367 10.8125L9.81055 12.4297C10.3496 12.7109 11.0059 12.2422 10.9121 11.6328L10.3262 8.23438L12.7871 5.82031C13.2324 5.375 12.998 4.625 12.3887 4.53125L8.9668 4.03906L7.41992 0.921875C7.16211 0.382812 6.36523 0.359375 6.08398 0.921875Z"
-                                                    fill="{{ $i <= $averageRating ? '#ed1d24' : '#a7a8a3' }}" />
+                                                    fill="<?php echo e($i <= $averageRating ? '#ed1d24' : '#a7a8a3'); ?>" />
                                             </svg>
                                         </span>
                                     </li>
-                                @endfor
+                                <?php endfor; ?>
 
                                 <li>
-                                    @if ($productReviews->count() > 0)
+                                    <?php if($productReviews->count() > 0): ?>
                                         <span
-                                            class="rating__review--text">{{ $productReviews->count() . ' Reviews' }}</span>
-                                    @else
+                                            class="rating__review--text"><?php echo e($productReviews->count() . ' Reviews'); ?></span>
+                                    <?php else: ?>
                                         <span class="rating__review--text">0 Review</span>
-                                    @endif
+                                    <?php endif; ?>
                                 </li>
                             </ul>
-                            <p class="product__details--info__desc mb-15">{!! $carPart->short_description ?? '' !!}</p>
+                            <p class="product__details--info__desc mb-15"><?php echo $carPart->short_description ?? ''; ?></p>
                             <div class="product__variant">
                                 <div class="product__variant--list quantity d-flex align-items-center mb-20">
 
                                     <button class="product__card--btn primary__btn add-to-cart-btn"
-                                        data-id="{{ $carPart->id }}" data-name="{{ $carPart->title }}"
-                                        data-price="{{ $carPart->price }}"
-                                        data-sale_price="{{ $carPart->sale_price ?? '' }}"
-                                        data-original_price="{{ $carPart->original_price ?? '' }}"
-                                        data-slug="{{ $carPart->slug ?? '' }}"
-                                        data-image="{{ $carPart->feature_image ?? 'demo.png' }}" type="button">
+                                        data-id="<?php echo e($carPart->id); ?>" data-name="<?php echo e($carPart->title); ?>"
+                                        data-price="<?php echo e($carPart->price); ?>"
+                                        data-sale_price="<?php echo e($carPart->sale_price ?? ''); ?>"
+                                        data-original_price="<?php echo e($carPart->original_price ?? ''); ?>"
+                                        data-slug="<?php echo e($carPart->slug ?? ''); ?>"
+                                        data-image="<?php echo e($carPart->feature_image ?? 'demo.png'); ?>" type="button">
                                         <svg width="14" height="11" viewBox="0 0 14 11" fill="none"
                                             xmlns="http://www.w3.org/2000/svg">
                                             <path
@@ -244,40 +240,26 @@
                                     </button>
                                 </div>
 
-                                {{-- <div class="product__variant--list mb-15">
-                                <a class="variant__wishlist--icon mb-15" href="wishlist.html" title="Add to wishlist">
-                                    <svg class="quickview__variant--wishlist__svg" xmlns="http://www.w3.org/2000/svg"
-                                        viewBox="0 0 512 512">
-                                        <path
-                                            d="M352.92 80C288 80 256 144 256 144s-32-64-96.92-64c-52.76 0-94.54 44.14-95.08 96.81-1.1 109.33 86.73 187.08 183 252.42a16 16 0 0018 0c96.26-65.34 184.09-143.09 183-252.42-.54-52.67-42.32-96.81-95.08-96.81z"
-                                            fill="none" stroke="currentColor" stroke-linecap="round"
-                                            stroke-linejoin="round" stroke-width="32" />
-                                    </svg>
-                                    Add to Wishlist
-                                </a>
-                                <button class="variant__buy--now__btn primary__btn" type="submit">Buy it now</button>
-                            </div> --}}
+                                
                                 <div class="product__variant--list mb-15">
                                     <div class="product__details--info__meta">
                                         <p class="product__details--info__meta--list"><strong>SKU:</strong> <span>
-                                                {{ ucwords($carPart->sku) ?? '' }}</span> </p>
+                                                <?php echo e(ucwords($carPart->sku) ?? ''); ?></span> </p>
                                         <p class="product__details--info__meta--list"><strong>Stock:</strong>
-                                            <span>{{ $carPart->stock_type ? 'In Stock' : 'Out of Stock' }}</span>
+                                            <span><?php echo e($carPart->stock_type ? 'In Stock' : 'Out of Stock'); ?></span>
                                         </p>
                                         <p class="product__details--info__meta--list"><strong>Category:</strong>
-                                            <span>{{ $carPart->carPartType->title ?? 'None' }}</span>
+                                            <span><?php echo e($carPart->carPartType->title ?? 'None'); ?></span>
                                         </p>
 
                                         <p class="product__details--info__meta--list"><strong>Part#:</strong>
-                                            <span>{{ ucwords($carPart->part_number ?? '') }}</span>
+                                            <span><?php echo e(ucwords($carPart->part_number ?? '')); ?></span>
                                         </p>
 
-                                        {{-- <p class="product__details--info__meta--list"><strong>Stock Available:</strong>
-                                        <span>{{ $carPart->stock_quantity ?? '' }}</span>
-                                    </p> --}}
+                                        
                                         <div class="part_brnad_image_sec">
-                                            <img src="{{ asset('public/images/brands/' . ($carPart->carPartBrand->brand_image ?? 'demo.png')) }}"
-                                                alt="{{ $carPart->carPartBrand->title ?? 'Brand Image' }}"
+                                            <img src="<?php echo e(asset('public/images/brands/' . ($carPart->carPartBrand->brand_image ?? 'demo.png'))); ?>"
+                                                alt="<?php echo e($carPart->carPartBrand->title ?? 'Brand Image'); ?>"
                                                 style="width:120px; height:60px; border-radius:10px;" />
                                         </div>
                                     </div>
@@ -312,11 +294,7 @@
                                     </li>
                                 </ul>
                             </div>
-                            {{-- <div class="guarantee__safe--checkout">
-                            <h5 class="guarantee__safe--checkout__title">Guaranteed Safe Checkout</h5>
-                            <img class="guarantee__safe--checkout__img"
-                                src="{{ asset('public/assets/front/img/other/safe-checkout.webp') }}" alt="Payment Image">
-                        </div> --}}
+                            
                         </form>
                     </div>
                 </div>
@@ -335,16 +313,14 @@
                             Description</li>
                         <li class="product__details--tab__list" data-toggle="tab" data-target="#reviews">Product Reviews
                         </li>
-                        {{-- <li class="product__details--tab__list" data-toggle="tab" data-target="#information">Additional
-                        Info
-                    </li> --}}
+                        
                     </ul>
                     <div class="product__details--tab__inner border-radius-10">
                         <div class="tab_content">
                             <div id="description" class="tab_pane active show">
                                 <div class="product__tab--content">
                                     <div class="product__tab--content__step mb-30">
-                                        <p class="product__tab--content__desc">{!! $carPart->description ?? '' !!}</p>
+                                        <p class="product__tab--content__desc"><?php echo $carPart->description ?? ''; ?></p>
                                     </div>
                                 </div>
                             </div>
@@ -354,45 +330,44 @@
                                         <h2 class="product__reviews--header__title h3 mb-20">Customer Reviews</h2>
                                         <div class="reviews__ratting d-flex align-items-center">
                                             <ul class="rating d-flex">
-                                                @for ($i = 1; $i <= 5; $i++)
+                                                <?php for($i = 1; $i <= 5; $i++): ?>
                                                     <li class="rating__list">
                                                         <span class="rating__icon">
                                                             <svg width="14" height="13" viewBox="0 0 14 13"
                                                                 fill="none" xmlns="http://www.w3.org/2000/svg">
                                                                 <path
                                                                     d="M6.08398 0.921875L4.56055 4.03906L1.11523 4.53125C0.505859 4.625 0.271484 5.375 0.716797 5.82031L3.17773 8.23438L2.5918 11.6328C2.49805 12.2422 3.1543 12.7109 3.69336 12.4297L6.76367 10.8125L9.81055 12.4297C10.3496 12.7109 11.0059 12.2422 10.9121 11.6328L10.3262 8.23438L12.7871 5.82031C13.2324 5.375 12.998 4.625 12.3887 4.53125L8.9668 4.03906L7.41992 0.921875C7.16211 0.382812 6.36523 0.359375 6.08398 0.921875Z"
-                                                                    fill="{{ $i <= $averageRating ? '#ed1d24' : '#a7a8a3' }}" />
+                                                                    fill="<?php echo e($i <= $averageRating ? '#ed1d24' : '#a7a8a3'); ?>" />
                                                             </svg>
                                                         </span>
                                                     </li>
-                                                @endfor
+                                                <?php endfor; ?>
                                             </ul>
                                             <span class="reviews__summary--caption">Based on
-                                                {{ $productReviews->count() ?? '' }} reviews</span>
+                                                <?php echo e($productReviews->count() ?? ''); ?> reviews</span>
                                         </div>
-                                        @if (auth()->check())
+                                        <?php if(auth()->check()): ?>
                                             <!-- User is logged in -->
                                             <a class="actions__newreviews--btn primary__btn" href="#writereview">Write A
                                                 Review</a>
-                                        @else
+                                        <?php else: ?>
                                             <!-- User is NOT logged in, redirect to login -->
                                             <a class="actions__newreviews--btn primary__btn"
-                                                href="{{ route('login') }}">Write A Review</a>
-                                        @endif
-                                        {{-- <a class="actions__newreviews--btn primary__btn" href="#writereview">Write A
-                                        Review</a> --}}
+                                                href="<?php echo e(route('login')); ?>">Write A Review</a>
+                                        <?php endif; ?>
+                                        
                                     </div>
-                                    @if ($productReviews->count() > 0)
-                                        @foreach ($productReviews as $productReview)
+                                    <?php if($productReviews->count() > 0): ?>
+                                        <?php $__currentLoopData = $productReviews; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $productReview): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                             <div class="reviews__comment--area">
                                                 <div class="reviews__comment--list d-flex">
                                                     <div class="reviews__comment--content">
                                                         <div class="reviews__comment--top d-flex justify-content-between">
                                                             <div class="reviews__comment--top__left">
                                                                 <h3 class="reviews__comment--content__title h4">
-                                                                    {{ ucwords($productReview->username ?? '') }}</h3>
+                                                                    <?php echo e(ucwords($productReview->username ?? '')); ?></h3>
                                                                 <ul class="rating d-flex">
-                                                                    @for ($i = 1; $i <= 5; $i++)
+                                                                    <?php for($i = 1; $i <= 5; $i++): ?>
                                                                         <li class="rating__list">
                                                                             <span class="rating__icon">
                                                                                 <svg width="14" height="13"
@@ -400,21 +375,21 @@
                                                                                     xmlns="http://www.w3.org/2000/svg">
                                                                                     <path
                                                                                         d="M6.08398 0.921875L4.56055 4.03906L1.11523 4.53125C0.505859 4.625 0.271484 5.375 0.716797 5.82031L3.17773 8.23438L2.5918 11.6328C2.49805 12.2422 3.1543 12.7109 3.69336 12.4297L6.76367 10.8125L9.81055 12.4297C10.3496 12.7109 11.0059 12.2422 10.9121 11.6328L10.3262 8.23438L12.7871 5.82031C13.2324 5.375 12.998 4.625 12.3887 4.53125L8.9668 4.03906L7.41992 0.921875C7.16211 0.382812 6.36523 0.359375 6.08398 0.921875Z"
-                                                                                        fill="{{ $i <= $productReview->rating ? '#ed1d24' : 'currentColor' }}" />
+                                                                                        fill="<?php echo e($i <= $productReview->rating ? '#ed1d24' : 'currentColor'); ?>" />
                                                                                 </svg>
                                                                             </span>
                                                                         </li>
-                                                                    @endfor
+                                                                    <?php endfor; ?>
                                                                 </ul>
                                                             </div>
                                                             <span
-                                                                class="reviews__comment--content__date">{{ $productReview->updated_at->format('M d, Y') ?? '' }}</span>
+                                                                class="reviews__comment--content__date"><?php echo e($productReview->updated_at->format('M d, Y') ?? ''); ?></span>
                                                         </div>
                                                         <p class="reviews__comment--content__desc">
-                                                            {{ $productReview->review ?? '' }}</p>
+                                                            <?php echo e($productReview->review ?? ''); ?></p>
                                                     </div>
                                                 </div>
-                                                @if ($productReview->reply)
+                                                <?php if($productReview->reply): ?>
                                                     <div class="reviews__comment--list margin__left d-flex">
 
                                                         <div class="reviews__comment--content">
@@ -422,24 +397,24 @@
                                                                 class="reviews__comment--top d-flex justify-content-between">
                                                                 <div class="reviews__comment--top__left">
                                                                     <h3 class="reviews__comment--content__title h4">
-                                                                        {{ $productReview->reply_admin_name ?? '' }}</h3>
+                                                                        <?php echo e($productReview->reply_admin_name ?? ''); ?></h3>
                                                                 </div>
                                                             </div>
                                                             <p class="reviews__comment--content__desc">
-                                                                {{ $productReview->reply ?? '' }}</p>
+                                                                <?php echo e($productReview->reply ?? ''); ?></p>
                                                         </div>
                                                     </div>
-                                                @endif
+                                                <?php endif; ?>
                                             </div>
-                                        @endforeach
-                                    @else
+                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                    <?php else: ?>
                                         <h3 class="text-danger">There is no review.</h3>
-                                    @endif
+                                    <?php endif; ?>
 
-                                    @if (Auth::check())
+                                    <?php if(Auth::check()): ?>
                                         <div id="writereview" class="reviews__comment--reply__area">
-                                            <form action="{{ route('review.store') }}" method="POST">
-                                                @csrf
+                                            <form action="<?php echo e(route('review.store')); ?>" method="POST">
+                                                <?php echo csrf_field(); ?>
                                                 <h3 class="reviews__comment--reply__title mb-15">Add a review </h3>
                                                 <div class="reviews__ratting mb-20">
                                                     <ul class="rating d-flex">
@@ -497,30 +472,30 @@
                                                 </div>
                                                 <div class="row">
                                                     <input type="hidden" name="product_id"
-                                                        value="{{ $carPart->id ?? '' }}">
+                                                        value="<?php echo e($carPart->id ?? ''); ?>">
                                                     <input type="hidden" name="product_title"
-                                                        value="{{ $carPart->title ?? '' }}">
+                                                        value="<?php echo e($carPart->title ?? ''); ?>">
                                                     <input type="hidden" name="product_url"
-                                                        value="{{ url()->current() }}">
+                                                        value="<?php echo e(url()->current()); ?>">
                                                     <input type="hidden" name="user_image"
-                                                        value="{{ Auth::user()->user_image }}">
+                                                        value="<?php echo e(Auth::user()->user_image); ?>">
                                                     <input type="hidden" name="rating" id="rating" value="0">
 
                                                     <div class="col-12 mb-10">
-                                                        <textarea class="reviews__comment--reply__textarea" placeholder="Your Comments...." name="review">{{ old('review') }}</textarea>
+                                                        <textarea class="reviews__comment--reply__textarea" placeholder="Your Comments...." name="review"><?php echo e(old('review')); ?></textarea>
                                                     </div>
                                                     <div class="col-lg-6 col-md-6 mb-15">
                                                         <label>
                                                             <input class="reviews__comment--reply__input"
                                                                 placeholder="Your Name...." type="text"
-                                                                value="{{ Auth::user()->name ?? '' }}" readonly>
+                                                                value="<?php echo e(Auth::user()->name ?? ''); ?>" readonly>
                                                         </label>
                                                     </div>
                                                     <div class="col-lg-6 col-md-6 mb-15">
                                                         <label>
                                                             <input class="reviews__comment--reply__input"
                                                                 placeholder="Your Email...." type="email"
-                                                                value="{{ Auth::user()->email ?? '' }}" readonly>
+                                                                value="<?php echo e(Auth::user()->email ?? ''); ?>" readonly>
                                                         </label>
                                                     </div>
                                                 </div>
@@ -528,11 +503,11 @@
                                                     type="submit">SUBMIT</button>
                                             </form>
                                         </div>
-                                    @else
+                                    <?php else: ?>
                                         <h3 class="text-danger fw-bold">To share your valuable review, please log in <a
-                                                href="{{ route('login.form') }}" class="text-decoration-underline">log
+                                                href="<?php echo e(route('login.form')); ?>" class="text-decoration-underline">log
                                                 in</a> first.</h3>
-                                    @endif
+                                    <?php endif; ?>
                                 </div>
                                 <script>
                                     document.addEventListener("DOMContentLoaded", function() {
@@ -572,34 +547,7 @@
                                 </style>
 
                             </div>
-                            {{-- <div id="information" class="tab_pane">
-                            <div class="product__tab--conten">
-                                <div class="product__tab--content__step">
-                                    <ul class="additional__info_list">
-                                        <li class="additional__info_list--item">
-                                            <span class="info__list--item-head"><strong>Color</strong></span>
-                                            <span class="info__list--item-content">Black, white, blue, red, gray</span>
-                                        </li>
-                                        <li class="additional__info_list--item">
-                                            <span class="info__list--item-head"><strong>Weight</strong></span>
-                                            <span class="info__list--item-content">2kg</span>
-                                        </li>
-                                        <li class="additional__info_list--item">
-                                            <span class="info__list--item-head"><strong>Brand</strong></span>
-                                            <span class="info__list--item-content">Gadget</span>
-                                        </li>
-                                        <li class="additional__info_list--item">
-                                            <span class="info__list--item-head"><strong>Guarantee</strong></span>
-                                            <span class="info__list--item-content">5 years</span>
-                                        </li>
-                                        <li class="additional__info_list--item">
-                                            <span class="info__list--item-head"><strong>Battery</strong></span>
-                                            <span class="info__list--item-content">10000 mA</span>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div> --}}
+                            
 
                         </div>
                     </div>
@@ -617,27 +565,27 @@
             </div>
             <div class="product__section--inner pb-15 product__swiper--activation swiper">
                 <div class="swiper-wrapper">
-                    @if ($relatedProducts->count() > 0)
-                        @foreach ($relatedProducts as $related)
+                    <?php if($relatedProducts->count() > 0): ?>
+                        <?php $__currentLoopData = $relatedProducts; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $related): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                             <div class="swiper-slide">
                                 <article class="product__card">
                                     <div class="product__card--thumbnail">
                                         <a class="product__card--thumbnail__link display-block"
-                                            href="{{ route('product.view', $related->slug) }}">
-                                            @if ($related->feature_image)
+                                            href="<?php echo e(route('product.view', $related->slug)); ?>">
+                                            <?php if($related->feature_image): ?>
                                                 <img class="product__card--thumbnail__img product__primary--img"
-                                                    src="{{ asset('public/images/parts/feature/' . ($related->feature_image ?? 'demo.png')) }}"
+                                                    src="<?php echo e(asset('public/images/parts/feature/' . ($related->feature_image ?? 'demo.png'))); ?>"
                                                     alt="feature_img">
-                                            @endif
+                                            <?php endif; ?>
 
-                                            @if ($related->gallery_images)
+                                            <?php if($related->gallery_images): ?>
                                                 <img class="product__card--thumbnail__img product__secondary--img"
-                                                    src="{{ asset('public/images/parts/feature/' . ($related->feature_image ?? 'demo.png')) }}"
+                                                    src="<?php echo e(asset('public/images/parts/feature/' . ($related->feature_image ?? 'demo.png'))); ?>"
                                                     alt="feature_img">
-                                            @endif
+                                            <?php endif; ?>
 
                                         </a>
-                                        @php
+                                        <?php
                                             $original_price = $carPart->original_price;
                                             $sale_price = $carPart->sale_price;
 
@@ -648,46 +596,45 @@
                                             } else {
                                                 $percent_discount = null;
                                             }
-                                        @endphp
+                                        ?>
 
-                                        @if ($percent_discount)
-                                            <span class="product__badge">-{{ $percent_discount }}%</span>
-                                        @endif
+                                        <?php if($percent_discount): ?>
+                                            <span class="product__badge">-<?php echo e($percent_discount); ?>%</span>
+                                        <?php endif; ?>
 
                                     </div>
                                     <div class="product__card--content">
                                         <h3 class="product__card--title"><a
-                                                href="{{ route('product.view', $related->slug) }}">{{ $related->title ?? '' }}</a>
+                                                href="<?php echo e(route('product.view', $related->slug)); ?>"><?php echo e($related->title ?? ''); ?></a>
                                         </h3>
 
                                         <div class="d-flex justify-content-between">
                                             <div>
                                                 <p class="oth_brand_title"><span class="oth_p">Brand:</span> <span
-                                                        class="rating__review--text">{{ ucwords($related->carBrand->title ?? '') }}</span>
+                                                        class="rating__review--text"><?php echo e(ucwords($related->carBrand->title ?? '')); ?></span>
                                                 </p>
 
-                                                {{-- <p class="oth_p_m"><span class="oth_p">Type:</span> <span class="rating__review--text">{{
-                                            ucwords($carPart->carPartType->title ?? '' ) }}</span></p> --}}
+                                                
                                                 <p class="oth_p_part"><span class="oth_p">Part#:</span> <span
-                                                        class="rating__review--text">{{ ucwords($related->part_number ?? '') }}</span>
+                                                        class="rating__review--text"><?php echo e(ucwords($related->part_number ?? '')); ?></span>
                                                 </p>
                                             </div>
                                             <div class="part_brnad_image_sec">
-                                                <img src="{{ asset('public/images/brands/' . ($related->carPartBrand->brand_image ?? 'demo.png')) }}"
-                                                    alt="{{ $related->carPartBrand->title ?? 'Brand Image' }}"
+                                                <img src="<?php echo e(asset('public/images/brands/' . ($related->carPartBrand->brand_image ?? 'demo.png'))); ?>"
+                                                    alt="<?php echo e($related->carPartBrand->title ?? 'Brand Image'); ?>"
                                                     style="width:120px; height:60px; border:1px solid #a7a8a3; border-radius:10px;" />
                                             </div>
                                         </div>
 
                                         <div class="product__card--price">
                                             <span
-                                                class="current__price">{{ $related->sale_price ? '$' . $related->sale_price : '' }}</span>
+                                                class="current__price"><?php echo e($related->sale_price ? '$' . $related->sale_price : ''); ?></span>
                                             <span class="old__price">
-                                                {{ $related->original_price ? '$' . $related->original_price : '' }}</span>
+                                                <?php echo e($related->original_price ? '$' . $related->original_price : ''); ?></span>
                                         </div>
                                         <div class="product__card--footer">
                                             <a class="product__card--btn primary__btn"
-                                                href="{{ route('product.view', $related->slug) }}">
+                                                href="<?php echo e(route('product.view', $related->slug)); ?>">
                                                 <svg width="14" height="11" viewBox="0 0 14 11" fill="none"
                                                     xmlns="http://www.w3.org/2000/svg">
                                                     <path
@@ -700,10 +647,10 @@
                                     </div>
                                 </article>
                             </div>
-                        @endforeach
-                    @else
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                    <?php else: ?>
                         <h3 class="product__card--title">No related products found</h3>
-                    @endif
+                    <?php endif; ?>
                 </div>
                 <div class="swiper__nav--btn swiper-button-next">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
@@ -725,7 +672,9 @@
     <!-- End product section -->
 
     <!-- Start shipping section -->
-    @include('front.partials.shipping_sec')
+    <?php echo $__env->make('front.partials.shipping_sec', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
     <!-- End shipping section -->
 
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.front.front-layout', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH E:\sajjel\laragon\www\carpartslb.com\resources\views/front/pages/product.blade.php ENDPATH**/ ?>

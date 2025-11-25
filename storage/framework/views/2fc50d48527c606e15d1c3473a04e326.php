@@ -1,31 +1,28 @@
-@extends('layouts.admin.admin-layout')
-
-@section('content')
+<?php $__env->startSection('content'); ?>
 
     <!-- Main content -->
     <section class="content">
         <div class="row">
-
-            @if (session('success'))
+            <?php if(session('success')): ?>
                 <div class="alert alert-success alert-dismissible notic_bar" style="margin:20px;">
                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                    {{ session('success') }}
-                </div>
-            @endif
+                    <?php echo e(session('success')); ?>
 
-            @if (session('error'))
+                </div>
+            <?php endif; ?>
+
+            <?php if(session('error')): ?>
                 <div class="alert alert-danger alert-dismissible notic_bar" style="margin:20px;">
                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                    {{ session('error') }}
-                </div>
-            @endif
+                    <?php echo e(session('error')); ?>
 
+                </div>
+            <?php endif; ?>
 
             <div class="col-xs-12">
-
-                @foreach ($types as $type)
+                <?php $__currentLoopData = $carParts; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $carPart): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                     <!-- Delete confirmation modal -->
-                    <div class="modal fade" id="deleteModal{{ $type->id }}" tabindex="-1" role="dialog"
+                    <div class="modal fade" id="deleteModal<?php echo e($carPart->id); ?>" tabindex="-1" role="dialog"
                         aria-hidden="true">
                         <div class="modal-dialog modal-danger" role="document">
                             <div class="modal-content">
@@ -36,13 +33,13 @@
                                     </button>
                                 </div>
                                 <div class="modal-body">
-                                    <p>Do you want to delete this type?</p>
+                                    <p>Do you want to delete this product?</p>
                                 </div>
                                 <div class="modal-footer modal-buttons">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                                    <form action="{{ route('type.destroy', $type->id) }}" method="POST">
-                                        @csrf
-                                        @method('DELETE')
+                                    <form action="<?php echo e(route('product.destroy', $carPart->id)); ?>" method="POST">
+                                        <?php echo csrf_field(); ?>
+                                        <?php echo method_field('DELETE'); ?>
                                         <button type="submit" class="btn btn-danger" id="confirmDelete">Delete</button>
                                     </form>
                                 </div>
@@ -50,15 +47,15 @@
                         </div>
                     </div>
                     <!-- End Delete confirmation modal -->
-                @endforeach
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
-                <!-- Search form -->
+                <!-- search form -->
                 <div class="container-fluid" style="margin:0 0 10px 0;">
                     <div class="row">
                         <div class="col-10 col-sm-8 col-md-6 col-offset-1 col-sm-offset-2 col-md-offset-3">
-                            <form action="{{ route('typeSearch.admin') }}" method="GET" class="w-100">
+                            <form action="<?php echo e(route('productSearch.admin')); ?>" method="GET" class="w-100">
                                 <div class="input-group">
-                                    <input type="text" name="q" class="form-control" value="{{ $q ?? '' }}"
+                                    <input type="text" name="q" class="form-control" value="<?php echo e($q ?? ''); ?>"
                                         placeholder="Search...">
                                     <span class="input-group-btn">
                                         <button type="submit" class="btn btn-primary">
@@ -71,14 +68,15 @@
                     </div>
                 </div>
 
+
                 <div class="box">
                     <div class="main-flex">
-                        <h3 class="box-title">All Product Types</h3>
-                        <a href="{{ route('type.create') }}" class="btn btn-primary btn-sm">Add New Category</a>
+                        <h3 class="box-title">All Product</h3>
+                        <a href="<?php echo e(route('product.create')); ?>" class="btn btn-primary btn-sm">Add New Product</a>
                     </div><!-- /.box-header -->
                     <div class="box-body">
-                        <form action="{{ route('type.deleteSelected') }}" method="POST">
-                            @csrf
+                        <form action="<?php echo e(route('product.deleteSelected')); ?>" method="POST">
+                            <?php echo csrf_field(); ?>
 
                             <button type="submit" class="btn btn-danger" style="margin-bottom:10px;">Delete
                                 Selected</button>
@@ -90,56 +88,64 @@
                                             <input type="checkbox" id="selectAll"> All
                                         </th>
                                         <th>Sr #</th>
-                                        <th>Type Image</th>
-                                        <th>Type Name</th>
+                                        <th>Image</th>
+                                        <th>Name</th>
+                                        <th>Category</th>
+                                        <th>Stock</th>
+                                        <th>Part Brand</th>
+                                        <th>Part Number</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @if ($types->count() > 0)
-                                        @foreach ($types as $type)
+                                    <?php if($carParts->count() > 0): ?>
+                                        <?php $__currentLoopData = $carParts; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $carPart): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                             <tr>
                                                 <td>
-                                                    <input type="checkbox" name="ids[]" value="{{ $type->id }}"
+                                                    <input type="checkbox" name="ids[]" value="<?php echo e($carPart->id); ?>"
                                                         class="checkbox">
                                                 </td>
-                                                <td>{{ $loop->iteration }}</td>
-                                                <td><img src="{{ $type->part_type_image ? asset('public/images/types/' . $type->part_type_image) : asset('public/images/brands/demo.png') }}"
-                                                        alt="{{ $type->part_type_image }}" class="table-brand-image"></td>
-                                                <td><a href="#" class="all-title">{{ $type->title ?? '' }}</a></td>
+                                                <td><?php echo e($loop->iteration); ?></td>
+                                                <td><img src="<?php echo e($carPart->feature_image ? asset('public/images/parts/feature/' . $carPart->feature_image) : asset('public/images/brands/demo.png')); ?>"
+                                                        alt="<?php echo e($carPart->feature_image); ?>" class="table-brand-image"></td>
+                                                <td><a href="<?php echo e(route('product.view', $carPart->slug)); ?>"
+                                                        class="all-title"><?php echo e($carPart->title); ?></a></td>
+                                                <td><?php echo e($carPart->part_type_id ? $carPart->carPartType->title : 'None'); ?>
+
+                                                </td>
+                                                <td><?php echo e($carPart->stock_type == 'in' ? 'In Stock' : 'Out of Stock'); ?></td>
+                                                <td><?php echo e($carPart->part_brand_id ? $carPart->carPartBrand->title : 'None'); ?>
+
+                                                </td>
+                                                <td><?php echo e($carPart->part_number ?? 'None'); ?>
+
+                                                </td>
                                                 <td>
                                                     <div class="action-container">
-                                                        <a href="{{ route('type.edit', $type->id) }}" class="edit-icon"><i
-                                                                class="fa fa-edit"></i></a>
-                                                        <a href="javascript:void(0)" class="">
+                                                        <a href="<?php echo e(route('product.edit', $carPart->id)); ?>"
+                                                            class="edit-icon"><i class="fa fa-edit"></i></a>
+                                                        <a href="javascript:void(0)" class="edit-icon">
                                                             <span class="delete-icon fa fa-trash-o" data-toggle="modal"
-                                                                data-target="#deleteModal{{ $type->id }}"
-                                                                data-id="{{ $type->id }}"><i></i></span>
+                                                                data-target="#deleteModal<?php echo e($carPart->id); ?>"
+                                                                data-id="<?php echo e($carPart->id); ?>"><i></i></span>
                                                         </a>
-                                                        <a href="{{ route('type.view', $type->slug) }}"
+                                                        <a href="<?php echo e(route('product.view', $carPart->slug)); ?>"
                                                             class="view-icon"><i class="fa fa-eye"></i></a>
                                                     </div>
                                                 </td>
-                                        @endforeach
-                                    @else
+                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                    <?php else: ?>
                                         <tr>
-                                            <td colspan="5" class="text-center">No products categories found.</td>
+                                            <td colspan="9" class="text-center">No products found.</td>
                                         </tr>
-                                    @endif
+                                    <?php endif; ?>
                                 </tbody>
-                                {{-- <tfoot>
-                            <tr>
-                                <th>Rendering engine</th>
-                                <th>Browser</th>
-                                <th>Platform(s)</th>
-                                <th>Engine version</th>
-                                <th>CSS grade</th>
-                            </tr>
-                        </tfoot> --}}
+                                
                             </table>
                         </form>
                         <!-- Pagination Links -->
-                        {{ $types->links('pagination::bootstrap-4') }}
+                        <?php echo e($carParts->links('pagination::bootstrap-4')); ?>
+
                     </div><!-- /.box-body -->
                 </div><!-- /.box -->
             </div><!-- /.col -->
@@ -149,8 +155,6 @@
             document.addEventListener("DOMContentLoaded", function() {
                 const selectAll = document.getElementById("selectAll");
                 const checkboxes = document.querySelectorAll(".checkbox");
-
-                if (!selectAll || !checkboxes) return;
 
                 selectAll.addEventListener("change", function() {
                     checkboxes.forEach(checkbox => {
@@ -173,4 +177,6 @@
 
     </section><!-- /.content -->
 
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.admin.admin-layout', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH E:\sajjel\laragon\www\carpartslb.com\resources\views/admin/product/index.blade.php ENDPATH**/ ?>

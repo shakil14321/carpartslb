@@ -1,27 +1,27 @@
-@extends('layouts.admin.admin-layout')
-
-@section('content')
+<?php $__env->startSection('content'); ?>
 
     <!-- Main content -->
     <section class="content">
         <div class="row">
-            @if (session('success'))
+            <?php if(session('success')): ?>
                 <div class="alert alert-success alert-dismissible notic_bar" style="margin:20px;">
                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                    {{ session('success') }}
-                </div>
-            @endif
+                    <?php echo e(session('success')); ?>
 
-            @if (session('error'))
+                </div>
+            <?php endif; ?>
+
+            <?php if(session('error')): ?>
                 <div class="alert alert-danger alert-dismissible notic_bar" style="margin:20px;">
                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                    {{ session('error') }}
-                </div>
-            @endif
+                    <?php echo e(session('error')); ?>
 
-            @foreach ($contacts as $contact)
+                </div>
+            <?php endif; ?>
+
+            <?php $__currentLoopData = $contacts; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $contact): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                 <!-- Delete confirmation modal -->
-                <div class="modal fade" id="deleteModal{{ $contact->id }}" tabindex="-1" role="dialog"
+                <div class="modal fade" id="deleteModal<?php echo e($contact->id); ?>" tabindex="-1" role="dialog"
                     aria-hidden="true">
                     <div class="modal-dialog modal-danger" role="document">
                         <div class="modal-content">
@@ -36,9 +36,9 @@
                             </div>
                             <div class="modal-footer modal-buttons">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                                <form action="{{ route('contact.destroy', $contact->id) }}" method="POST">
-                                    @csrf
-                                    @method('DELETE')
+                                <form action="<?php echo e(route('contact.destroy', $contact->id)); ?>" method="POST">
+                                    <?php echo csrf_field(); ?>
+                                    <?php echo method_field('DELETE'); ?>
                                     <button type="submit" class="btn btn-danger" id="confirmDelete">Delete</button>
                                 </form>
                             </div>
@@ -46,15 +46,15 @@
                     </div>
                 </div>
                 <!-- End Delete confirmation modal -->
-            @endforeach
+            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
             <!-- Search form -->
             <div class="container-fluid" style="margin:0 0 10px 0;">
                 <div class="row">
                     <div class="col-10 col-sm-8 col-md-6 col-offset-1 col-sm-offset-2 col-md-offset-3">
-                        <form action="{{ route('contactSearch.admin') }}" method="GET" class="w-100">
+                        <form action="<?php echo e(route('contactSearch.admin')); ?>" method="GET" class="w-100">
                             <div class="input-group">
-                                <input type="text" name="q" class="form-control" value="{{ $q ?? '' }}"
+                                <input type="text" name="q" class="form-control" value="<?php echo e($q ?? ''); ?>"
                                     placeholder="Search...">
                                 <span class="input-group-btn">
                                     <button type="submit" class="btn btn-primary">
@@ -74,9 +74,9 @@
                         <h3 class="box-title">All Contact Details</h3>
                     </div><!-- /.box-header -->
                     <div class="box-body">
-                        <form action="{{ route('contact.deleteSelected') }}" method="POST">
-                            @csrf
-                            @method('delete');
+                        <form action="<?php echo e(route('contact.deleteSelected')); ?>" method="POST">
+                            <?php echo csrf_field(); ?>
+                            <?php echo method_field('delete'); ?>;
 
                             <button type="submit" class="btn btn-danger" style="margin-bottom:10px;">Delete
                                 Selected</button>
@@ -94,41 +94,42 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @if ($contacts->count() > 0)
-                                        @foreach ($contacts as $contact)
+                                    <?php if($contacts->count() > 0): ?>
+                                        <?php $__currentLoopData = $contacts; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $contact): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                             <tr>
                                                 <td>
-                                                    <input type="checkbox" name="ids[]" value="{{ $contact->id }}"
+                                                    <input type="checkbox" name="ids[]" value="<?php echo e($contact->id); ?>"
                                                         class="checkbox">
                                                 </td>
-                                                <td>{{ $loop->iteration }}</td>
-                                                <td><a href="{{ route('contact.show', $contact->id) }}"
-                                                        class="all-title">{{ $contact->first_name . ' ' . $contact->last_name }}</a>
+                                                <td><?php echo e($loop->iteration); ?></td>
+                                                <td><a href="<?php echo e(route('contact.show', $contact->id)); ?>"
+                                                        class="all-title"><?php echo e($contact->first_name . ' ' . $contact->last_name); ?></a>
                                                 </td>
-                                                <td><a href="#" class="all-title">{{ $contact->email }}</a></td>
-                                                <td><a href="#" class="all-title">{{ $contact->phone }}</a></td>
+                                                <td><a href="#" class="all-title"><?php echo e($contact->email); ?></a></td>
+                                                <td><a href="#" class="all-title"><?php echo e($contact->phone); ?></a></td>
                                                 <td>
                                                     <div class="action-container">
                                                         <a href="javascript:void(0)">
                                                             <span class="delete-icon fa fa-trash-o" data-toggle="modal"
-                                                                data-target="#deleteModal{{ $contact->id }}"
-                                                                data-id="{{ $contact->id }}"><i></i></span>
+                                                                data-target="#deleteModal<?php echo e($contact->id); ?>"
+                                                                data-id="<?php echo e($contact->id); ?>"><i></i></span>
                                                         </a>
-                                                        <a href="{{ route('contact.show', $contact->id) }}"
+                                                        <a href="<?php echo e(route('contact.show', $contact->id)); ?>"
                                                             class="view-icon"><i class="fa fa-eye"></i></a>
                                                     </div>
                                                 </td>
-                                        @endforeach
-                                    @else
+                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                    <?php else: ?>
                                         <tr>
                                             <td colspan="5" class="text-center">No contact details found.</td>
                                         </tr>
-                                    @endif
+                                    <?php endif; ?>
                                 </tbody>
                             </table>
                         </form>
                         <!-- Pagination Links -->
-                        {{ $contacts->links('pagination::bootstrap-4') }}
+                        <?php echo e($contacts->links('pagination::bootstrap-4')); ?>
+
                     </div><!-- /.box-body -->
                 </div><!-- /.box -->
             </div><!-- /.col -->
@@ -160,4 +161,6 @@
 
     </section><!-- /.content -->
 
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.admin.admin-layout', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH E:\sajjel\laragon\www\carpartslb.com\resources\views/admin/contact/index.blade.php ENDPATH**/ ?>

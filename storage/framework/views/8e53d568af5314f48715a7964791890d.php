@@ -34,27 +34,17 @@
                         <div class="footer__widget--inner">
                             <ul class="footer__widget--menu footer__widget--inner flex-column"
                                 style="display:block !important;">
-                                <li><a href="{{ auth()->check() ? route('customerDashboard') : route('login.form') }}"
+                                <li><a href="<?php echo e(auth()->check() ? route('customerDashboard') : route('login.form')); ?>"
                                         class="" style="color: var(--foreground-sub-color);">My
                                         Account</a></li>
-                                <li><a href="{{ route('shop') }}" class="mt-3"
+                                <li><a href="<?php echo e(route('shop')); ?>" class="mt-3"
                                         style="color: var(--foreground-sub-color);">Shop</a></li>
-                                <li><a href="{{ route('login.form') }}" class="mt-3"
+                                <li><a href="<?php echo e(route('login.form')); ?>" class="mt-3"
                                         style="color: var(--foreground-sub-color);">Login</a></li>
-                                <li><a href="{{ route('register.form') }}" class="mt-3"
+                                <li><a href="<?php echo e(route('register.form')); ?>" class="mt-3"
                                         style="color: var(--foreground-sub-color);">Register</a></li>
                             </ul>
-                            {{-- <ul class="footer__widget--menu footer__widget--inner d-flex justify-content-between align-items-center">
-                                <li class="footer__widget--menu__list"><a class="footer__widget--menu__text"
-                                        href="{{ auth()->check() ? route('customerDashboard') : route('login.form') }}">{{ auth()->check() ? 'My Account' : 'My Account' }}</a>
-                                </li>
-                                <li class="footer__widget--menu__list"><a class="footer__widget--menu__text"
-                                        href="{{ route('shop') }}">Shop</a></li>
-                                <li class="footer__widget--menu__list"><a class="footer__widget--menu__text"
-                                        href="{{ route('login.form') }}">Login</a></li>
-                                <li class="footer__widget--menu__list"><a class="footer__widget--menu__text"
-                                        href="{{ route('register.form') }}">Register</a></li>
-                            </ul> --}}
+                            
                         </div>
                     </div>
                 </div>
@@ -93,10 +83,11 @@
             <div class="footer__bottom--inenr d-flex justify-content-between align-items-center">
                 <p class="copyright__content"><span class="text__secondary">© 2025 . All Rights Reserved.</p>
                 <div class="footer__payment">
-                    <!--<img src="{{ asset('public/assets/front/img/icon/payment-img.webp') }}" alt="payment-img">-->
+                    <!--<img src="<?php echo e(asset('public/assets/front/img/icon/payment-img.webp')); ?>" alt="payment-img">-->
                 </div>
             </div>
         </div>
     </div>
 </footer>
 <!-- End footer section -->
+<?php /**PATH E:\sajjel\laragon\www\carpartslb.com\resources\views/components/front/footer.blade.php ENDPATH**/ ?>

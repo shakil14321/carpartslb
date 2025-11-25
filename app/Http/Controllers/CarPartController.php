@@ -52,7 +52,7 @@ class CarPartController extends Controller
         ->inRandomOrder()
         ->take(8)
         ->get();
-        
+
         $productId = $carPart->id;
         $productReviews = Review::where('product_id', $productId)->get();
         $averageRating = $productReviews->avg('rating');
@@ -73,8 +73,8 @@ class CarPartController extends Controller
             "vin_code" => "nullable|string",
             'fav_product' => 'nullable|in:0,1',
 
-            "original_price"     => "nullable|numeric|min:0",
-            "sale_price" => "nullable|numeric|min:0",
+            "original_price"     => "required|numeric|min:0",
+            "sale_price" => "required|numeric|min:0",
             "stock_quantity" => "nullable|integer|min:0",
             "stock_type" => ['nullable', Rule::in(['in', 'out'])],
 
@@ -164,8 +164,8 @@ class CarPartController extends Controller
             "vin_code" => "nullable|string",
             'fav_product' => 'nullable|in:0,1',
 
-            "original_price"     => "nullable|numeric|min:0",
-            "sale_price" => "nullable|numeric|min:0",
+            "original_price"     => "required|numeric|min:0",
+            "sale_price" => "required|numeric|min:0",
             "stock_quantity" => "nullable|integer|min:0",
             "stock_type" => ['nullable', Rule::in(['in', 'out'])],
 
@@ -212,26 +212,45 @@ class CarPartController extends Controller
         }
 
         // Gallery Images Upload (replace or append)
-        if($request->hasFile('gallery_images')){
-            $galleryImageNames = [];
+        if ($request->hasFile('gallery_images')) {
 
-            // Optionally delete old gallery images
-            if($carPart->gallery_images){
-                $oldGallery = json_decode($carPart->gallery_images, true);
-                foreach($oldGallery as $oldImg){
-                    if(file_exists(public_path('images/parts/gallery/'.$oldImg))){
-                        unlink(public_path('images/parts/gallery/'.$oldImg));
-                    }
-                }
-            }
+    // Keep old images
+    $existingGallery = json_decode($carPart->gallery_images, true) ?? [];
+    $newGallery = [];
 
-            foreach($request->file('gallery_images') as $galleryImage){
-                $name = time() . '_' . uniqid() . '.' . $galleryImage->getClientOriginalExtension();
-                $galleryImage->move(public_path('images/parts/gallery'), $name);
-                $galleryImageNames[] = $name;
-            }
-            $carPart->gallery_images = json_encode($galleryImageNames);
-        }
+    // Upload new ones
+    foreach ($request->file('gallery_images') as $galleryImage) {
+        $name = time() . '_' . uniqid() . '.' . $galleryImage->getClientOriginalExtension();
+        $galleryImage->move(public_path('images/parts/gallery'), $name);
+        $newGallery[] = $name;
+    }
+
+    // Append new images with old ones
+    $mergedGallery = array_merge($existingGallery, $newGallery);
+
+    $carPart->gallery_images = json_encode($mergedGallery);
+}
+
+        // if($request->hasFile('gallery_images')){
+        //     $galleryImageNames = [];
+
+        //     // Optionally delete old gallery images
+        //     if($carPart->gallery_images){
+        //         $oldGallery = json_decode($carPart->gallery_images, true);
+        //         foreach($oldGallery as $oldImg){
+        //             if(file_exists(public_path('images/parts/gallery/'.$oldImg))){
+        //                 unlink(public_path('images/parts/gallery/'.$oldImg));
+        //             }
+        //         }
+        //     }
+
+        //     foreach($request->file('gallery_images') as $galleryImage){
+        //         $name = time() . '_' . uniqid() . '.' . $galleryImage->getClientOriginalExtension();
+        //         $galleryImage->move(public_path('images/parts/gallery'), $name);
+        //         $galleryImageNames[] = $name;
+        //     }
+        //     $carPart->gallery_images = json_encode($galleryImageNames);
+        // }
 
         // Update other fields
         $carPart->update([
@@ -341,40 +360,40 @@ class CarPartController extends Controller
         $fileName = 'car_parts_' . now()->format('Y_m_d_H_i_s') . '.xlsx';
         return Excel::download(new CarPartsExport, $fileName);
     }
-    
+
      public function deleteSelected(Request $request)
     {
         $ids = $request->input('ids');
-    
+
         if (empty($ids)) {
             return redirect()->route('product.index')
                 ->with('error', 'Please select at least one brand to delete.');
         }
-    
+
         // Get brands
         $carParts = CarPart::whereIn('id', $ids)->get();
-    
+
         foreach ($carParts as $carPart) {
             if (!empty($carPart->feature_image)) {
                 $imagePath = public_path('images/feature/' . $carPart->feature_image);
-    
+
                 if (file_exists($imagePath)) {
                     @unlink($imagePath);
                 }
             }
         }
-    
+
         // Delete from database
         CarPart::whereIn('id', $ids)->delete();
-    
+
         return redirect()->route('product.index')
             ->with('success', 'Selected Products Deleted Successfully!');
     }
-    
+
     public function productSearchAdmin(Request $request)
     {
         $q = trim($request->input('q', ''));
-    
+
         if ($q === '') {
             return redirect()->back()->with('error', 'Write something in search box.');
         } else {
@@ -389,7 +408,7 @@ class CarPartController extends Controller
                 ->paginate(100)
                 ->appends(['q' => $q]);
         }
-    
+
         return view('admin.product.search', compact('carParts', 'q'));
     }
 

@@ -1,29 +1,28 @@
-@extends('layouts.admin.admin-layout')
-
-@section('content')
+<?php $__env->startSection('content'); ?>
 
     <!-- Main content -->
     <section class="content">
         <div class="row">
-            @if (session('success'))
+            <?php if(session('success')): ?>
                 <div class="alert alert-success alert-dismissible notic_bar" style="margin:20px;">
                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                    {{ session('success') }}
-                </div>
-            @endif
+                    <?php echo e(session('success')); ?>
 
-            @if (session('error'))
+                </div>
+            <?php endif; ?>
+
+            <?php if(session('error')): ?>
                 <div class="alert alert-danger alert-dismissible notic_bar" style="margin:20px;">
                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                    {{ session('error') }}
+                    <?php echo e(session('error')); ?>
+
                 </div>
-            @endif
+            <?php endif; ?>
 
             <div class="col-xs-12">
-
-                @foreach ($users as $user)
+                <?php $__currentLoopData = $users; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $user): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                     <!-- Delete confirmation modal -->
-                    <div class="modal fade" id="deleteModal{{ $user->id }}" tabindex="-1" role="dialog"
+                    <div class="modal fade" id="deleteModal<?php echo e($user->id); ?>" tabindex="-1" role="dialog"
                         aria-hidden="true">
                         <div class="modal-dialog modal-danger" role="document">
                             <div class="modal-content">
@@ -38,9 +37,9 @@
                                 </div>
                                 <div class="modal-footer modal-buttons">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                                    <form action="{{ route('user.destroy', $user->id) }}" method="POST">
-                                        @csrf
-                                        @method('DELETE')
+                                    <form action="<?php echo e(route('customers.destroy', $user->id)); ?>" method="POST">
+                                        <?php echo csrf_field(); ?>
+                                        <?php echo method_field('DELETE'); ?>
                                         <button type="submit" class="btn btn-danger" id="confirmDelete">Delete</button>
                                     </form>
                                 </div>
@@ -48,21 +47,38 @@
                         </div>
                     </div>
                     <!-- End Delete confirmation modal -->
-                @endforeach
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
+                <!-- Search form -->
+                <div class="container-fluid" style="margin:0 0 10px 0;">
+                    <div class="row">
+                        <div class="col-10 col-sm-8 col-md-6 col-offset-1 col-sm-offset-2 col-md-offset-3">
+                            <form action="<?php echo e(route('customerSearch.admin')); ?>" method="GET" class="w-100">
+                                <div class="input-group">
+                                    <input type="text" name="q" class="form-control" value="<?php echo e($q ?? ''); ?>"
+                                        placeholder="Search...">
+                                    <span class="input-group-btn">
+                                        <button type="submit" class="btn btn-primary">
+                                            <i class="fa fa-search"></i>
+                                        </button>
+                                    </span>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
 
                 <div class="box">
                     <div class="main-flex">
-                        <h3 class="box-title">All Users</h3>
-                        <a href="{{ route('user.create') }}" class="btn btn-primary btn-sm">Add New User</a>
+                        <h3 class="box-title">All Customers</h3>
+                        
                     </div><!-- /.box-header -->
                     <div class="box-body">
-                        <form action="{{ route('user.deleteSelected') }}" method="POST">
-                            @csrf
+                        <form action="<?php echo e(route('user.deleteSelected')); ?>" method="POST">
+                            <?php echo csrf_field(); ?>
 
                             <button type="submit" class="btn btn-danger" style="margin-bottom:10px;">Delete
                                 Selected</button>
-
                             <table id="example1" class="table table-bordered table-striped">
                                 <thead>
                                     <tr>
@@ -79,54 +95,51 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @if ($users->count() > 0)
-                                        @foreach ($users as $user)
+                                    <?php if($users->count() > 0): ?>
+                                        <?php $__currentLoopData = $users; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $user): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                             <tr>
-                                                <td>
-                                                    <input type="checkbox" name="ids[]" value="{{ $user->id }}"
-                                                        class="checkbox">
-                                                </td>
-                                                <td>{{ $loop->iteration }}</td>
-                                                <td><img src="{{ $user->user_image ? asset('public/images/users/' . $user->user_image) : asset('public/images/brands/demo.png') }}"
-                                                        alt="{{ $user->user_image }}" class="table-brand-image"></td>
-                                                <td><a href="#" class="all-title">{{ $user->name ?? '' }}</a></td>
-                                                <td><a href="#" class="all-email">{{ $user->email ?? '' }}</a></td>
-                                                <td>{{ ucwords($user->role ?? '') }}</td>
+                                                <td><input type="checkbox" name="ids[]" value="<?php echo e($user->id); ?>"
+                                                        class="checkbox"></td>
+                                                <td><?php echo e($loop->iteration); ?></td>
+                                                <td><img src="<?php echo e($user->user_image ? asset('public/images/users/' . $user->user_image) : asset('public/images/brands/demo.png')); ?>"
+                                                        alt="<?php echo e($user->user_image); ?>" class="table-brand-image"></td>
+                                                <td><a href="#" class="all-title"><?php echo e($user->name ?? ''); ?></a></td>
+                                                <td><a href="#" class="all-email"><?php echo e($user->email ?? ''); ?></a></td>
+                                                <td><?php echo e(ucwords($user->role ?? '')); ?></td>
                                                 <td>
                                                     <p
-                                                        class="verificaton_btn {{ !is_null($user->email_verified_at) ? 'text-success' : 'text-danger' }}">
-                                                        {{ !is_null($user->email_verified_at) ? 'Done' : 'None' }}</p>
+                                                        class="verificaton_btn <?php echo e(!is_null($user->email_verified_at) ? 'text-success' : 'text-danger'); ?>">
+                                                        <?php echo e(!is_null($user->email_verified_at) ? 'Done' : 'None'); ?></p>
                                                 </td>
                                                 <td>
                                                     <div class="action-container">
-                                                        <a href="{{ route('user.edit', $user->id) }}" class="edit-icon"><i
+                                                        <a href="<?php echo e(route('user.edit', $user->id)); ?>" class="edit-icon"><i
                                                                 class="fa fa-edit"></i></a>
+
                                                         <a href="javascript:void(0)">
                                                             <span class="delete-icon fa fa-trash-o" data-toggle="modal"
-                                                                data-target="#deleteModal{{ $user->id }}"
-                                                                data-id="{{ $user->id }}"><i></i></span>
+                                                                data-target="#deleteModal<?php echo e($user->id); ?>"
+                                                                data-id="<?php echo e($user->id); ?>"><i></i></span>
                                                         </a>
-                                                        {{-- <a href="{{ route('user.index', $user->slug) }}" class="view-icon"><i
-                                                class="fa fa-eye"></i></a> --}}
+                                                        
                                                     </div>
                                                 </td>
-                                        @endforeach
-                                    @else
+                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                    <?php else: ?>
                                         <tr>
                                             <td colspan="8" class="text-center">No users found.</td>
                                         </tr>
-                                    @endif
+                                    <?php endif; ?>
                                 </tbody>
                             </table>
-
                         </form>
                         <!-- Pagination Links -->
-                        {{ $users->links('pagination::bootstrap-4') }}
+                        <?php echo e($users->links('pagination::bootstrap-4')); ?>
+
                     </div><!-- /.box-body -->
                 </div><!-- /.box -->
             </div><!-- /.col -->
         </div><!-- /.row -->
-
         <script>
             document.addEventListener("DOMContentLoaded", function() {
                 const selectAll = document.getElementById("selectAll");
@@ -153,4 +166,6 @@
 
     </section><!-- /.content -->
 
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.admin.admin-layout', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH E:\sajjel\laragon\www\carpartslb.com\resources\views/admin/customer/index.blade.php ENDPATH**/ ?>

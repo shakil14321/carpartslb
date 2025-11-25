@@ -22,7 +22,8 @@
             <div class="col-xs-12">
                 @foreach ($carParts as $carPart)
                     <!-- Delete confirmation modal -->
-                    <div class="modal fade" id="deleteModal{{ $carPart->id }}" tabindex="-1" role="dialog" aria-hidden="true">
+                    <div class="modal fade" id="deleteModal{{ $carPart->id }}" tabindex="-1" role="dialog"
+                        aria-hidden="true">
                         <div class="modal-dialog modal-danger" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
@@ -47,7 +48,7 @@
                     </div>
                     <!-- End Delete confirmation modal -->
                 @endforeach
-                
+
                 <!-- search form -->
                 <div class="container-fluid" style="margin:0 0 10px 0;">
                     <div class="row">
@@ -107,17 +108,24 @@
                                                 <td>{{ $loop->iteration }}</td>
                                                 <td><img src="{{ $carPart->feature_image ? asset('public/images/parts/feature/' . $carPart->feature_image) : asset('public/images/brands/demo.png') }}"
                                                         alt="{{ $carPart->feature_image }}" class="table-brand-image"></td>
-                                                <td><a href="#" class="all-title">{{ $carPart->title }}</a></td>
-                                                <td>{{ $carPart->part_type_id ? $carPart->carPartType->title : 'None' }}</td>
+                                                <td><a href="{{ route('product.view', $carPart->slug) }}"
+                                                        class="all-title">{{ $carPart->title }}</a></td>
+                                                <td>{{ $carPart->part_type_id ? $carPart->carPartType->title : 'None' }}
+                                                </td>
                                                 <td>{{ $carPart->stock_type == 'in' ? 'In Stock' : 'Out of Stock' }}</td>
-                                                <td>{{ $carPart->part_brand_id ? $carPart->carPartBrand->title : 'None' }}</td>
+                                                <td>{{ $carPart->part_brand_id ? $carPart->carPartBrand->title : 'None' }}
+                                                </td>
                                                 <td>{{ $carPart->part_number ?? 'None' }}
                                                 </td>
                                                 <td>
                                                     <div class="action-container">
                                                         <a href="{{ route('product.edit', $carPart->id) }}"
                                                             class="edit-icon"><i class="fa fa-edit"></i></a>
-                                                        <span class="delete-icon fa fa-trash-o" data-toggle="modal" data-target="#deleteModal{{ $carPart->id }}" data-id="{{ $carPart->id }}"><i></i></span>
+                                                        <a href="javascript:void(0)" class="edit-icon">
+                                                            <span class="delete-icon fa fa-trash-o" data-toggle="modal"
+                                                                data-target="#deleteModal{{ $carPart->id }}"
+                                                                data-id="{{ $carPart->id }}"><i></i></span>
+                                                        </a>
                                                         <a href="{{ route('product.view', $carPart->slug) }}"
                                                             class="view-icon"><i class="fa fa-eye"></i></a>
                                                     </div>
