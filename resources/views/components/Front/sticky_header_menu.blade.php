@@ -14,11 +14,12 @@
             </div>
             <!-- End offcanvas menu startup -->
             @php
-            $setting = \App\Models\SiteSetting::first();
+                $setting = \App\Models\SiteSetting::first();
             @endphp
             <div class="main__logo">
-                    <h1 class="main__logo--title"><a class="main__logo--link" href="{{ route('home') }}"><img
-                            class="main__logo--img" src="{{ asset($setting && $setting->site_logo ? 'public/images/logos/' . $setting->site_logo : 'public/images/logos/demo.png') }}"
+                <h1 class="main__logo--title"><a class="main__logo--link" href="{{ route('home') }}"><img
+                            class="main__logo--img"
+                            src="{{ asset($setting && $setting->site_logo ? 'public/images/logos/' . $setting->site_logo : 'public/images/logos/demo.png') }}"
                             alt="logo-img" width="175px"></a></h1>
             </div>
             {{-- Search input field --}}
@@ -28,7 +29,8 @@
                     <div class="header__search--box">
                         <label for="search_field">
                             <input id="globalSearch" name="query" class="header__search--input"
-                                placeholder="Search For Products..." type="text" autocomplete="off">
+                                placeholder="Search For Products..." type="text" autocomplete="off"
+                                value="{{ request()->query('query') }}">
                         </label>
                         <button class="header__search--button bg__primary text-white" aria-label="search button"
                             type="submit">
@@ -48,17 +50,18 @@
                 <!-- Main menu start -->
                 <nav class="header__menu--navigation">
                     <ul class="header__menu--wrapper d-flex">
-                         @if($setting && !empty($setting->menu_items))
-                            @foreach($setting->menu_items as $menu)
+                        @if ($setting && !empty($setting->menu_items))
+                            @foreach ($setting->menu_items as $menu)
                                 <li class="header__menu--items">
                                     @php
                                         $routeName = $menu['name'];
                                     @endphp
-                                    <a href="{{ $menu['link'] }}" class="header__menu--link {{ request()->routeIs(strtolower($routeName)) ? 'active' : '' }}">{{ $menu['name'] }}</a>
+                                    <a href="{{ $menu['link'] }}"
+                                        class="header__menu--link {{ request()->routeIs(strtolower($routeName)) ? 'active' : '' }}">{{ $menu['name'] }}</a>
                                 </li>
                             @endforeach
                         @else
-                        <p>Menu items not found.</p>
+                            <p>Menu items not found.</p>
                         @endif
                     </ul>
                 </nav>
@@ -69,7 +72,7 @@
                 <ul class="header__account--wrapper d-flex align-items-center">
                     <li class="header__account--items d-none d-lg-block">
                         <a class="header__account--btn"
-                            href="{{ (Auth::check() && Auth::user()->role === 'customer')  ? route('customerDashboard') : route('login.form') }}">
+                            href="{{ Auth::check() && Auth::user()->role === 'customer' ? route('customerDashboard') : route('login.form') }}">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                 stroke-linejoin="round" class=" -user">
@@ -114,12 +117,12 @@
                             <span class="minicart__btn--text">My Cart <br>
                                 <span class="minicart__btn--text__price" id="header_cart_total">
                                     @php
-                                    $total = 0;
-                                    foreach(session('cart', []) as $item) {
-                                        $price = $item['sale_price'] ?: $item['original_price'];
-                                        $total += $price * $item['quantity'];
-                                    }
-                                    echo '$' . number_format($total, 2);
+                                        $total = 0;
+                                        foreach (session('cart', []) as $item) {
+                                            $price = $item['sale_price'] ?: $item['original_price'];
+                                            $total += $price * $item['quantity'];
+                                        }
+                                        echo '$' . number_format($total, 2);
                                     @endphp
                                 </span>
                             </span>
@@ -136,18 +139,18 @@
                                 width="22.51" height="20.443" viewBox="0 0 512 512">
                                 <path d="M221.09 64a157.09 157.09 0 10157.09 157.09A157.1 157.1 0 00221.09 64z"
                                     fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="32" />
-                                <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10"
-                                    stroke-width="32" d="M338.29 338.29L448 448" />
+                                <path fill="none" stroke="currentColor" stroke-linecap="round"
+                                    stroke-miterlimit="10" stroke-width="32" d="M338.29 338.29L448 448" />
                             </svg>
                             <span class="visually-hidden">Search</span>
                         </a>
                     </li>
                     <li class="header__account--items d-none d-lg-block">
                         <a class="header__account--btn"
-                            href="{{ (Auth::check() && Auth::user()->role === 'customer') ? route('customerDashboard') : route('login.form') }}">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round" class=" -user">
+                            href="{{ Auth::check() && Auth::user()->role === 'customer' ? route('customerDashboard') : route('login.form') }}">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round" class=" -user">
                                 <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
                                 <circle cx="12" cy="7" r="4"></circle>
                             </svg>
@@ -163,7 +166,8 @@
                                 <svg xmlns="http://www.w3.org/2000/svg" width="22.51" height="20.443"
                                     viewBox="0 0 512 512">
                                     <path d="M221.09 64a157.09 157.09 0 10157.09 157.09A157.1 157.1 0 00221.09 64z"
-                                        fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="32" />
+                                        fill="none" stroke="currentColor" stroke-miterlimit="10"
+                                        stroke-width="32" />
                                     <path fill="none" stroke="currentColor" stroke-linecap="round"
                                         stroke-miterlimit="10" stroke-width="32" d="M338.29 338.29L448 448" />
                                 </svg>
@@ -195,12 +199,12 @@
                             <span class="minicart__btn--text">My Cart <br>
                                 <span class="minicart__btn--text__price" id="header_cart_total">
                                     @php
-                                    $total = 0;
-                                    foreach(session('cart', []) as $item) {
-                                        $price = $item['sale_price'] ?: $item['original_price'];
-                                        $total += $price * $item['quantity'];
-                                    }
-                                    echo '$' . number_format($total, 2);
+                                        $total = 0;
+                                        foreach (session('cart', []) as $item) {
+                                            $price = $item['sale_price'] ?: $item['original_price'];
+                                            $total += $price * $item['quantity'];
+                                        }
+                                        echo '$' . number_format($total, 2);
                                     @endphp
                                 </span>
                             </span>
@@ -216,16 +220,18 @@
 </div>
 
 
-{{-- Search input field in mobile mode top on hero section--}}
+{{-- Search input field in mobile mode top on hero section --}}
 <div class="seach_form_container">
     <form class="d-flex header__search--form border-radius-5" action="{{ route('search.page') }}" method="GET">
         <div class="header__search--box">
             <label for="search_field">
-                <input id="globalSearch" name="query" class="header__search--input" placeholder="Search For Products..."
-                    type="text" autocomplete="off">
+                <input id="globalSearch" name="query" class="header__search--input"
+                    placeholder="Search For Products..." type="text" autocomplete="off"
+                    value="{{ request()->query('query') }}">
             </label>
             <button class="header__search--button bg__primary text-white" aria-label="search button" type="submit">
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none"
+                    xmlns="http://www.w3.org/2000/svg">
                     <path
                         d="M15.6952 14.4991L11.7663 10.5588C12.7765 9.4008 13.33 7.94381 13.33 6.42703C13.33 2.88322 10.34 0 6.66499 0C2.98997 0 0 2.88322 0 6.42703C0 9.97085 2.98997 12.8541 6.66499 12.8541C8.04464 12.8541 9.35938 12.4528 10.4834 11.6911L14.4422 15.6613C14.6076 15.827 14.8302 15.9184 15.0687 15.9184C15.2944 15.9184 15.5086 15.8354 15.6711 15.6845C16.0166 15.364 16.0276 14.8325 15.6952 14.4991ZM6.66499 1.67662C9.38141 1.67662 11.5913 3.8076 11.5913 6.42703C11.5913 9.04647 9.38141 11.1775 6.66499 11.1775C3.94857 11.1775 1.73869 9.04647 1.73869 6.42703C1.73869 3.8076 3.94857 1.67662 6.66499 1.67662Z"
                         fill="currentColor" />

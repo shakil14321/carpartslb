@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // -------------------------------
     // ADD TO CART BUTTON
     // -------------------------------
+
     document.querySelectorAll('.add-to-cart-btn').forEach(btn => {
         btn.addEventListener('click', function () {
             const payload = {
@@ -21,82 +22,82 @@ document.addEventListener('DOMContentLoaded', function () {
                 },
                 body: JSON.stringify(payload)
             })
-            .then(res => res.json())
-            .then(data => {
-                console.log('Cart updated', data);
-                updateMiniCart(data);
-            })
-            .catch(err => console.error('Add to cart error:', err));
+                .then(res => res.json())
+                .then(data => {
+                    console.log('Cart updated', data);
+                    updateMiniCart(data);
+                })
+                .catch(err => console.error('Add to cart error:', err));
         });
     });
 
     // -------------------------------
     // UPDATE QUANTITY BUTTONS
     // -------------------------------
-    document.addEventListener('click', function(e){
-        if(e.target.classList.contains('cart-qty-btn')){
+    document.addEventListener('click', function (e) {
+        if (e.target.classList.contains('cart-qty-btn')) {
             const cartId = e.target.dataset.id;
             const type = e.target.dataset.type;
 
             fetch('/cart/update-quantity', {
                 method: 'POST',
                 headers: {
-                    'Content-Type':'application/json',
+                    'Content-Type': 'application/json',
                     'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
                 },
                 body: JSON.stringify({ id: cartId, type: type })
             })
-            .then(res => res.json())
-            .then(data => updateMiniCart(data))
-            .catch(err => console.error('Update quantity error:', err));
+                .then(res => res.json())
+                .then(data => updateMiniCart(data))
+                .catch(err => console.error('Update quantity error:', err));
         }
     });
 
     // -------------------------------
     // REMOVE ITEM BUTTON
     // -------------------------------
-    document.addEventListener('click', function(e){
-        if(e.target.classList.contains('remove-cart-item')){
+    document.addEventListener('click', function (e) {
+        if (e.target.classList.contains('remove-cart-item')) {
             const cartId = e.target.dataset.id;
 
             fetch('/cart/remove', {
                 method: 'POST',
                 headers: {
-                    'Content-Type':'application/json',
+                    'Content-Type': 'application/json',
                     'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
                 },
                 body: JSON.stringify({ id: cartId })
             })
-            .then(res => res.json())
-            .then(data => updateMiniCart(data))
-            .catch(err => console.error('Remove cart item error:', err));
+                .then(res => res.json())
+                .then(data => updateMiniCart(data))
+                .catch(err => console.error('Remove cart item error:', err));
         }
     });
 
     // -------------------------------
     // FETCH CART DATA FUNCTION
     // -------------------------------
-    function fetchCartData(){
+    function fetchCartData() {
         fetch('/cart/data', {
             headers: { 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content') }
         })
-        .then(res => res.json())
-        .then(data => updateMiniCart(data))
-        .catch(err => console.error('Fetch cart error:', err));
+            .then(res => res.json())
+            .then(data => updateMiniCart(data))
+            .catch(err => console.error('Fetch cart error:', err));
     }
 
     // -------------------------------
     // UPDATE MINI CART UI
     // -------------------------------
-    function updateMiniCart(data){
+    function updateMiniCart(data) {
         const countElem = document.querySelector('#cart-count');
         const totalElem = document.querySelector('#cart_total');
 
-        if(countElem) countElem.textContent = data.count;
-        if(totalElem) totalElem.textContent = data.total;
+        if (countElem) countElem.textContent = data.count;
+        if (totalElem) totalElem.textContent = data.total;
 
         const listElem = document.querySelector('.minicart__product');
-        if(listElem){
+        if (listElem) {
             listElem.innerHTML = '';
             data.cart.forEach(item => {
                 const li = document.createElement('div');

@@ -5,10 +5,10 @@
         <div class="row row-cols-1">
             <div class="col">
                 <div class="breadcrumb__content text-center">
-                    <h1 class="breadcrumb__content--title">Products</h1>
+                    <h1 class="breadcrumb__content--title">Search Results For: <?php echo e(request()->query('query')); ?></h1>
                     <ul class="breadcrumb__content--menu d-flex justify-content-center">
                         <li class="breadcrumb__content--menu__items"><a href="<?php echo e(route('home')); ?>">Home</a></li>
-                        <li class="breadcrumb__content--menu__items"><span>Shop</span></li>
+                        <li class="breadcrumb__content--menu__items"><span>Search</span></li>
                     </ul>
                 </div>
             </div>
@@ -21,7 +21,6 @@
 <div class="shop__section section--padding">
     <div class="container">
         <div class="row">
-            
             <div class="col-xl-3 col-lg-4 shop-col-width-lg-4">
                 <div class="shop__sidebar--widget widget__area d-none d-lg-block">
 
@@ -64,11 +63,11 @@
                                 <a href="<?php echo e(route('type.view', $carPartType->slug)); ?>">
                                     <label class="widget__categories--menu__label d-flex align-items-center">
                                         <img class="widget__categories--menu__img" src="<?php echo e($carPartType->part_type_image 
-                                            ? asset('public/images/types/' . $carPartType->part_type_image) 
-                                            : asset('public/images/types/demo.png')); ?>"
+                                            ? asset('public/assets/front/img/product/small-product/' . $carPartType->part_type_image) 
+                                            : asset('public/assets/front/img/product/small-product/product1.webp')); ?>"
                                             alt="categories-img">
 
-                                        <span class="widget__categories--menu__text lh-base"><?php echo e($carPartType->title); ?></span>
+                                        <span class="widget__categories--menu__text"><?php echo e($carPartType->title); ?></span>
                                     </label>
                                 </a>
                             </li>
@@ -85,22 +84,24 @@
                         <div class="shop__sidebar--product">
                             <?php if($carPartsFav->count() > 0): ?>
                             <?php $__currentLoopData = $carPartsFav; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $carPartFav): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                            <div class="small__product--card">
+                            <div class="small__product--card d-flex">
                                 <div class="small__product--thumbnail">
-                                    <a class="display-block" href="<?php echo e(route('product.view', $carPartFav->slug)); ?>" style="height:150px !important;">
-                                         <?php if($carPartFav->feature_image): ?>
-                                        <img class="product__card--thumbnail__img product__primary--img"
-                                            src="<?php echo e(asset('public/images/parts/feature/' . $carPartFav->feature_image)); ?>"
-                                            alt="feature_img" style="width:100%; height:100%; object-fit:cover;">
-                                        <?php else: ?>
-                                        <img class="product__card--thumbnail__img product__primary--img"
-                                            src="<?php echo e(asset('public/images/brands/demo.png')); ?>" alt="no-image" style="width:100%; height:100%; object-fit:cover;">
-                                        <?php endif; ?>
+                                    <?php if($carPartFav->feature_image): ?>
+                                    <img class="product__card--thumbnail__img product__primary--img"
+                                        src="<?php echo e(asset('public/images/parts/feature/' . $carPartFav->feature_image)); ?>"
+                                        alt="feature_img">
+                                    <?php else: ?>
+                                    <img class="product__card--thumbnail__img product__primary--img"
+                                        src="<?php echo e(asset('public/images/brands/demo.png')); ?>" alt="no-image">
+                                    <?php endif; ?>
+
+                                    <a class="display-block" href="<?php echo e(route('product.details', $carPartFav->slug)); ?>">
+                                        <img src="" alt="product-img">
                                     </a>
                                 </div>
                                 <div class="small__product--content">
                                     <h3 class="small__product--card__title">
-                                        <a href="<?php echo e(route('product.view', $carPartFav->slug)); ?>">
+                                        <a href="<?php echo e(route('product.details', $carPartFav->slug)); ?>">
                                             <?php echo e($carPartFav->title ?? ''); ?>
 
                                         </a>
@@ -159,25 +160,9 @@
 
                                 </div>
                             </div>
-                            <?php
-                                // Check if any filter is applied
-                                $hasFilter = request()->filled('min_price') || request()->filled('max_price') || request()->filled('sort');
-                            ?>
-                            
-                            <?php if($hasFilter): ?>
-                                
-                                <p class="product__showing--count">
-                                    Showing <?php echo e($carParts->firstItem()); ?>–<?php echo e($carParts->lastItem()); ?> of
-                                    <?php echo e($carParts->total()); ?> filtered results
-                                </p>
-                            <?php else: ?>
-                                
-                                <p class="product__showing--count">
-                                    Showing <?php echo e($carParts->firstItem()); ?>–<?php echo e($carParts->lastItem()); ?> of
-                                    <?php echo e($carParts->total()); ?> total products
-                                </p>
-                            <?php endif; ?>
-
+                            <p class="product__showing--count">
+                                Showing <?php echo e($carParts->firstItem()); ?>–<?php echo e($carParts->lastItem()); ?> of <?php echo e($carParts->total()); ?> results
+                            </p>
 
                         </div>
                         <div class="tab_content">
@@ -203,4 +188,4 @@
 <?php echo $__env->make('front.partials.shipping_sec', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
 <!-- End shipping section -->
 <?php $__env->stopSection(); ?>
-<?php echo $__env->make('layouts.front.front-layout', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH F:\laragon\www\carpartslb.com\resources\views/front/pages/shop.blade.php ENDPATH**/ ?>
+<?php echo $__env->make('layouts.front.front-layout', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH E:\sajjel\laragon\www\carpartslb.com\resources\views/front/pages/search.blade.php ENDPATH**/ ?>
