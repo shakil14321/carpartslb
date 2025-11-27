@@ -1,5 +1,6 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+
 <link rel="shortcut icon" type="image/x-icon" href="<?php echo e(asset('public/assets/front/img/favicon.jpg')); ?>">
 
 <!-- Google site verification -->

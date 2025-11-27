@@ -23,10 +23,22 @@
 <?php $component = $__componentOriginal460e94350fb64b422ddc7ebcaa7d1bff; ?>
 <?php unset($__componentOriginal460e94350fb64b422ddc7ebcaa7d1bff); ?>
 <?php endif; ?>
+    <style>
+        .slider__maintitle--style2 {
+            max-width: 350px;
+            white-space: normal;
+            word-break: break-word;
+        }
+
+        .swiper-slide-product {
+            display: flex;
+            height: auto;
+        }
+    </style>
 </head>
 
 <body>
-    
+
     <?php if (isset($component)) { $__componentOriginal918579708d6a04ebdb7dc25298bfcdb7 = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginal918579708d6a04ebdb7dc25298bfcdb7 = $attributes; } ?>
 <?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.Front.loader','data' => []] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
@@ -46,7 +58,7 @@
 <?php if (isset($__componentOriginal918579708d6a04ebdb7dc25298bfcdb7)): ?>
 <?php $component = $__componentOriginal918579708d6a04ebdb7dc25298bfcdb7; ?>
 <?php unset($__componentOriginal918579708d6a04ebdb7dc25298bfcdb7); ?>
-<?php endif; ?> 
+<?php endif; ?>
     <?php if (isset($component)) { $__componentOriginalacb86123b9e742a84a2a8cf310881329 = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginalacb86123b9e742a84a2a8cf310881329 = $attributes; } ?>
 <?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.Front.announcement_bar','data' => []] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
@@ -163,10 +175,14 @@
             </a>
         </div>
     </div>
-<script>
-    window.csrfToken = "<?php echo e(csrf_token()); ?>";
-    window.productUrl = "<?php echo e(url('product')); ?>/";
-</script>
+    <script>
+        window.csrfToken = "<?php echo e(csrf_token()); ?>";
+        window.productUrl = "<?php echo e(url('product')); ?>/";
+        const cartAddUrl = "<?php echo e(route('cart.add')); ?>";
+        const cartUpdateUrl = "<?php echo e(route('cart.update.quantity')); ?>";
+        const cartRemoveUrl = "<?php echo e(route('cart.remove')); ?>";
+        const cartDataUrl = "<?php echo e(route('cart.data')); ?>";
+    </script>
     <?php if (isset($component)) { $__componentOriginal5596e0726e13f47ab1e6598e8d2383aa = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginal5596e0726e13f47ab1e6598e8d2383aa = $attributes; } ?>
 <?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.Front.script','data' => []] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
@@ -191,4 +207,5 @@
 
 </body>
 
-</html><?php /**PATH E:\sajjel\laragon\www\carpartslb.com\resources\views/layouts/front/front-layout.blade.php ENDPATH**/ ?>
+</html>
+<?php /**PATH E:\sajjel\laragon\www\carpartslb.com\resources\views/layouts/front/front-layout.blade.php ENDPATH**/ ?>

@@ -619,7 +619,7 @@
                 <div class="swiper-wrapper">
                     @if ($relatedProducts->count() > 0)
                         @foreach ($relatedProducts as $related)
-                            <div class="swiper-slide">
+                            <div class="swiper-slide swiper-slide-product">
                                 <article class="product__card">
                                     <div class="product__card--thumbnail">
                                         <a class="product__card--thumbnail__link display-block"

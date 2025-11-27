@@ -567,7 +567,7 @@
                 <div class="swiper-wrapper">
                     <?php if($relatedProducts->count() > 0): ?>
                         <?php $__currentLoopData = $relatedProducts; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $related): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                            <div class="swiper-slide">
+                            <div class="swiper-slide swiper-slide-product">
                                 <article class="product__card">
                                     <div class="product__card--thumbnail">
                                         <a class="product__card--thumbnail__link display-block"

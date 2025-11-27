@@ -1,4 +1,8 @@
 <!-- Start footer section -->
+@php
+    $setting = \App\Models\SiteSetting::first();
+@endphp
+
 <footer class="footer__section footer__bg" style="padding:0; margin:0;">
     <div class="container">
         <div class="main__footer">
@@ -14,10 +18,20 @@
                             </svg>
                         </h2>
                         <div class="footer__widget--inner">
-                            <p class="footer__widget--desc">At CarPartsLB, we specialize in providing genuine and
+                            {{-- <p class="footer__widget--desc">At CarPartsLB, we specialize in providing genuine and
                                 high-quality spare parts for BMW, MINI, and BMW Motorrad. As trusted auto parts
                                 resellers in Lebanon, we focus on reliability, affordability, and performance to keep
-                                your vehicle running at its best.</p>
+                                your vehicle running at its best.</p> --}}
+
+                            <p class="footer__widget--desc">
+                                {{ $setting && $setting->footer_about_text
+                                    ? $setting->footer_about_text
+                                    : ' At CarPartsLB, we specialize in providing genuine and
+                                                                                                                                                                                                high-quality spare parts for BMW, MINI, and BMW Motorrad. As trusted auto parts
+                                                                                                                                                                                                resellers in Lebanon, we focus on reliability, affordability, and performance to keep
+                                                                                                                                                                                                your vehicle running at its best.' }}
+
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -63,7 +77,8 @@
             <div class="footer_social_icons_container">
                 <ul class="social__share footer__social d-flex">
                     <li class="social__share--list">
-                        <a class="social__share--icon__style2" target="_blank" href="https://www.facebook.com">
+                        <a class="social__share--icon__style2" target="_blank"
+                            href="{{ $setting && $setting->footer_facebook_link ? $setting->footer_facebook_link : 'javascript:void(0)' }}">
                             <svg width="11" height="17" viewBox="0 0 9 15" fill="none"
                                 xmlns="http://www.w3.org/2000/svg">
                                 <path
@@ -74,7 +89,8 @@
                         </a>
                     </li>
                     <li class="social__share--list">
-                        <a class="social__share--icon__style2" target="_blank" href="https://www.instagram.com">
+                        <a class="social__share--icon__style2" target="_blank"
+                            href="{{ $setting && $setting->footer_instagram_link ? $setting->footer_instagram_link : 'javascript:void(0)' }}">
                             <svg width="16" height="15" viewBox="0 0 14 13" fill="none"
                                 xmlns="http://www.w3.org/2000/svg">
                                 <path

@@ -256,6 +256,11 @@
                          <li class="{{ request()->routeIs('setting.verification') ? 'active' : '' }}"><a
                                  href="{{ route('setting.verification') }}"><i class="fa fa-circle-o"></i>
                                  Verification</a></li>
+                         <li class="{{ request()->routeIs('setting.homeText') ? 'active' : '' }}">
+                             <a href="{{ route('setting.homeText') }}">
+                                 <i class="fa fa-circle-o"></i> Home Page Text
+                             </a>
+                         </li>
                      </ul>
                  </li>
 

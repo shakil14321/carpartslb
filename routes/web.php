@@ -52,10 +52,10 @@ Route::get('/search-products', [PageController::class, 'search'])->name('product
 // Cart functionality routes
 
 // Cart
-Route::get('/cart/data', [CartController::class,'data']);
-Route::post('/cart/add', [CartController::class,'addToCart']);
-Route::post('/cart/updateQuantity', [CartController::class,'updateQuantity']);
-Route::post('/cart/remove', [CartController::class,'removeFromCart']);
+Route::get('/cart/data', [CartController::class,'data'])->name('cart.data');
+Route::post('/cart/add', [CartController::class,'addToCart'])->name('cart.add');
+Route::post('/cart/updateQuantity', [CartController::class,'updateQuantity'])->name('cart.update.quantity');
+Route::post('/cart/remove', [CartController::class,'removeFromCart'])->name('cart.remove');
 
 Route::get('/checkout', [CartController::class,'checkoutPage'])->name('checkout.page')->middleware('auth');
 Route::post('/order/store', [OrderController::class,'store'])->name('order.store');
@@ -259,6 +259,7 @@ Route::prefix('panel')->middleware(['auth','role:admin','prevent-back-history'])
     Route::get('/setting/announcement-bar', [SiteSettingController::class, 'announcement'])->name('setting.announcement');
     Route::get('/setting/menu', [SiteSettingController::class, 'menu'])->name('setting.menu');
     Route::get('/setting/brand', [SiteSettingController::class, 'brand'])->name('setting.brand');
+    Route::get('/setting/homeText', [SiteSettingController::class, 'homeText'])->name('setting.homeText');
     Route::get('/setting/site-verification', [SiteSettingController::class, 'siteVerification'])->name('setting.verification');
     Route::post('/site-setting', [SiteSettingController::class, 'store'])->name('site.setting.store');
 

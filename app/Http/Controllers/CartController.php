@@ -6,6 +6,7 @@ use App\Models\Address;
 use App\Models\CarPart;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Cart;
 use Illuminate\Support\Facades\Auth;
 
 class CartController extends Controller
@@ -36,8 +37,9 @@ class CartController extends Controller
     // Add to cart
     public function addToCart(Request $request)
     {
+        // dd($request->all());
         $user_id = Auth::id();
-        $product_id = $request->id;
+        $product_id = $request->product_id;
 
         $cart = Cart::where('user_id', $user_id)->where('product_id', $product_id)->first();
         if ($cart) {

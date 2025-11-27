@@ -4,12 +4,24 @@
 <head>
     @yield('seo')
     <x-Front.head />
+    <style>
+        .slider__maintitle--style2 {
+            max-width: 350px;
+            white-space: normal;
+            word-break: break-word;
+        }
+
+        .swiper-slide-product {
+            display: flex;
+            height: auto;
+        }
+    </style>
 </head>
 
 <body>
-    
-    <x-Front.loader /> 
-    <x-Front.announcement_bar  />
+
+    <x-Front.loader />
+    <x-Front.announcement_bar />
     <x-Front.header />
     <x-Front.brands-bar />
 
@@ -49,10 +61,14 @@
             </a>
         </div>
     </div>
-<script>
-    window.csrfToken = "{{ csrf_token() }}";
-    window.productUrl = "{{ url('product') }}/";
-</script>
+    <script>
+        window.csrfToken = "{{ csrf_token() }}";
+        window.productUrl = "{{ url('product') }}/";
+        const cartAddUrl = "{{ route('cart.add') }}";
+        const cartUpdateUrl = "{{ route('cart.update.quantity') }}";
+        const cartRemoveUrl = "{{ route('cart.remove') }}";
+        const cartDataUrl = "{{ route('cart.data') }}";
+    </script>
     <x-Front.script />
     @yield('scripts')
 

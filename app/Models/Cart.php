@@ -10,4 +10,16 @@ class Cart extends Model
         'user_id', 'product_id', 'title', 'slug', 'sku', 'part_number',
         'feature_image', 'original_price', 'sale_price', 'quantity'
     ];
+
+
+    public function product()
+    {
+        return $this->belongsTo(CarPart::class, 'product_id');
+    }
+
+    // Optionally: cart belongs to a user
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 }

@@ -1,4 +1,5 @@
 <!-- All Script JS Plugins here  -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="<?php echo e(asset('public/assets/front/js/cart.js')); ?>"></script>
 <script src="<?php echo e(asset('public/assets/front/js/vendor/popper.js')); ?>" defer="defer"></script>
 <script src="<?php echo e(asset('public/assets/front/js/vendor/bootstrap.min.js')); ?>" defer="defer"></script>
