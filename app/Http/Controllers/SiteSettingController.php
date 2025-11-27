@@ -14,29 +14,34 @@ class SiteSettingController extends Controller
         $setting = SiteSetting::first();
         return view('admin.siteSetting.logo', compact('setting'));
     }
-    
+
     public function homeSlider(){
         $setting = SiteSetting::first();
         return view('admin.siteSetting.homeSlider', compact('setting'));
     }
-    
+
     public function announcement(){
         $setting = SiteSetting::first();
         return view('admin.siteSetting.announcement', compact('setting'));
     }
-    
+
     public function menu(){
         $setting = SiteSetting::first();
         return view('admin.siteSetting.menu', compact('setting'));
     }
-    
+
     public function brand(){
         $setting = SiteSetting::first();
         $carBrands = CarBrand::latest()->get();
-        
+
         return view('admin.siteSetting.brand', compact('setting', 'carBrands'));
     }
-    
+
+    public function homeText(){
+        $setting = SiteSetting::first();
+        return view('admin.siteSetting.homeText', compact('setting'));
+    }
+
     public function siteVerification(){
          $setting = SiteSetting::first();
         return view('admin.siteSetting.site_verification', compact('setting'));
@@ -54,8 +59,22 @@ public function store(Request $request)
         'carousel_image_one' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
         'carousel_image_two' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
         'carousel_image_three' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
+        'slider1_subtitle' => 'nullable|string',
+        'slider1_maintitle' => 'nullable|string',
+        'slider1_desc' => 'nullable|string',
+        'slider2_subtitle' => 'nullable|string',
+        'slider2_maintitle' => 'nullable|string',
+        'slider2_desc' => 'nullable|string',
+        'slider3_subtitle' => 'nullable|string',
+        'slider3_maintitle' => 'nullable|string',
+        'slider3_desc' => 'nullable|string',
         'brand_quantity' => 'nullable|integer',
         'google_verification' => 'nullable|string',
+        'shipping_text' => 'nullable|string',
+        'price_guarantee_text' => 'nullable|string',
+        'footer_about_text' => 'nullable|string',
+        'footer_facebook_link' => 'nullable|url',
+        'footer_instagram_link' => 'nullable|url',
     ]);
 
     $setting = SiteSetting::first() ?? new SiteSetting();
@@ -118,9 +137,26 @@ public function store(Request $request)
     }
 
     // ===== Assign other settings =====
+    $setting->slider1_subtitle = $request->slider1_subtitle;
+    $setting->slider1_maintitle = $request->slider1_maintitle;
+    $setting->slider1_desc = $request->slider1_desc;
+
+    $setting->slider2_subtitle = $request->slider2_subtitle;
+    $setting->slider2_maintitle = $request->slider2_maintitle;
+    $setting->slider2_desc = $request->slider2_desc;
+
+    $setting->slider3_subtitle = $request->slider3_subtitle;
+    $setting->slider3_maintitle = $request->slider3_maintitle;
+    $setting->slider3_desc = $request->slider3_desc;
     $setting->notice_bar = $request->notice_bar;
     $setting->brand_quantity = $request->brand_quantity;
     $setting->google_verification = $request->google_verification;
+
+    $setting->shipping_text = $request->shipping_text;
+    $setting->price_guarantee_text = $request->price_guarantee_text;
+    $setting->footer_about_text = $request->footer_about_text;
+    $setting->footer_facebook_link = $request->footer_facebook_link;
+    $setting->footer_instagram_link = $request->footer_instagram_link;
 
     // Sirf tab update karo jab menu_items empty na ho
     if (!empty($menu_items)) {

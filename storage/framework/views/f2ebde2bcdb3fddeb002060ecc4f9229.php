@@ -1,79 +1,71 @@
-@if ($carParts->count() > 0)
-    @foreach ($carParts as $carPart)
-        <div class="col-lg-4 col-md-4 col-sm-6 col-6 custom-col mb-30">
-            <article class="product__card h-100">
+<?php if($carParts->count() > 0): ?>
+    <?php $__currentLoopData = $carParts; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $carPart): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+        <div class="swiper-slide swiper-slide-product">
+            <article class="product__card">
                 <div class="product__card--thumbnail">
                     <a class="product__card--thumbnail__link display-block"
-                        href="{{ route('product.view', $carPart->slug) }}" style="height:210px !important;">
-                        @if ($carPart->feature_image)
+                        href="<?php echo e(route('product.view', $carPart->slug)); ?>" style="height:210px !important;">
+                        <?php if($carPart->feature_image): ?>
                             <img class="product__card--thumbnail__img product__primary--img"
-                                src="{{ asset($carPart->feature_image ? 'public/images/parts/feature/' . $carPart->feature_image : 'public/images/parts/feature/product-preview.jpg') }}"
+                                src="<?php echo e(asset($carPart->feature_image ? 'public/images/parts/feature/' . $carPart->feature_image : 'public/images/parts/feature/product-preview.jpg')); ?>"
                                 alt="feature_img" style="width:100%; height:100%; object-fit:cover;">
-                        @endif
+                        <?php endif; ?>
 
-                        @if ($carPart->feature_image)
+                        <?php if($carPart->feature_image): ?>
                             <img class="product__card--thumbnail__img product__secondary--img"
-                                src="{{ asset($carPart->feature_image ? 'public/images/parts/feature/' . $carPart->feature_image : 'public/images/parts/feature/product-preview.jpg') }}"
+                                src="<?php echo e(asset($carPart->feature_image ? 'public/images/parts/feature/' . $carPart->feature_image : 'public/images/parts/feature/product-preview.jpg')); ?>"
                                 alt="feature_img" style="width:100%; height:100%; object-fit:cover;">
-                        @endif
+                        <?php endif; ?>
 
                     </a>
 
-                    @php
+                    <?php
                         $original_price = $carPart->original_price;
                         $sale_price = $carPart->sale_price;
 
-                        if ($original_price > 0 && $sale_price > 0) {
+                        if ($original_price > 0 && $sale_price < $original_price) {
                             $percent_discount = round((($original_price - $sale_price) / $original_price) * 100);
                         } else {
-                            $percent_discount = null;
+                            $percent_discount = 0;
                         }
-                    @endphp
-
-                    @if ($percent_discount)
-                        <span class="product__badge">-{{ $percent_discount }}%</span>
-                    @endif
-
+                    ?>
+                    <span class="product__badge">-<?php echo e($percent_discount ?? ''); ?>%</span>
                 </div>
                 <div class="product__card--content">
-
                     <h3 class="product__card--title"><a
-                            href="{{ route('product.view', $carPart->slug) }}">{{ $carPart->title ?? '' }}</a></h3>
+                            href="<?php echo e(route('product.view', $carPart->slug)); ?>"><?php echo e($carPart->title ?? ''); ?></a></h3>
 
                     <div class="d-flex justify-content-between">
                         <div>
                             <p class="oth_brand_title"><span class="oth_p">Brand:</span> <span
-                                    class="rating__review--text">{{ strtoupper($carPart->carBrand->title ?? '') }}</span>
+                                    class="rating__review--text"><?php echo e(strtoupper($carPart->carBrand->title ?? '')); ?></span>
                             </p>
 
-                            {{-- <p class="oth_p_m"><span class="oth_p">Type:</span> <span class="rating__review--text">{{
-                            ucwords($carPart->carPartType->title ?? '' ) }}</span></p> --}}
+                            
 
                             <p class="oth_p_part"><span class="oth_p">Part#:</span> <span
-                                    class="rating__review--text">{{ ucwords($carPart->part_number ?? '') }}</span></p>
+                                    class="rating__review--text"><?php echo e(ucwords($carPart->part_number ?? '')); ?></span></p>
                         </div>
                         <div class="part_brnad_image_sec">
-                            <img src="{{ asset('public/images/brands/' . ($carPart->carPartBrand->brand_image ?? 'demo.png')) }}"
-                                alt="{{ $carPart->carPartBrand->title ?? 'Brand Image' }}"
+                            <img src="<?php echo e(asset('public/images/brands/' . ($carPart->carPartBrand->brand_image ?? 'demo.png'))); ?>"
+                                alt="<?php echo e($carPart->carPartBrand->title ?? 'Brand Image'); ?>"
                                 style="width:120px; height:60px; border:1px solid #a7a8a3; border-radius:10px;" />
                         </div>
                     </div>
 
-                    <div class="product__card--price price_pro">
+                    <div class="product__card--price">
                         <span
-                            class="current__price">{{ $carPart->sale_price ? '$' . $carPart->sale_price : '' }}</span>
+                            class="current__price"><?php echo e($carPart->sale_price ? '$' . $carPart->sale_price : ''); ?></span>
                         <span class="old__price">
-                            {{ $carPart->original_price ? '$' . $carPart->original_price : '' }}</span>
+                            <?php echo e($carPart->original_price ? '$' . $carPart->original_price : ''); ?></span>
                     </div>
-                    <div class="product__card--footer">
-                        <button class="product__card--btn primary__btn add-to-cart-btn" data-id="{{ $carPart->id }}"
-                            data-name="{{ $carPart->title }}" data-price="{{ $carPart->price }}"
-                            data-sale_price="{{ $carPart->sale_price ?? '' }}"
-                            data-original_price="{{ $carPart->original_price ?? '' }}"
-                            data-slug="{{ $carPart->slug ?? '' }}"
-                            data-image="{{ $carPart->feature_image ?? 'demo.png' }}"
-                            data-sku="{{ $carPart->sku ?? '' }}" data-part_number="{{ $carPart->part_number ?? '' }}"
-                            type="button">
+                    <div class="product__card--footer_swiper">
+                        <button class="product__card--btn primary__btn add-to-cart-btn" data-id="<?php echo e($carPart->id); ?>"
+                            data-name="<?php echo e($carPart->title); ?>" data-price="<?php echo e($carPart->price); ?>"
+                            data-sale_price="<?php echo e($carPart->sale_price ?? ''); ?>"
+                            data-original_price="<?php echo e($carPart->original_price ?? ''); ?>"
+                            data-slug="<?php echo e($carPart->slug ?? ''); ?>"
+                            data-image="<?php echo e($carPart->feature_image ?? 'demo.png'); ?>" type="button">
                             <svg width="14" height="11" viewBox="0 0 14 11" fill="none"
                                 xmlns="http://www.w3.org/2000/svg">
                                 <path
@@ -86,14 +78,8 @@
                 </div>
             </article>
         </div>
-    @endforeach
-@else
-    <h3 class="product__card--title text-danger text-center">No products found. Please reach us on <a
-            href="http://wa.me/+96176380584" class="text-black">WhatsApp</a> for available alternatives.</h3>
-@endif
-
-<div class="pagination__area d-flex justify-content-center">
-
-    {{ $carParts->links('pagination::bootstrap-4') }}
-
-</div>
+    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+<?php else: ?>
+    <h3 class="product__card--title">No featured products found</h3>
+<?php endif; ?>
+<?php /**PATH E:\sajjel\laragon\www\carpartslb.com\resources\views/front/partials/car_part_list_slide.blade.php ENDPATH**/ ?>
