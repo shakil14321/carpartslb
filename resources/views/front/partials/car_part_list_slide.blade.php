@@ -65,7 +65,8 @@
                             data-name="{{ $carPart->title }}" data-price="{{ $carPart->price }}"
                             data-sale_price="{{ $carPart->sale_price ?? '' }}"
                             data-original_price="{{ $carPart->original_price ?? '' }}"
-                            data-slug="{{ $carPart->slug ?? '' }}"
+                            data-slug="{{ $carPart->slug ?? '' }}" data-sku="{{ $carPart->sku ?? '' }}"
+                            data-part_number="{{ $carPart->part_number ?? '' }}"
                             data-image="{{ $carPart->feature_image ?? 'demo.png' }}" type="button">
                             <svg width="14" height="11" viewBox="0 0 14 11" fill="none"
                                 xmlns="http://www.w3.org/2000/svg">

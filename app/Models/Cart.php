@@ -8,7 +8,7 @@ class Cart extends Model
 {
      protected $fillable = [
         'user_id', 'product_id', 'title', 'slug', 'sku', 'part_number',
-        'feature_image', 'original_price', 'sale_price', 'quantity'
+        'feature_image', 'original_price', 'sale_price', 'quantity', 'session_id'
     ];
 
 

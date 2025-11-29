@@ -34,6 +34,15 @@
             display: flex;
             height: auto;
         }
+
+        .toast-message {
+            font-size: 15px !important;
+        }
+
+        .quantity-btn.minus-btn,
+        .quantity-btn.plus-btn {
+            font-size: 20px;
+        }
     </style>
 </head>
 
@@ -178,10 +187,19 @@
     <script>
         window.csrfToken = "<?php echo e(csrf_token()); ?>";
         window.productUrl = "<?php echo e(url('product')); ?>/";
+        window.baseUrl = "<?php echo e(asset('')); ?>";
         const cartAddUrl = "<?php echo e(route('cart.add')); ?>";
         const cartUpdateUrl = "<?php echo e(route('cart.update.quantity')); ?>";
         const cartRemoveUrl = "<?php echo e(route('cart.remove')); ?>";
         const cartDataUrl = "<?php echo e(route('cart.data')); ?>";
+    </script>
+    <script>
+        toastr.options = {
+            "closeButton": true,
+            "progressBar": true,
+            "positionClass": "toast-top-right",
+            "timeOut": "2000"
+        };
     </script>
     <?php if (isset($component)) { $__componentOriginal5596e0726e13f47ab1e6598e8d2383aa = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginal5596e0726e13f47ab1e6598e8d2383aa = $attributes; } ?>

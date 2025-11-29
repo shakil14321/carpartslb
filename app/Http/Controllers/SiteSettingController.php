@@ -137,26 +137,61 @@ public function store(Request $request)
     }
 
     // ===== Assign other settings =====
-    $setting->slider1_subtitle = $request->slider1_subtitle;
-    $setting->slider1_maintitle = $request->slider1_maintitle;
-    $setting->slider1_desc = $request->slider1_desc;
+    if($request->slider1_subtitle){
+        $setting->slider1_subtitle = $request->slider1_subtitle;
+    }
+    if($request->slider1_maintitle){
+        $setting->slider1_maintitle = $request->slider1_maintitle;
+    }
 
-    $setting->slider2_subtitle = $request->slider2_subtitle;
-    $setting->slider2_maintitle = $request->slider2_maintitle;
-    $setting->slider2_desc = $request->slider2_desc;
+    if($request->slider1_desc){
+        $setting->slider1_desc = $request->slider1_desc;
+    }
+    if($request->slider2_subtitle){
+        $setting->slider2_subtitle = $request->slider2_subtitle;
+    }
+    if($request->slider2_maintitle){
+        $setting->slider2_maintitle = $request->slider2_maintitle;
+    }
+    if($request->slider2_desc){
+        $setting->slider2_desc = $request->slider2_desc;
+    }
+    if($request->slider3_subtitle){
+        $setting->slider3_subtitle = $request->slider3_subtitle;
+    }
+    if($request->slider3_maintitle){
+        $setting->slider3_maintitle = $request->slider3_maintitle;
+    }
+    if($request->slider3_desc){
+        $setting->slider3_desc = $request->slider3_desc;
+    }
+    if($request->notice_bar){
+        $setting->notice_bar = $request->notice_bar;
+    }
+    if($request->brand_quantity){
+        $setting->brand_quantity = $request->brand_quantity;
+    }
+    if($request->google_verification){
+        $setting->google_verification = $request->google_verification;
+    }
+    if($request->shipping_text){
+        $setting->shipping_text = $request->shipping_text;
+    }
+    if($request->price_guarantee_text){
+        $setting->price_guarantee_text = $request->price_guarantee_text;
+    }
+    if($request->footer_about_text){
+        $setting->footer_about_text = $request->footer_about_text;
+    }
+    if($request->footer_facebook_link){
+        $setting->footer_facebook_link = $request->footer_facebook_link;
+    }
+    if($request->footer_instagram_link){
+        $setting->footer_instagram_link = $request->footer_instagram_link;
+    }
 
-    $setting->slider3_subtitle = $request->slider3_subtitle;
-    $setting->slider3_maintitle = $request->slider3_maintitle;
-    $setting->slider3_desc = $request->slider3_desc;
-    $setting->notice_bar = $request->notice_bar;
-    $setting->brand_quantity = $request->brand_quantity;
-    $setting->google_verification = $request->google_verification;
 
-    $setting->shipping_text = $request->shipping_text;
-    $setting->price_guarantee_text = $request->price_guarantee_text;
-    $setting->footer_about_text = $request->footer_about_text;
-    $setting->footer_facebook_link = $request->footer_facebook_link;
-    $setting->footer_instagram_link = $request->footer_instagram_link;
+
 
     // Sirf tab update karo jab menu_items empty na ho
     if (!empty($menu_items)) {

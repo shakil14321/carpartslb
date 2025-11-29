@@ -64,7 +64,8 @@
                             data-name="<?php echo e($carPart->title); ?>" data-price="<?php echo e($carPart->price); ?>"
                             data-sale_price="<?php echo e($carPart->sale_price ?? ''); ?>"
                             data-original_price="<?php echo e($carPart->original_price ?? ''); ?>"
-                            data-slug="<?php echo e($carPart->slug ?? ''); ?>"
+                            data-slug="<?php echo e($carPart->slug ?? ''); ?>" data-sku="<?php echo e($carPart->sku ?? ''); ?>"
+                            data-part_number="<?php echo e($carPart->part_number ?? ''); ?>"
                             data-image="<?php echo e($carPart->feature_image ?? 'demo.png'); ?>" type="button">
                             <svg width="14" height="11" viewBox="0 0 14 11" fill="none"
                                 xmlns="http://www.w3.org/2000/svg">

@@ -15,6 +15,15 @@
             display: flex;
             height: auto;
         }
+
+        .toast-message {
+            font-size: 15px !important;
+        }
+
+        .quantity-btn.minus-btn,
+        .quantity-btn.plus-btn {
+            font-size: 20px;
+        }
     </style>
 </head>
 
@@ -64,10 +73,19 @@
     <script>
         window.csrfToken = "{{ csrf_token() }}";
         window.productUrl = "{{ url('product') }}/";
+        window.baseUrl = "{{ asset('') }}";
         const cartAddUrl = "{{ route('cart.add') }}";
         const cartUpdateUrl = "{{ route('cart.update.quantity') }}";
         const cartRemoveUrl = "{{ route('cart.remove') }}";
         const cartDataUrl = "{{ route('cart.data') }}";
+    </script>
+    <script>
+        toastr.options = {
+            "closeButton": true,
+            "progressBar": true,
+            "positionClass": "toast-top-right",
+            "timeOut": "2000"
+        };
     </script>
     <x-Front.script />
     @yield('scripts')

@@ -1980,6 +1980,15 @@ body.overlay__active::before,
     gap: 3rem;
 }
 
+@media (max-width: 360px) {
+    .main__header--inner {
+        gap: 0rem;
+        /* or 0.5rem depending on your layout */
+        flex-wrap: wrap;
+        /* optional: prevents overflow */
+    }
+}
+
 .main__logo--link {
     display: block;
 }

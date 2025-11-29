@@ -19,8 +19,8 @@
     <!-- End breadcrumb section -->
 
     @if ($errors->any())
-        <div class="alert alert-danger alert-dismissible fade show shadow-sm border-0 main-danger notic_bar" role="alert"
-            style="margin:20px; border-radius:8px;">
+        <div class="alert alert-danger alert-dismissible fade show shadow-sm border-0 main-danger notic_bar text-center"
+            role="alert" style="margin:20px; border-radius:8px;">
             <i class="bi bi-exclamation-triangle-fill me-2"></i>
             <strong>Whoops! Something went wrong:</strong>
             <ul class="mt-2 mb-0 ps-3">
@@ -35,7 +35,7 @@
 
 
     @if (session('success'))
-        <div class="alert alert-success alert-dismissible fade show shadow-sm border-0 notic_bar" role="alert"
+        <div class="alert alert-success alert-dismissible fade show shadow-sm border-0 notic_bar text-center" role="alert"
             style="margin:20px; border-radius:8px;">
             <i class="bi bi-check-circle-fill me-2"></i>
             {{ session('success') }}
@@ -79,7 +79,7 @@
                                         <form action="{{ route('order.store') }}" method="post" id="new_address_form">
                                             @csrf
 
-                                            @foreach ($cart as $id => $product)
+                                            @foreach ($cartItems as $id => $product)
                                                 <input type="hidden" name="products[{{ $id }}][title]"
                                                     value="{{ $product['title'] }}">
                                                 @if ($product['sale_price'])
@@ -98,7 +98,6 @@
                                                     value="{{ $product['sku'] ?? '' }}">
                                                 <input type="hidden" name="products[{{ $id }}][part_number]"
                                                     value="{{ $product['part_number'] ?? '' }}">
-                                                    
                                             @endforeach
 
                                             {{-- product summary subtotal, total, taxes hidden input fields --}}
@@ -244,7 +243,7 @@
                                                 id="defaul_address_form">
                                                 @csrf
 
-                                                @foreach ($cart as $id => $product)
+                                                @foreach ($cartItems as $id => $product)
                                                     <input type="hidden" name="products[{{ $id }}][title]"
                                                         value="{{ $product['title'] }}">
                                                     @if ($product['sale_price'])
@@ -261,8 +260,9 @@
                                                         value="{{ $product['quantity'] ?? 0 }}">
                                                     <input type="hidden" name="products[{{ $id }}][slug]"
                                                         value="{{ $product['slug'] ?? '' }}">
-                                                    <input type="hidden" name="products[{{ $id }}][part_number]"
-                                                    value="{{ $product['part_number'] ?? '' }}">
+                                                    <input type="hidden"
+                                                        name="products[{{ $id }}][part_number]"
+                                                        value="{{ $product['part_number'] ?? '' }}">
                                                 @endforeach
 
                                                 {{-- product summary subtotal, total, taxes hidden input fields --}}
@@ -297,7 +297,8 @@
                                                                 Name
                                                                 <span class="checkout__input--label__star">*</span></label>
                                                             <input class="checkout__input--field border-radius-5"
-                                                                placeholder="Last name" id="input8" type="text" name="last_name"
+                                                                placeholder="Last name" id="input8" type="text"
+                                                                name="last_name"
                                                                 value="{{ old('last_name', $defaultAddress->user->last_name) }}"
                                                                 readonly>
                                                         </div>
@@ -321,7 +322,8 @@
                                                 <div class="col-12 mb-20">
                                                     <div class="checkout__input--list">
                                                         <input class="checkout__input--field border-radius-5"
-                                                            placeholder="Apartment, suite, etc. (optional)" type="text" name="address_line_2"
+                                                            placeholder="Apartment, suite, etc. (optional)" type="text"
+                                                            name="address_line_2"
                                                             value="{{ old('address_line_2', $defaultAddress->address_line_2) }}"
                                                             readonly>
                                                     </div>
@@ -335,7 +337,8 @@
                                                                 for="input11">Town/City
                                                                 <span class="checkout__input--label__star">*</span></label>
                                                             <input class="checkout__input--field border-radius-5"
-                                                                placeholder="City" id="input11" type="text" name="city"
+                                                                placeholder="City" id="input11" type="text"
+                                                                name="city"
                                                                 value="{{ old('city', $defaultAddress->city) }}" readonly>
                                                         </div>
                                                     </div>
@@ -347,8 +350,10 @@
                                                                 for="input11">State/Province
                                                                 <span class="checkout__input--label__star">*</span></label>
                                                             <input class="checkout__input--field border-radius-5"
-                                                                placeholder="City" id="input11" type="text" name="state"
-                                                                value="{{ old('state', $defaultAddress->state) }}" readonly>
+                                                                placeholder="City" id="input11" type="text"
+                                                                name="state"
+                                                                value="{{ old('state', $defaultAddress->state) }}"
+                                                                readonly>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -361,7 +366,8 @@
                                                                 for="country2">Country/region
                                                                 <span class="checkout__input--label__star">*</span></label>
                                                             <div class="checkout__input--select select">
-                                                                <select class="checkout__input--select__field border-radius-5"
+                                                                <select
+                                                                    class="checkout__input--select__field border-radius-5"
                                                                     id="country2" name="country" readonly>
                                                                     <option
                                                                         value="{{ old('country', $defaultAddress->country) }}"
@@ -376,7 +382,8 @@
                                                     {{-- postal code --}}
                                                     <div class="col-lg-6 mb-20">
                                                         <div class="checkout__input--list">
-                                                            <label class="checkout__input--label mb-5" for="input12">Postal
+                                                            <label class="checkout__input--label mb-5"
+                                                                for="input12">Postal
                                                                 Code
                                                                 <span class="checkout__input--label__star">*</span></label>
                                                             <input class="checkout__input--field border-radius-5"
@@ -418,15 +425,14 @@
                         <div class="cart__table checkout__product--table">
                             <table class="cart__table--inner">
                                 <tbody class="cart__table--body">
-                                    @forelse($cart as $id => $item)
-                                    
+                                    @forelse($cartItems as $id => $item)
                                         <tr class="cart__table--body__items">
                                             <td class="cart__table--body__list">
                                                 <div class="product__image two d-flex align-items-center">
                                                     <div class="product__thumbnail border-radius-5">
                                                         <a class="display-block" href="{{ route('product.view', $id) }}">
                                                             <img class="display-block border-radius-5"
-                                                                src="{{ $item['feature_image'] ? asset('public/images/parts/feature/' . $item['feature_image']) : asset('public/assets/front/img/product/default.webp') }}"
+                                                                src="{{ $item->product->feature_image ? asset('public/images/parts/feature/' . $item->product->feature_image) : asset('public/assets/front/img/product/default.webp') }}"
                                                                 alt="cart-product">
                                                         </a>
                                                         <span

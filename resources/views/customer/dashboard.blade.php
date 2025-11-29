@@ -71,6 +71,7 @@
                                         <th class="account__table--header__child--items">Payment</th>
                                         <th class="account__table--header__child--items">Status</th>
                                         <th class="account__table--header__child--items">Total</th>
+                                        <th class="account__table--header__child--items">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody class="account__table--body mobile__none">
@@ -78,22 +79,34 @@
                                         @foreach ($orders as $order)
                                             <tr class="account__table--body__child">
                                                 <td class="account__table--body__child--items">{{ $loop->iteration }}</td>
-                                                <td class="account__table--body__child--items"><a href="{{ route('orderView.customer',  ['id' => $order->id]) }}">{{ $order->order_number ?? '' }}</a></td>
+                                                <td class="account__table--body__child--items"><a
+                                                        href="{{ route('orderView.customer', ['id' => $order->id]) }}">{{ $order->order_number ?? '' }}</a>
+                                                </td>
                                                 <td class="account__table--body__child--items">
                                                     {{ ucwords(trim(($order->first_name ?? '') . ' ' . ($order->last_name ?? ''))) }}
                                                 </td>
                                                 <td class="account__table--body__child--items">
                                                     {{ $order->updated_at ?? '' }}</td>
-                                                <td class="account__table--body__child--items">{{ strtoupper($order->payment_method) ?? '' }}</td>
-                                                <td class="account__table--body__child--items">{{ ucwords($order->status) ?? '' }}
+                                                <td class="account__table--body__child--items">
+                                                    {{ strtoupper($order->payment_method) ?? '' }}</td>
+                                                <td class="account__table--body__child--items">
+                                                    {{ ucwords($order->status) ?? '' }}
                                                 </td>
-                                                <td class="account__table--body__child--items">{{ $order->total ? $order->total : '' }}
+                                                <td class="account__table--body__child--items">
+                                                    {{ $order->total ? $order->total : '' }}
+                                                </td>
+                                                <td class="account__table--body__child--items">
+                                                    <a href="{{ route('orderView.customer', ['id' => $order->id]) }}"
+                                                        class="btn btn-sm btn-info">
+                                                        View
+                                                    </a>
                                                 </td>
                                             </tr>
                                         @endforeach
                                     @else
                                         <tr class="account__table--body__child">
-                                            <td colspan="7" class="account__table--body__child--items text-center">Orders not found.</td>
+                                            <td colspan="7" class="account__table--body__child--items text-center">Orders
+                                                not found.</td>
                                         </tr>
                                     @endif
 
@@ -124,13 +137,20 @@
                                                 </td>
                                                 <td class="account__table--body__child--items">
                                                     <strong>Total</strong>
-                                                    <span>{{ $order->total ? '$'.$order->total : '' }}</span>
+                                                    <span>{{ $order->total ? '$' . $order->total : '' }}</span>
+                                                </td>
+                                                <td class="account__table--body__child--items">
+                                                    <a href="{{ route('orderView.customer', ['id' => $order->id]) }}"
+                                                        class="btn btn-sm btn-info">
+                                                        View
+                                                    </a>
                                                 </td>
                                             </tr>
                                         @endforeach
                                     @else
                                         <tr class="account__table--body__child">
-                                            <td colspan="6" class="account__table--body__child--items text-center">Orders not found.</td>
+                                            <td colspan="6" class="account__table--body__child--items text-center">Orders
+                                                not found.</td>
                                         </tr>
                                     @endif
                                 </tbody>

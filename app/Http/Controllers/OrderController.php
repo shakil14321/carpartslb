@@ -22,39 +22,39 @@ class OrderController extends Controller
 
         return view('admin.order.index', compact('orders'));
     }
-    
-    // Show review orders in admin dashboard 
+
+    // Show review orders in admin dashboard
     public function reviewOrders(){
         $orders = Order::where('status', 'review')->latest()->paginate(100);
-        
+
         return view('admin.order.review', compact('orders'));
     }
-    
+
     // Show process orders in admin dashboard
     public function processOrders(){
         $orders = Order::where('status', 'process')->latest()->paginate(100);
-        
+
         return view('admin.order.process', compact('orders'));
     }
-    
+
     // Show deliver order in admin dashboard
     public function deliverOrders(){
         $orders = Order::where('status', 'deliver')->latest()->paginate(100);
-        
+
         return view('admin.order.deliver', compact('orders'));
     }
-    
+
     // Show complete order in admin dashboard
     public function completeOrders(){
         $orders = Order::where('status', 'complete')->latest()->paginate(100);
-        
+
         return view('admin.order.complete', compact('orders'));
     }
-    
+
     // Show cancel order in admin dashboard
     public function cancelOrders(){
         $orders = Order::where('status', 'cancel')->latest()->paginate(100);
-        
+
         return view('admin.order.cancel', compact('orders'));
     }
 
@@ -112,13 +112,14 @@ class OrderController extends Controller
             'payment_method' => $request->payment_method ?? 'cod',
             'status' => 'pending',
             'order_number' => Str::upper(Str::random(10)),
+            'order_address_default' => $request->order_address_default ?? 'no',
             'products' => $products,
         ]);
 
         // Clear user's cart
         Cart::where('user_id', $user_id)->delete();
 
-        return redirect()->route('checkout.success', $order->id)
+        return redirect()->route('checkout.page', $order->id)
             ->with('success', 'Order placed successfully!');
     }
 
@@ -146,6 +147,28 @@ class OrderController extends Controller
             'products' => 'required|array', // products ko array me bhejna hoga
         ]);
 
+        // $user_id = Auth::id();
+        $cartItems = Cart::where('user_id', $request->user_id)->get();
+        if ($cartItems->isEmpty()) return back()->with('error', 'Cart is empty.');
+
+
+        $total = 0;
+        $products = [];
+        foreach ($cartItems as $item) {
+            $price = $item->sale_price ?? $item->original_price ?? 0;
+            $total += $price * $item->quantity;
+
+            $products[$item->product_id] = [
+                'title' => $item->product->title ?? '',
+                'sale_price' => $item->sale_price,
+                'original_price' => $item->original_price,
+                'quantity' => $item->quantity,
+                'slug' => $item->product->slug ?? '',
+                'sku' => $item->sku,
+                'part_number' => $item->part_number
+            ];
+        }
+
         $randomOrderNumber = 'ORD-' . Str::upper(Str::random(8));
 
         // Order create
@@ -168,14 +191,16 @@ class OrderController extends Controller
             'order_address_default' => $request->order_address_default,
 
             'total' => $request->total,
-            'products' => $request->products, // JSON format me save hoga
+            // 'products' => $request->products, // JSON format me save hoga
+            'products' => $products,
         ]);
 
-        Session::forget('cart');
+         Cart::where('user_id', $request->user_id)->delete();
+        // Session::forget('cart');
 
         return redirect()->route('checkout.page')->with('success', 'Order submitted successfully.');
     }
-    
+
     // This is admin dashboard. Edit order
     public function edit($id)
     {
@@ -189,28 +214,28 @@ class OrderController extends Controller
         $request->validate([
             'status' => 'required|string',
         ]);
-    
+
         $order = Order::findOrFail($id);
-    
+
         $order->update([
             'status' => $request->status,
         ]);
-    
+
         return redirect()->back()
                          ->with('success', 'Order updated successfully.');
     }
-    
+
     public function updateCustomer(Request $request, $id){
         $request->validate([
             'status' => 'required|string',
         ]);
-    
+
         $order = Order::findOrFail($id);
-    
+
         $order->update([
             'status' => $request->status,
         ]);
-    
+
         return redirect()->back()
                          ->with('success', 'Order cancel successfully.');
     }
@@ -228,7 +253,7 @@ class OrderController extends Controller
     public function deleteSelected(Request $request)
     {
        $ids = $request->ids;
-       
+
        if($ids){
            Order::whereIn('id', $ids)->delete();
             return redirect()->route('orderView.admin')->with('success', 'Selected orders deleted successfully.');
@@ -243,16 +268,16 @@ class OrderController extends Controller
 
         return redirect()->route('checkout.page')->with('success', 'All orders deleted successfully.');
     }
-    
+
     // search functionality for all orders
     public function orderSearch(Request $request)
     {
         $q = trim($request->input('q', ''));
-    
+
         if ($q === '') {
             return redirect()->route('orderView.admin')->with('error', 'Write something in search box.');
         }
-    
+
         $orders = Order::query()
             ->where('order_number', 'LIKE', "%{$q}%")
             ->orWhere('first_name', 'LIKE', "%{$q}%")
@@ -260,19 +285,19 @@ class OrderController extends Controller
             ->latest()
             ->paginate(100)
             ->appends(['q' => $q]);
-    
+
         return view('admin.order.search', compact('orders', 'q'));
     }
-    
+
     // search functionality for review orders
    public function orderReviewSearch(Request $request)
     {
         $q = trim($request->input('q', ''));
-    
+
         if ($q === '') {
             return redirect()->route('reviewOrder.admin')->with('error', 'Write something in search box.');
         }
-    
+
         $orders = Order::query()
             ->where('status', 'review')
             ->where(function($query) use ($q) {
@@ -283,19 +308,19 @@ class OrderController extends Controller
             ->latest()
             ->paginate(100)
             ->appends(['q' => $q]);
-    
+
         return view('admin.order.reviewSearch', compact('orders', 'q'));
     }
-    
+
     // search functionality for processing orders
    public function orderProcessSearch(Request $request)
     {
         $q = trim($request->input('q', ''));
-    
+
         if ($q === '') {
             return redirect()->route('processOrder.admin')->with('error', 'Write something in search box.');
         }
-    
+
         $orders = Order::query()
             ->where('status', 'process')
             ->where(function($query) use ($q) {
@@ -306,19 +331,19 @@ class OrderController extends Controller
             ->latest()
             ->paginate(100)
             ->appends(['q' => $q]);
-    
+
         return view('admin.order.processSearch', compact('orders', 'q'));
     }
-    
+
     // search functionality for deliver orders
    public function orderDeliverSearch(Request $request)
     {
         $q = trim($request->input('q', ''));
-    
+
         if ($q === '') {
             return redirect()->route('deliverOrder.admin')->with('error', 'Write something in search box.');
         }
-    
+
         $orders = Order::query()
             ->where('status', 'deliver')
             ->where(function($query) use ($q) {
@@ -329,19 +354,19 @@ class OrderController extends Controller
             ->latest()
             ->paginate(100)
             ->appends(['q' => $q]);
-    
+
         return view('admin.order.deliverSearch', compact('orders', 'q'));
     }
-    
+
     // search functionality for complete orders
    public function orderCompleteSearch(Request $request)
     {
         $q = trim($request->input('q', ''));
-    
+
         if ($q === '') {
             return redirect()->route('completeOrder.admin')->with('error', 'Write something in search box.');
         }
-    
+
         $orders = Order::query()
             ->where('status', 'complete')
             ->where(function($query) use ($q) {
@@ -352,19 +377,19 @@ class OrderController extends Controller
             ->latest()
             ->paginate(100)
             ->appends(['q' => $q]);
-    
+
         return view('admin.order.completeSearch', compact('orders', 'q'));
     }
-    
+
     // search functionality for cancel orders
    public function orderCancelSearch(Request $request)
     {
         $q = trim($request->input('q', ''));
-    
+
         if ($q === '') {
             return redirect()->route('cancelOrders.admin')->with('error', 'Write something in search box.');
         }
-    
+
         $orders = Order::query()
             ->where('status', 'cancel')
             ->where(function($query) use ($q) {
@@ -375,8 +400,8 @@ class OrderController extends Controller
             ->latest()
             ->paginate(100)
             ->appends(['q' => $q]);
-    
+
         return view('admin.order.cancelSearch', compact('orders', 'q'));
     }
-    
+
 }

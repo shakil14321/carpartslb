@@ -5,6 +5,7 @@
 <script src="{{ asset('public/assets/front/js/vendor/bootstrap.min.js') }}" defer="defer"></script>
 <script src="{{ asset('public/assets/front/js/plugins/swiper-bundle.min.js') }}"></script>
 <script src="{{ asset('public/assets/front/js/plugins/glightbox.min.js') }}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
 <!-- Custom my js -->
 <script src="{{ asset('public/assets/front/js/custom.js') }}"></script>

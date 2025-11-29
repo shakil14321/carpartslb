@@ -20,6 +20,7 @@
 
 <!-- Plugin css -->
 <link rel="stylesheet" href="{{ asset('public/assets/front/css/vendor/bootstrap.min.css') }}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 
 <!-- Custom Style CSS -->
 <link rel="stylesheet" href="{{ asset('public/assets/front/css/style.css') }}">

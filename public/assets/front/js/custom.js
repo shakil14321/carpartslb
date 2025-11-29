@@ -396,44 +396,44 @@ customerEdit();
 
 // Privacy accept check box functionality
 function privacyCheck() {
-  const acceptPolicy = document.getElementById("accept_policy");
-  const checkoutBtn = document.getElementById("checkout_cart_btn");
+    const acceptPolicy = document.getElementById("accept_policy");
+    const checkoutBtn = document.getElementById("checkout_cart_btn");
 
-  if (!acceptPolicy || !checkoutBtn) return;
+    if (!acceptPolicy || !checkoutBtn) return;
 
-  !acceptPolicy.checked && checkoutBtn.removeAttribute("href");
+    !acceptPolicy.checked && checkoutBtn.removeAttribute("href");
 
-  acceptPolicy.addEventListener("change", () => {
-    if (acceptPolicy.checked) {
-      checkoutBtn.setAttribute("href", checkoutBtn.dataset.href);
-    } else {
-      checkoutBtn.removeAttribute("href");
-    }
-  });
+    acceptPolicy.addEventListener("change", () => {
+        if (acceptPolicy.checked) {
+            checkoutBtn.setAttribute("href", checkoutBtn.dataset.href);
+        } else {
+            checkoutBtn.removeAttribute("href");
+        }
+    });
 }
 document.addEventListener("DOMContentLoaded", () => {
-  const checkoutBtn = document.getElementById("checkout_cart_btn");
-  if (checkoutBtn) checkoutBtn.dataset.href = checkoutBtn.getAttribute("href");
-  privacyCheck();
+    const checkoutBtn = document.getElementById("checkout_cart_btn");
+    if (checkoutBtn) checkoutBtn.dataset.href = checkoutBtn.getAttribute("href");
+    privacyCheck();
 });
 
 // Shipping form selected functionality at checkout page
 if (window.location.pathname.includes('/checkout')) {
     // Form hide and show functionality for checkout page.
-    function checkoutPageFormToggle(){
+    function checkoutPageFormToggle() {
         const newAddFormSec = document.getElementById("new_address_form_sec");
         const defaultAddFormSec = document.getElementById("default_address_form_sec");
 
-        if(!new_address_form_sec || !defaultAddFormSec) return;
+        if (!new_address_form_sec || !defaultAddFormSec) return;
 
         const newFormLabel = document.getElementById("newAdd");
         const defaultFormLabel = document.getElementById("defaulAdd");
 
-        newFormLabel.addEventListener("click", ()=>{
+        newFormLabel.addEventListener("click", () => {
             defaultAddFormSec.classList.toggle("toggleClass");
         });
 
-        defaultFormLabel.addEventListener("click", ()=>{
+        defaultFormLabel.addEventListener("click", () => {
             newAddFormSec.classList.toggle("toggleClass");
         });
     }
@@ -466,19 +466,19 @@ if (window.location.pathname.includes('/checkout')) {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  const checkmarks = document.querySelectorAll(".checkmark");
-  
-  if(!checkmarks.length) return;
+    const checkmarks = document.querySelectorAll(".checkmark");
 
-  checkmarks.forEach((checkmark) => {
-    checkmark.addEventListener("click", () => {
-      const checkbox = checkmark.previousElementSibling; // <input> checkbox
-      if (checkbox) {
-        checkbox.checked = !checkbox.checked;
-        checkbox.dispatchEvent(new Event("change")); // optional event trigger
-      }
+    if (!checkmarks.length) return;
+
+    checkmarks.forEach((checkmark) => {
+        checkmark.addEventListener("click", () => {
+            const checkbox = checkmark.previousElementSibling; // <input> checkbox
+            if (checkbox) {
+                checkbox.checked = !checkbox.checked;
+                checkbox.dispatchEvent(new Event("change")); // optional event trigger
+            }
+        });
     });
-  });
 });
 
 
@@ -521,43 +521,95 @@ function showPass() {
 }
 showPass();
 
-// Form checking for checkout submit button, and getting the selected form id on checkout page
+
 function checkoutGetFormId() {
     const newAddCheck = document.getElementById('new_checkbox');
     const defaulAddCheck = document.getElementById('default_checkbox');
     const checkoutBtn = document.getElementById('checkout_payment');
 
-    var formValue1 = document.getElementById('new_address_form');
-    var formValue2 = document.getElementById('defaul_address_form');
-    
-    if(!checkoutBtn) return;
+    const formValue1 = document.getElementById('new_address_form');
+    const formValue2 = document.getElementById('defaul_address_form');
 
-    checkoutBtn.addEventListener('click', function () {
+    const newFormSec = document.getElementById('new_address_form_sec');
+    const defaultFormSec = document.getElementById('default_address_form_sec');
 
-        if (newAddCheck && newAddCheck.checked) {
-            this.setAttribute('form', formValue1.id);
-            console.log(formValue1.id);
-        } else if (defaulAddCheck && defaulAddCheck.checked) {
-            this.setAttribute('form', formValue2.id);
-            console.log(formValue2.id);
+    if (!checkoutBtn) return;
+
+    function updateForms() {
+        if (newAddCheck.checked) {
+            defaulAddCheck.checked = false;
+            defaultFormSec.style.display = 'none';
+            newFormSec.style.display = 'block';
+        } else if (defaulAddCheck.checked) {
+            newAddCheck.checked = false;
+            newFormSec.style.display = 'none';
+            defaultFormSec.style.display = 'block';
+        } else {
+            newFormSec.style.display = 'block';
+            defaultFormSec.style.display = 'block';
         }
+    }
 
+    // Update forms when checkboxes change
+    newAddCheck.addEventListener('change', updateForms);
+    defaulAddCheck.addEventListener('change', updateForms);
 
+    // Set form on checkout button click
+    checkoutBtn.addEventListener('click', function () {
+        if (newAddCheck.checked) {
+            this.setAttribute('form', formValue1.id);
+            console.log('Submitting form:', formValue1.id);
+        } else if (defaulAddCheck.checked) {
+            this.setAttribute('form', formValue2.id);
+            console.log('Submitting form:', formValue2.id);
+        } else {
+            console.log('No address selected!');
+        }
     });
 
+    // Initialize state
+    updateForms();
 }
+
 checkoutGetFormId();
 
+// Form checking for checkout submit button, and getting the selected form id on checkout page
+// function checkoutGetFormId() {
+//     const newAddCheck = document.getElementById('new_checkbox');
+//     const defaulAddCheck = document.getElementById('default_checkbox');
+//     const checkoutBtn = document.getElementById('checkout_payment');
+
+//     var formValue1 = document.getElementById('new_address_form');
+//     var formValue2 = document.getElementById('defaul_address_form');
+
+//     if(!checkoutBtn) return;
+
+//     checkoutBtn.addEventListener('click', function () {
+
+//         if (newAddCheck && newAddCheck.checked) {
+//             this.setAttribute('form', formValue1.id);
+//             console.log(formValue1.id);
+//         } else if (defaulAddCheck && defaulAddCheck.checked) {
+//             this.setAttribute('form', formValue2.id);
+//             console.log(formValue2.id);
+//         }
+
+
+//     });
+
+// }
+// checkoutGetFormId();
+
 // Integrate hidden input values for new address form checkout page
-function checkoutSubmit(){
+function checkoutSubmit() {
     const totalAmountElement = document.getElementById('totalAmount');
     const totalHiddenInput = document.getElementById('totalAmountHiddenInput');
     const defaultTotalHiddenInput = document.getElementById('defaultTotalAmountHiddenInput');
-    
-    if(!totalAmountElement) return;
+
+    if (!totalAmountElement) return;
 
     const totalAmout = totalAmountElement.innerText;
-    
+
     totalAmout ? totalHiddenInput.value = totalAmout : '';
     totalAmout ? defaultTotalHiddenInput.value = totalAmout : '';
 

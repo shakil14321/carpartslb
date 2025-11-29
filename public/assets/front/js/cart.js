@@ -4,12 +4,14 @@ $(document).ready(function () {
     // ADD TO CART BUTTON
     // ------------------------------------------
     $('.add-to-cart-btn').on('click', function () {
+        const quantity = $(this).closest('.product__variant--list').find('.quantity-input').val() || 1;
         const payload = {
             product_id: $(this).data('id'),
             sale_price: $(this).data('sale_price') || null,
             original_price: $(this).data('original_price') || null,
             sku: $(this).data('sku') || null,
             part_number: $(this).data('part_number') || null,
+            quantity: parseInt(quantity)
         };
 
         $.ajax({
@@ -22,9 +24,27 @@ $(document).ready(function () {
             success: function (data) {
                 console.log("Cart updated", data);
                 updateMiniCart(data);
+                // Update counter
+                $(".items__count").text(data.count);
+
+                // Update total price
+                console.log($("#header_cart_total"));
+                $(".minicart__btn--text__price").html(data.total);
+                toastr.success("Product added to cart!");
+
             },
             error: function (xhr) {
-                console.error("Add to cart error:", xhr.responseText);
+                if (xhr.status === 401) {
+                    // Backend message
+                    const res = xhr.responseJSON;
+                    if (res && res.message) {
+                        toastr.warning(res.message);
+                    } else {
+                        toastr.warning("Please login to add items to cart.");
+                    }
+                } else {
+                    console.error("Add to cart error:", xhr.responseText);
+                }
             }
         });
 
@@ -77,6 +97,10 @@ $(document).ready(function () {
             },
             success: function (data) {
                 updateMiniCart(data);
+                $(".items__count").text(data.count);
+
+                // Update header total
+                $(".minicart__btn--text__price").text(data.total);
             },
             error: function (xhr) {
                 console.error("Remove cart item error:", xhr.responseText);
@@ -124,7 +148,7 @@ $(document).ready(function () {
                 <div class="minicart__item">
                     <div class="d-flex justify-content-between align-items-center mb-2">
                         <div class="d-flex align-items-center gap-2">
-                            <img src="/public/images/parts/feature/${item.product.feature_image}"
+                            <img src="${window.baseUrl}public/images/parts/feature/${item.product.feature_image}"
                                  width="50" height="50" style="object-fit:cover;">
                             <span>${item.product.title}</span>
                         </div>

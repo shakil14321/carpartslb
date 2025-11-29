@@ -4,8 +4,8 @@
             <h3 class="minicart__title">Shopping Cart</h3>
             <button class="minicart__close--btn" aria-label="minicart close btn" data-offcanvas>
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-                    <path d="M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                    <path d="M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    <path d="M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                    <path d="M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
                 </svg>
             </button>
         </div>
@@ -32,6 +32,7 @@
     </div>
 
     <div class="minicart__button d-flex justify-content-center mt-3 gap-2">
-        <a class="primary__btn minicart__button--link text-center" id="checkout_cart_btn" href="{{ route('checkout.page') }}" style="width:100% !important;">Checkout</a>
+        <a class="primary__btn minicart__button--link text-center" id="checkout_cart_btn"
+            href="{{ route('checkout.page') }}" style="width:100% !important;">Checkout</a>
     </div>
 </div>
