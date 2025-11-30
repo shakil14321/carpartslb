@@ -21,6 +21,10 @@ class CarPartsImport implements ToModel, WithHeadingRow, WithValidation, WithChu
 
     public function model(array $row)
     {
+
+        if (CarPart::where('sku', $row['sku'])->exists()) {
+            return null; // Skip this row instead of inserting
+        }
         // Map names to IDs
         $carBrandId  = CarBrand::where('title', $row['car_brand_name'])->value('id');
         $carModelId  = CarModel::where('title', $row['car_model_name'])->value('id');
