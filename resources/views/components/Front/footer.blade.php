@@ -27,15 +27,15 @@
                                 {{ $setting && $setting->footer_about_text
                                     ? $setting->footer_about_text
                                     : ' At CarPartsLB, we specialize in providing genuine and
-                                                                                                                                                                                                high-quality spare parts for BMW, MINI, and BMW Motorrad. As trusted auto parts
-                                                                                                                                                                                                resellers in Lebanon, we focus on reliability, affordability, and performance to keep
-                                                                                                                                                                                                your vehicle running at its best.' }}
+                                                                                                                                                                                                                                high-quality spare parts for BMW, MINI, and BMW Motorrad. As trusted auto parts
+                                                                                                                                                                                                                                resellers in Lebanon, we focus on reliability, affordability, and performance to keep
+                                                                                                                                                                                                                                your vehicle running at its best.' }}
 
                             </p>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-6 col-md-4">
+                <div class="col-lg-6 col-md-4 text-right">
                     <div class="footer__widget">
                         <h2 class="footer__widget--title">My Account <button class="footer__widget--button"
                                 aria-label="footer widget button"></button>
