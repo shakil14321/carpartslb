@@ -79,6 +79,7 @@
         const cartRemoveUrl = "{{ route('cart.remove') }}";
         const cartDataUrl = "{{ route('cart.data') }}";
     </script>
+    <x-Front.script />
     <script>
         toastr.options = {
             "closeButton": true,
@@ -87,7 +88,6 @@
             "timeOut": "2000"
         };
     </script>
-    <x-Front.script />
     @yield('scripts')
 
 </body>

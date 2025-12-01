@@ -19,18 +19,32 @@ $(document).ready(function () {
             method: "POST",
             data: payload,
             headers: {
-                "X-CSRF-TOKEN": window.csrfToken
+                "X-CSRF-TOKEN": window.csrfToken,
+                "Accept": "application/json"
             },
             success: function (data) {
-                console.log("Cart updated", data);
-                updateMiniCart(data);
-                // Update counter
-                $(".items__count").text(data.count);
+                if (data.success) {
+                    // Only update cart if success
+                    updateMiniCart(data);
 
-                // Update total price
-                console.log($("#header_cart_total"));
-                $(".minicart__btn--text__price").html(data.total);
-                toastr.success("Product added to cart!");
+                    // Update counter & total price
+                    $(".items__count").text(data.count);
+                    $(".minicart__btn--text__price").html(data.total);
+
+                    toastr.success("Product added to cart!");
+                } else {
+                    // If not success, show warning
+                    toastr.warning(data.message);
+                }
+                // console.log("Cart updated", data);
+                // updateMiniCart(data);
+                // // Update counter
+                // $(".items__count").text(data.count);
+
+                // // Update total price
+                // console.log($("#header_cart_total"));
+                // $(".minicart__btn--text__price").html(data.total);
+                // toastr.success("Product added to cart!");
 
             },
             error: function (xhr) {

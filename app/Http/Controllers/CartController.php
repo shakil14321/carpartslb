@@ -36,6 +36,7 @@ class CartController extends Controller
         $count = $cartItems->count();
 
         return response()->json([
+            'success' => true,
             'cart' => $cartItems,
             'total' => '$' . number_format($total, 2),
             'raw_total' => $total,
@@ -73,8 +74,8 @@ class CartController extends Controller
         if (!$user_id) {
             return response()->json([
                 'success' => false,
-                'message' => 'Please login to add items to cart.'
-            ], 401); // 401 Unauthorized
+                'message' => "Please login first for 'Add To Cart'"
+            ], 200); // still 200 so Ajax won’t throw an error
         }
         $product_id = $request->product_id;
 

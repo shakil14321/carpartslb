@@ -2,13 +2,7 @@
      use App\Models\Cart;
 
      $userId = auth()->id();
-     $sessionId = session()->getId();
-
-     $cartItems = Cart::where(function ($q) use ($userId, $sessionId) {
-         if ($userId) {
-             $q->where('user_id', $userId);
-         }
-     })->get();
+     $cartItems = Cart::where('user_id', $userId)->get();
 
      $cartCount = $cartItems->count();
 

@@ -60,7 +60,14 @@ class RegisterController extends Controller
         ]);
 
         // send verification email
-        Mail::to($user->email)->send(new VerifyEmailCode($code, $user->name));
+        try {
+            // Send email
+            Mail::to($user->email)->send(new VerifyEmailCode($code, $user->name));
+        } catch (\Exception $e) {
+            // If email fails, do NOT stop storing the message
+            \Log::error('Registration form email failed: '.$e->getMessage());
+        }
+        // Mail::to($user->email)->send(new VerifyEmailCode($code, $user->name));
 
         return redirect()->route('verify.form')->with('success', 'Registration successful. Please check your email for the verification code.');
     }

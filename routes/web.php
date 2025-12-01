@@ -24,6 +24,7 @@ use App\Http\Controllers\Frontend\Auth\VerificationController;
 use App\Http\Controllers\Frontend\Auth\PasswordResetController;
 
 // Fronted pages
+Route::get('/cc', [PageController::class, 'cacheClear'])->name('cacheClear');
 Route::get('/', [PageController::class, 'index'])->name('home');
 Route::get('/product/{slug}', [CarPartController::class, 'show'])->name('product.view');
 Route::get('/category/{slug}', [PageController::class, 'shopType'])->name('type.view');

@@ -16,6 +16,8 @@ class PageController extends Controller
 {
     // Home page functionality
     public function index(){
+        $title = 'Auto Parts Accessories';
+        $meta_des = 'At CarPartsLB, we specialize in providing genuine and high-quality spare parts for BMW, MINI, and BMW Motorrad. As trusted auto parts resellers in Lebanon, we focus on reliability, affordability, and performance to keep your vehicle running at its best.';
         $carParts = CarPart::where('fav_product', 1)->latest()->take(10)->get();
         $latestParts = CarPart::latest()->get();
 
@@ -35,7 +37,7 @@ class PageController extends Controller
         $partType70 =  CarPartType::withCount('carPart')->skip(61)->take(9)->get();
         $partType80 =  CarPartType::withCount('carPart')->skip(70)->take(10)->get();
 
-        return view('front.pages.home', compact('carParts', 'latestParts', 'carPartTypes', 'carBrands', 'carPartBrands', 'partType10', 'partType20', 'partType30', 'partType40', 'partType50', 'partType60', 'partType70', 'partType80'));
+        return view('front.pages.home', compact('carParts', 'latestParts', 'carPartTypes', 'carBrands', 'carPartBrands', 'partType10', 'partType20', 'partType30', 'partType40', 'partType50', 'partType60', 'partType70', 'partType80', 'title', 'meta_des', 'setting'));
     }
 
     // About us page
@@ -203,7 +205,12 @@ class PageController extends Controller
         $carPartTypes = CarPartType::withCount('carPart')->get();
         $carPartsFav = CarPart::where('fav_product', 10)->get();
 
+        $setting = SiteSetting::first();
+
         $partBrand = CarPartBrand::where('slug', $slug)->firstOrFail();
+        $title = $partBrand->title;
+        $meta_des = 'At CarPartsLB, we specialize in providing genuine and high-quality spare parts for BMW, MINI, and BMW Motorrad. As trusted auto parts resellers in Lebanon, we focus on reliability, affordability, and performance to keep your vehicle running at its best.';
+
 
         $query = CarPart::where('part_brand_id', $partBrand->id);
 
@@ -233,7 +240,7 @@ class PageController extends Controller
             return view('front.partials.car_parts_list', compact('carParts'))->render();
         }
 
-        return view('front.pages.part-brand', compact('partBrand', 'carParts', 'carPartTypes', 'carPartsFav'));
+        return view('front.pages.part-brand', compact('setting','partBrand', 'carParts', 'carPartTypes', 'carPartsFav', 'title', 'meta_des'));
     }
 
     //It is refund policy page.
@@ -274,9 +281,20 @@ class PageController extends Controller
             });
         }
 
+        $rawMinPrice = $query->min('sale_price') ?? 0;
+        $rawMaxPrice = $query->max('sale_price') ?? 0;
+
+        $globalMinPrice = floor($rawMinPrice); // round down
+        $globalMaxPrice = ceil($rawMaxPrice);  // round up
+        // dd($globalMinPrice,$globalMaxPrice);
+
         // --- Price Filter ---
-        $minPrice = $request->input('min_price');
-        $maxPrice = $request->input('max_price');
+        $minPrice = $request->input('min_price', $globalMinPrice);
+        $maxPrice = $request->input('max_price', $globalMaxPrice);
+
+        // --- Price Filter ---
+        // $minPrice = $request->input('min_price');
+        // $maxPrice = $request->input('max_price');
 
         if ($minPrice) {
             $query->where('sale_price', '>=', $minPrice);
@@ -308,7 +326,7 @@ class PageController extends Controller
             return view('front.partials.car_parts_list', compact('carParts'))->render();
         }
 
-        return view('front.pages.search', compact('carParts', 'carPartTypes', 'carPartsFav', 'search'));
+        return view('front.pages.search', compact('carParts', 'carPartTypes', 'carPartsFav', 'search', 'globalMinPrice', 'globalMaxPrice', 'minPrice', 'maxPrice'));
     }
 
      // JSON search API
@@ -404,5 +422,17 @@ class PageController extends Controller
         "status" => "success",
         "message" => "All cache cleared successfully!"
         ]);
+    }
+
+    public function cacheClear()
+    {
+        Artisan::call('config:cache');
+        Artisan::call('cache:clear');
+       Artisan::call('optimize:clear'); // clears route, config, view, event caches
+
+        // Optionally rebuild config cache
+        Artisan::call('route:cache'); // optional if you want faster route loading
+
+        return redirect()->back()->with('success', 'Caches cleared and rebuilt successfully!');
     }
 }
