@@ -45,9 +45,9 @@ class CarPartsExport implements FromQuery, WithMapping, WithHeadings
         return [
             'ID',
             'Car Brand Name',
-            'Part Brand Name',
             'Car Model Name',
             'Part Type Name',
+            'Part Brand Name',
             'Title',
             'Slug',
             'SKU',

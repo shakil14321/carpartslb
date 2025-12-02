@@ -153,49 +153,49 @@ class CarPartTypeController extends Controller
             return redirect()->route('type.index')->with('error', 'Import failed: ' . $e->getMessage());
         }
     }
-    
+
     public function deleteSelected(Request $request)
     {
         $ids = $request->input('ids');
-    
+
         if (empty($ids)) {
             return redirect()->route('type.index')
                 ->with('error', 'Please select at least one brand to delete.');
         }
-    
+
         // Get brands
         $types = CarPartType::whereIn('id', $ids)->get();
-    
+
         foreach ($types as $type) {
             if (!empty($brand->part_type_image)) {
                 $imagePath = public_path('images/types/' . $type->part_type_image);
-    
+
                 if (file_exists($imagePath)) {
                     @unlink($imagePath);
                 }
             }
         }
-    
+
         // Delete from database
         CarPartType::whereIn('id', $ids)->delete();
-    
+
         return redirect()->route('type.index')
             ->with('success', 'Selected Car Categories Deleted Successfully!');
     }
-    
+
     public function productTypeSearchAdmin(Request $request){
         $q = trim($request->input('q', ''));
-        
+
         if($q === ''){
             return redirect()->back()->with('error', 'Write something in search box.');
         }
-        
+
          $types = CarPartType::query()
          ->where('title', 'LIKE', "%{$q}%")
          ->latest()
          ->paginate(100)
          ->appends(['q', $request->query('q')]);
-         
+
          return view('admin.type.search', compact('types', 'q'));
     }
 }

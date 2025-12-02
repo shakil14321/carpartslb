@@ -279,6 +279,7 @@ Route::prefix('panel')->middleware(['auth','role:admin','prevent-back-history'])
     Route::get('/orders/complete', [OrderController::class, 'completeOrders'])->name('completeOrder.admin');
     Route::get('/orders/cancel', [OrderController::class, 'cancelOrders'])->name('cancelOrders.admin');
     Route::get('/order/{id}/view', [OrderController::class, 'show'])->name('order.view');
+    Route::post('/order/cancel-item', [OrderController::class, 'cancelItem'])->name('order.cancelItem');
     Route::get('/order/{id}/edit', [OrderController::class, 'edit'])->name('order.edit');
     Route::put('/order/{id}/update', [OrderController::class, 'update'])->name('order.update');
     Route::delete('/order/{id}/delete', [OrderController::class, 'destroy'])->name('order.destroy');

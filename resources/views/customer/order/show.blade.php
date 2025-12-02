@@ -102,6 +102,7 @@
                                         <tr>
                                             <th>Sr. #</th>
                                             <th>Product Name</th>
+                                            <th>Part Number</th>
                                             <th>Quantity</th>
                                             <th>SKU</th>
                                         </tr>
@@ -111,7 +112,8 @@
                                             <tr>
                                                 <td>{{ $loop->iteration }}</td>
                                                 <td>{{ $product['title'] ?? '' }}</td>
-                                                <td>{{ $product['stock_quantity'] ?? '' }}</td>
+                                                <td>{{ $product['part_number'] ?? '' }}</td>
+                                                <td>{{ $product['quantity'] ?? '' }}</td>
                                                 <td>{{ $product['sku'] ?? '' }}</td>
                                             </tr>
                                         @endforeach

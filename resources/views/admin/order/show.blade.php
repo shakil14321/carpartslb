@@ -22,6 +22,10 @@
                 border: none !important;
                 box-shadow: none !important;
             }
+
+            .no-print {
+                display: none !important;
+            }
         }
     </style>
 
@@ -30,7 +34,8 @@
         <div class="container">
             <!-- Back Button -->
             <div class="mb-3 header-actions">
-                <a href="{{ url()->previous() }}" class="btn btn-outline-success btn-sm d-inline-flex align-items-center">
+                <a href="{{ route('orderView.admin') }}"
+                    class="btn btn-outline-success btn-sm d-inline-flex align-items-center">
                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" stroke="currentColor"
                         stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="me-1">
                         <path d="M6 8L2 12L6 16" />
@@ -95,6 +100,7 @@
                             <table class="table table-bordered align-middle text-center">
                                 <thead class="table-success">
                                     <tr>
+                                        <th scope="col"></th>
                                         <th scope="col">Sr. #</th>
                                         <th scope="col">Product Name</th>
                                         <th scope="col">Part Number</th>
@@ -105,7 +111,34 @@
                                 </thead>
                                 <tbody>
                                     @foreach ($order->products as $product)
+                                        @php
+                                            $canCancelItem = in_array($order->status, ['pending', 'process', 'review']);
+                                        @endphp
                                         <tr>
+                                            <td>
+                                                @if ($canCancelItem)
+                                                    <form action="{{ route('order.cancelItem') }}" method="POST"
+                                                        style="display:inline-block;">
+                                                        @csrf
+                                                        <input type="hidden" name="order_id" value="{{ $order->id }}">
+                                                        <input type="hidden" name="sku" value="{{ $product['sku'] }}">
+                                                        <button type="submit" class="btn btn-outline-danger btn-sm p-1"
+                                                            title="Cancel Item">
+                                                            <!-- Trash / cancel icon SVG -->
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="16"
+                                                                height="16" fill="currentColor" class="bi bi-x-circle"
+                                                                viewBox="0 0 16 16">
+                                                                <path
+                                                                    d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 1 8 0a8 8 0 0 1 0 16z" />
+                                                                <path
+                                                                    d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1
+                                                                                                                            .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8
+                                                                                                                            4.646 5.354a.5.5 0 0 1 0-.708z" />
+                                                            </svg>
+                                                        </button>
+                                                    </form>
+                                                @endif
+                                            </td>
                                             <td>{{ $loop->iteration }}</td>
                                             <td><a
                                                     href="{{ route('product.view', $product['slug']) }}">{{ $product['title'] ?? '' }}</a>
@@ -119,7 +152,7 @@
                                 </tbody>
                                 <tfoot>
                                     <tr>
-                                        <th colspan="5" class="text-end">Order Total</th>
+                                        <th colspan="6" class="text-end">Order Total</th>
                                         <th>{{ $order->total }}</th>
                                     </tr>
                                 </tfoot>
@@ -154,7 +187,7 @@
                         </div>
 
                         <div class="mt-5">
-                            <a href="{{ url()->previous() }}" class="btn btn-success btn-lg px-5">Back</a>
+                            <a href="{{ route('orderView.admin') }}" class="btn btn-success btn-lg px-5">Back</a>
                         </div>
                     @else
                         <p class="text-danger fs-5 mb-0">Order not found.</p>

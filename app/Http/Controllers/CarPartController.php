@@ -345,6 +345,7 @@ class CarPartController extends Controller
         ]);
 
         try {
+            CarPart::truncate();
             Excel::import(new CarPartsImport, $request->file('file'));
         } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
             $failures = $e->failures();

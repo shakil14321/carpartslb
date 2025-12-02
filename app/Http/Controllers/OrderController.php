@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\AdminOrderMail;
 use App\Models\Order;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
@@ -11,7 +12,9 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\OrderMail;
 use App\Models\Cart;
 use App\Models\OrderItem;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class OrderController extends Controller
 {
@@ -74,7 +77,7 @@ class OrderController extends Controller
     }
 
     // This is for checkout page
-     public function store(Request $request)
+    public function store(Request $request)
     {
         $user_id = Auth::id();
         $cartItems = Cart::where('user_id', $user_id)->get();
@@ -118,6 +121,27 @@ class OrderController extends Controller
 
         // Clear user's cart
         Cart::where('user_id', $user_id)->delete();
+
+        $user= User::find($request->user_id);
+        // Session::forget('cart');
+        try {
+            // Customer email
+            Mail::to($user->email)->send(new OrderMail($order));
+
+            sleep(1);
+            // Admin email
+            Mail::to(env('MAIL_FROM_ADDRESS'))->send(new AdminOrderMail($order));
+
+        } catch (\Exception $e) {
+
+            // Log error
+            Log::error('Order Email Error: '.$e->getMessage());
+
+            // Show warning but DO NOT stop order creation
+            return redirect()
+                ->route('checkout.page')
+                ->with('warning', 'Order placed but email failed to send. Please contact support.');
+        }
 
         return redirect()->route('checkout.page', $order->id)
             ->with('success', 'Order placed successfully!');
@@ -196,7 +220,26 @@ class OrderController extends Controller
         ]);
 
          Cart::where('user_id', $request->user_id)->delete();
+         $user= User::find($request->user_id);
         // Session::forget('cart');
+        try {
+            // Customer email
+            Mail::to($user->email)->send(new OrderMail($order));
+
+            sleep(1);
+            // Admin email
+            Mail::to(env('MAIL_FROM_ADDRESS'))->send(new AdminOrderMail($order));
+
+        } catch (\Exception $e) {
+
+            // Log error
+            Log::error('Order Email Error: '.$e->getMessage());
+
+            // Show warning but DO NOT stop order creation
+            return redirect()
+                ->route('checkout.page')
+                ->with('warning', 'Order placed but email failed to send. Please contact support.');
+        }
 
         return redirect()->route('checkout.page')->with('success', 'Order submitted successfully.');
     }
@@ -403,5 +446,55 @@ class OrderController extends Controller
 
         return view('admin.order.cancelSearch', compact('orders', 'q'));
     }
+
+
+    public function cancelItem(Request $request)
+    {
+        $request->validate([
+            'order_id' => 'required|exists:orders,id',
+            'sku' => 'required|string',
+        ]);
+
+        $order = Order::find($request->order_id);
+
+        // Only allow cancel if order status allows it
+        if (!in_array($order->status, ['pending', 'process', 'review'])) {
+            return back()->with('error', 'You cannot cancel items in this order.');
+        }
+
+        $products = $order->products; // this is a JSON decoded array
+
+        // Find the key of the product by SKU
+        $productKey = null;
+        foreach ($products as $key => $p) {
+            if ($p['sku'] === $request->sku) {
+                $productKey = $key;
+                break;
+            }
+        }
+
+        if (!$productKey) {
+            return back()->with('error', 'Product not found in order.');
+        }
+
+        // Remove the product
+        unset($products[$productKey]);
+
+        // Recalculate total
+        $total = 0;
+        foreach ($products as $p) {
+            $price = $p['sale_price'] ?? $p['original_price'] ?? 0;
+            $total += $price * $p['quantity'];
+        }
+
+        // Update the order
+        $order->update([
+            'products' => $products,
+            'total' => $total,
+        ]);
+
+        return back()->with('success', 'Product canceled successfully.');
+    }
+
 
 }
