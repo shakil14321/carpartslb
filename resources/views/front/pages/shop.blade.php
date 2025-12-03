@@ -1,5 +1,9 @@
 @extends('layouts.front.front-layout')
 
+@section('seo')
+    <meta name="robots" content="noindex, nofollow">
+@endsection
+
 @section('content')
     <!-- Start breadcrumb section -->
     <section class="breadcrumb__section breadcrumb__bg">

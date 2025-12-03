@@ -209,7 +209,8 @@ class PageController extends Controller
 
         $partBrand = CarPartBrand::where('slug', $slug)->firstOrFail();
         $title = $partBrand->title;
-        $meta_des = 'At CarPartsLB, we specialize in providing genuine and high-quality spare parts for BMW, MINI, and BMW Motorrad. As trusted auto parts resellers in Lebanon, we focus on reliability, affordability, and performance to keep your vehicle running at its best.';
+        $meta_des = "Buy genuine {$partBrand->title} parts at CarPartsLB. High-quality, affordable, and reliable original spare parts for perfect performance.";
+
 
 
         $query = CarPart::where('part_brand_id', $partBrand->id);

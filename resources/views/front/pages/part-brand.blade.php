@@ -8,10 +8,11 @@
     <!-- OG tags -->
     <meta property="og:title" content="{{ $title ?? 'Home - Your Website' }}">
     <meta property="og:description" content="{{ $meta_des ?? 'Best auto parts store' }}">
-    <meta property="og:image" content="{{ asset('public/images/logos/' . ($setting->site_logo ?? 'default.png')) }}">
+    <meta property="og:image" content="{{ asset('public/assets/front/img/logo/seo_image.png') }}">
+    <meta property="og:image:type" content="image/png" />
     <meta property="og:url" content="{{ url()->current() }}">
 
-    @php
+    {{-- @php
         // Build the schema inside a PHP block so Blade doesn't try to parse @context etc.
 $schema = [
     '@context' => 'https://schema.org',
@@ -35,7 +36,7 @@ $schema = [
 
     <script type="application/ld+json">
     {!! json_encode($schema, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE) !!}
-    </script>
+    </script> --}}
 @endsection
 
 @section('content')

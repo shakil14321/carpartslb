@@ -135,7 +135,7 @@
                                 <label for="input-originalPrice">Product Price*</label>
                                 <input type="number" class="form-control original-price" id="input-originalPrice"
                                     placeholder="Enter product price" name="original_price"
-                                    value="{{ old('original_price', $product->original_price) }}">
+                                    value="{{ old('original_price', $product->original_price) }}" step=".01">
                             </div>
 
                             <!-- Product sale price input -->
@@ -143,7 +143,7 @@
                                 <label for="input-salePrice">Product Sale Price*</label>
                                 <input type="number" class="form-control sale-price" id="input-salePrice"
                                     placeholder="Enter product sale price" name="sale_price"
-                                    value="{{ old('sale_price', $product->sale_price) }}">
+                                    value="{{ old('sale_price', $product->sale_price) }}" step=".01">
                             </div>
 
                             <!-- Types dropdown -->
