@@ -136,6 +136,13 @@ $(document).ready(function () {
                 "X-CSRF-TOKEN": window.csrfToken
             },
             success: function (data) {
+                // console.log(data);
+                // convert object to array
+                const cartArray = Array.isArray(data.cart) ? data.cart : Object.values(data.cart);
+
+                // replace cart with array
+                data.cart = cartArray;
+
                 updateMiniCart(data);
             },
             error: function (xhr) {
@@ -150,34 +157,110 @@ $(document).ready(function () {
     // UPDATE MINI CART UI
     // ------------------------------------------
     function updateMiniCart(data) {
+        // console.log(data);
 
         $('#cart-count').text(data.count);
         $('#cart_total').text(data.total);
 
         const listElem = $('.minicart__product');
-        listElem.html('');
+        listElem.html(''); // clear previous items
 
         data.cart.forEach(item => {
             listElem.append(`
-                <div class="minicart__item">
-                    <div class="d-flex justify-content-between align-items-center mb-2">
-                        <div class="d-flex align-items-center gap-2">
-                            <img src="${window.baseUrl}public/images/parts/feature/${item.product.feature_image}"
-                                 width="50" height="50" style="object-fit:cover;">
-                            <span>${item.product.title}</span>
-                        </div>
-                        <div>
-                            <button class="cart-qty-btn" data-id="${item.id}" data-type="minus">-</button>
-                            <span>${item.quantity}</span>
-                            <button class="cart-qty-btn" data-id="${item.id}" data-type="plus">+</button>
-                            <button class="remove-cart-item btn btn-sm text-danger" data-id="${item.id}">x</button>
+            <div class="minicart__item py-2">
+                <div class="d-flex justify-content-between align-items-start">
+
+                    <div class="d-flex align-items-start gap-2">
+                        <img src="${window.baseUrl}public/images/parts/feature/${item.image ?? ''}"
+                            width="50" height="50" style="object-fit:cover;">
+
+                        <div class="d-flex flex-column">
+                            <span class="fw-semibold d-block">${item.title ?? 'Unknown Product'}</span>
+
+                            <small class="text-muted d-block">Part#: ${item.part_number ?? '-'}</small>
+
+                            <small class="text-muted d-block">
+                                Price: <span class="fw-semibold text-dark">$${item.sale_price ?? item.original_price ?? 0}</span>
+                            </small>
                         </div>
                     </div>
-                </div>
-            `);
-        });
 
+                    <div class="d-flex align-items-center gap-1">
+                        <button class="cart-qty-btn qty-btn" data-id="${item.product_id}" data-type="minus">-</button>
+                        <span class="qty-display">${String(item.quantity).padStart(2, '0')}</span>
+                        <button class="cart-qty-btn qty-btn" data-id="${item.product_id}" data-type="plus">+</button>
+
+                        <button class="remove-cart-item remove-btn" data-id="${item.product_id}">×</button>
+                    </div>
+
+                </div>
+            </div>
+        `);
+        });
     }
+
+    // function updateMiniCart(data) {
+
+    //     $('#cart-count').text(data.count);
+    //     $('#cart_total').text(data.total);
+
+    //     const listElem = $('.minicart__product');
+    //     listElem.html('');
+    //     data.cart.forEach(item => {
+    //         listElem.append(`
+    //             <div class="minicart__item py-2">
+    //         <div class="d-flex justify-content-between align-items-start">
+
+    //             <div class="d-flex align-items-start gap-2">
+    //                 <img src="${window.baseUrl}public/images/parts/feature/${item.product.feature_image}"
+    //                     width="50" height="50" style="object-fit:cover;">
+
+    //                 <div class="d-flex flex-column">
+    //                     <span class="fw-semibold d-block">${item.product.title}</span>
+
+    //                     <small class="text-muted d-block">Part#: ${item.product.part_number ?? '-'}</small>
+
+    //                     <small class="text-muted d-block">
+    //                         Price: <span class="fw-semibold text-dark">$${item.product.sale_price}</span>
+    //                     </small>
+    //                 </div>
+    //             </div>
+
+    //             <div class="d-flex align-items-center gap-1">
+    //                 <button class="cart-qty-btn qty-btn" data-id="${item.id}" data-type="minus">-</button>
+    //                 <span class="qty-display">${String(item.quantity).padStart(2, '0')}</span>
+    //                 <button class="cart-qty-btn qty-btn" data-id="${item.id}" data-type="plus">+</button>
+
+    //                 <button class="remove-cart-item remove-btn" data-id="${item.id}">×</button>
+    //             </div>
+
+    //         </div>
+    //     </div>
+
+    //         `);
+    //     });
+
+    //     // data.cart.forEach(item => {
+    //     //     listElem.append(`
+    //     //         <div class="minicart__item border-bottom py-2">
+    //     //             <div class="d-flex justify-content-between align-items-center mb-2">
+    //     //                 <div class="d-flex align-items-center gap-2">
+    //     //                     <img src="${window.baseUrl}public/images/parts/feature/${item.product.feature_image}"
+    //     //                          width="50" height="50" style="object-fit:cover;">
+    //     //                     <span>${item.product.title}</span>
+    //     //                 </div>
+    //     //                 <div>
+    //     //                     <button class="cart-qty-btn qty-btn" data-id="${item.id}" data-type="minus">-</button>
+    //     //                     <span>${item.quantity}</span>
+    //     //                     <button class="cart-qty-btn qty-btn" data-id="${item.id}" data-type="plus">+</button>
+    //     //                     <button class="remove-cart-item remove-btn" data-id="${item.id}">x</button>
+    //     //                 </div>
+    //     //             </div>
+    //     //         </div>
+    //     //     `);
+    //     // });
+
+    // }
 
 
     // ------------------------------------------

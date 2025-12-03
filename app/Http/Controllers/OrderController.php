@@ -77,26 +77,101 @@ class OrderController extends Controller
     }
 
     // This is for checkout page
+    // public function store(Request $request)
+    // {
+    //     $user_id = Auth::id();
+    //     $cartItems = Cart::where('user_id', $user_id)->get();
+    //     if ($cartItems->isEmpty()) return back()->with('error', 'Cart is empty.');
+
+    //     $total = 0;
+    //     $products = [];
+    //     foreach ($cartItems as $item) {
+    //         $price = $item->sale_price ?? $item->original_price ?? 0;
+    //         $total += $price * $item->quantity;
+
+    //         $products[$item->product_id] = [
+    //             'title' => $item->product->title ?? '',
+    //             'sale_price' => $item->sale_price,
+    //             'original_price' => $item->original_price,
+    //             'quantity' => $item->quantity,
+    //             'slug' => $item->product->slug ?? '',
+    //             'sku' => $item->sku,
+    //             'part_number' => $item->part_number
+    //         ];
+    //     }
+
+    //     $order = Order::create([
+    //         'user_id' => $user_id,
+    //         'first_name' => $request->first_name,
+    //         'last_name' => $request->last_name,
+    //         'address_line_1' => $request->address_line_1,
+    //         'address_line_2' => $request->address_line_2,
+    //         'city' => $request->city,
+    //         'state' => $request->state,
+    //         'country' => $request->country,
+    //         'postal_code' => $request->postal_code,
+    //         'order_notes' => $request->order_notes,
+    //         'total' => $total,
+    //         'payment_method' => $request->payment_method ?? 'cod',
+    //         'status' => 'pending',
+    //         'order_number' => Str::upper(Str::random(10)),
+    //         'order_address_default' => $request->order_address_default ?? 'no',
+    //         'products' => $products,
+    //     ]);
+
+    //     // Clear user's cart
+    //     Cart::where('user_id', $user_id)->delete();
+
+    //     $user= User::find($request->user_id);
+    //     // Session::forget('cart');
+    //     try {
+    //         // Customer email
+    //         Mail::to($user->email)->send(new OrderMail($order));
+
+    //         sleep(1);
+    //         // Admin email
+    //         Mail::to(env('MAIL_FROM_ADDRESS'))->send(new AdminOrderMail($order));
+
+    //     } catch (\Exception $e) {
+
+    //         // Log error
+    //         Log::error('Order Email Error: '.$e->getMessage());
+
+    //         // Show warning but DO NOT stop order creation
+    //         return redirect()
+    //             ->route('checkout.page')
+    //             ->with('warning', 'Order placed but email failed to send. Please contact support.');
+    //     }
+
+    //     return redirect()->route('checkout.page', $order->id)
+    //         ->with('success', 'Order placed successfully!');
+    // }
     public function store(Request $request)
     {
-        $user_id = Auth::id();
-        $cartItems = Cart::where('user_id', $user_id)->get();
-        if ($cartItems->isEmpty()) return back()->with('error', 'Cart is empty.');
+        $user_id = Auth::id(); // may be null if guest
+
+        // Get cart from session
+        $cartItems = session()->get('cart', []);
+
+        if (empty($cartItems)) {
+            return back()->with('error', 'Cart is empty.');
+        }
 
         $total = 0;
         $products = [];
-        foreach ($cartItems as $item) {
-            $price = $item->sale_price ?? $item->original_price ?? 0;
-            $total += $price * $item->quantity;
 
-            $products[$item->product_id] = [
-                'title' => $item->product->title ?? '',
-                'sale_price' => $item->sale_price,
-                'original_price' => $item->original_price,
-                'quantity' => $item->quantity,
-                'slug' => $item->product->slug ?? '',
-                'sku' => $item->sku,
-                'part_number' => $item->part_number
+        foreach ($cartItems as $item) {
+            $price = $item['sale_price'] ?? $item['original_price'] ?? 0;
+            $total += $price * $item['quantity'];
+
+            $products[$item['product_id']] = [
+                'title' => $item['title'] ?? '',
+                'sale_price' => $item['sale_price'] ?? 0,
+                'original_price' => $item['original_price'] ?? 0,
+                'quantity' => $item['quantity'],
+                'slug' => $item['slug'] ?? '',
+                'sku' => $item['sku'] ?? '',
+                'part_number' => $item['part_number'] ?? ''
             ];
         }
 
@@ -119,25 +194,21 @@ class OrderController extends Controller
             'products' => $products,
         ]);
 
-        // Clear user's cart
-        Cart::where('user_id', $user_id)->delete();
+        // Clear session cart after order
+        session()->forget('cart');
 
-        $user= User::find($request->user_id);
-        // Session::forget('cart');
         try {
-            // Customer email
-            Mail::to($user->email)->send(new OrderMail($order));
+            if ($user_id) {
+                $user = Auth::user();
+                Mail::to($user->email)->send(new OrderMail($order));
+            }
 
-            sleep(1);
-            // Admin email
+            // Admin notification
             Mail::to(env('MAIL_FROM_ADDRESS'))->send(new AdminOrderMail($order));
 
         } catch (\Exception $e) {
-
-            // Log error
             Log::error('Order Email Error: '.$e->getMessage());
 
-            // Show warning but DO NOT stop order creation
             return redirect()
                 ->route('checkout.page')
                 ->with('warning', 'Order placed but email failed to send. Please contact support.');
@@ -146,6 +217,7 @@ class OrderController extends Controller
         return redirect()->route('checkout.page', $order->id)
             ->with('success', 'Order placed successfully!');
     }
+
 
     public function storeDefault(Request $request)
     {
@@ -166,36 +238,36 @@ class OrderController extends Controller
             'postal_code' => 'nullable|string',
             'country' => 'nullable|string',
             'order_address_default' => 'nullable|string',
-
-            'total' => 'required|string',
-            'products' => 'required|array', // products ko array me bhejna hoga
         ]);
 
-        // $user_id = Auth::id();
-        $cartItems = Cart::where('user_id', $request->user_id)->get();
-        if ($cartItems->isEmpty()) return back()->with('error', 'Cart is empty.');
+        // Get cart from session
+        $cartItems = session()->get('cart', []);
 
+        if (empty($cartItems)) {
+            return back()->with('error', 'Cart is empty.');
+        }
 
         $total = 0;
         $products = [];
-        foreach ($cartItems as $item) {
-            $price = $item->sale_price ?? $item->original_price ?? 0;
-            $total += $price * $item->quantity;
 
-            $products[$item->product_id] = [
-                'title' => $item->product->title ?? '',
-                'sale_price' => $item->sale_price,
-                'original_price' => $item->original_price,
-                'quantity' => $item->quantity,
-                'slug' => $item->product->slug ?? '',
-                'sku' => $item->sku,
-                'part_number' => $item->part_number
+        foreach ($cartItems as $item) {
+            $price = $item['sale_price'] ?? $item['original_price'] ?? 0;
+            $total += $price * $item['quantity'];
+
+            $products[$item['product_id']] = [
+                'title' => $item['title'] ?? '',
+                'sale_price' => $item['sale_price'] ?? 0,
+                'original_price' => $item['original_price'] ?? 0,
+                'quantity' => $item['quantity'],
+                'slug' => $item['slug'] ?? '',
+                'sku' => $item['sku'] ?? '',
+                'part_number' => $item['part_number'] ?? ''
             ];
         }
 
         $randomOrderNumber = 'ORD-' . Str::upper(Str::random(8));
 
-        // Order create
+        // Create order
         $order = Order::create([
             'user_id' => $request->user_id,
             'address_id' => $request->address_id,
@@ -214,35 +286,131 @@ class OrderController extends Controller
             'country' => $request->country ?? 'USA',
             'order_address_default' => $request->order_address_default,
 
-            'total' => $request->total,
-            // 'products' => $request->products, // JSON format me save hoga
+            'total' => $total,
             'products' => $products,
         ]);
 
-         Cart::where('user_id', $request->user_id)->delete();
-         $user= User::find($request->user_id);
-        // Session::forget('cart');
-        try {
-            // Customer email
-            Mail::to($user->email)->send(new OrderMail($order));
+        // Clear session cart
+        session()->forget('cart');
 
-            sleep(1);
-            // Admin email
+        // Send emails
+        try {
+            $user = User::find($request->user_id);
+            if ($user) {
+                Mail::to($user->email)->send(new OrderMail($order));
+            }
+
+            // Admin notification
             Mail::to(env('MAIL_FROM_ADDRESS'))->send(new AdminOrderMail($order));
 
         } catch (\Exception $e) {
+            Log::error('Order Email Error: ' . $e->getMessage());
 
-            // Log error
-            Log::error('Order Email Error: '.$e->getMessage());
-
-            // Show warning but DO NOT stop order creation
             return redirect()
                 ->route('checkout.page')
                 ->with('warning', 'Order placed but email failed to send. Please contact support.');
         }
 
-        return redirect()->route('checkout.page')->with('success', 'Order submitted successfully.');
+        return redirect()->route('checkout.page')
+            ->with('success', 'Order submitted successfully.');
     }
+
+    // public function storeDefault(Request $request)
+    // {
+    //     // Validation
+    //     $request->validate([
+    //         'user_id' => 'required|exists:users,id',
+    //         'address_id' => 'nullable|exists:addresses,id',
+    //         'order_notes' => 'nullable|string',
+    //         'payment_method' => 'required|string',
+    //         'status' => 'nullable|string|in:review,processing,complete,cancel',
+
+    //         'first_name' => 'required|string',
+    //         'last_name' => 'required|string',
+    //         'address_line_1' => 'required|string',
+    //         'address_line_2' => 'nullable|string',
+    //         'city' => 'required|string',
+    //         'state' => 'nullable|string',
+    //         'postal_code' => 'nullable|string',
+    //         'country' => 'nullable|string',
+    //         'order_address_default' => 'nullable|string',
+
+    //         'total' => 'required|string',
+    //         'products' => 'required|array', // products ko array me bhejna hoga
+    //     ]);
+
+    //     // $user_id = Auth::id();
+    //     $cartItems = Cart::where('user_id', $request->user_id)->get();
+    //     if ($cartItems->isEmpty()) return back()->with('error', 'Cart is empty.');
+
+
+    //     $total = 0;
+    //     $products = [];
+    //     foreach ($cartItems as $item) {
+    //         $price = $item->sale_price ?? $item->original_price ?? 0;
+    //         $total += $price * $item->quantity;
+
+    //         $products[$item->product_id] = [
+    //             'title' => $item->product->title ?? '',
+    //             'sale_price' => $item->sale_price,
+    //             'original_price' => $item->original_price,
+    //             'quantity' => $item->quantity,
+    //             'slug' => $item->product->slug ?? '',
+    //             'sku' => $item->sku,
+    //             'part_number' => $item->part_number
+    //         ];
+    //     }
+
+    //     $randomOrderNumber = 'ORD-' . Str::upper(Str::random(8));
+
+    //     // Order create
+    //     $order = Order::create([
+    //         'user_id' => $request->user_id,
+    //         'address_id' => $request->address_id,
+    //         'order_number' => $randomOrderNumber,
+    //         'order_notes' => $request->order_notes,
+    //         'payment_method' => $request->payment_method,
+    //         'status' => $request->status ?? 'review',
+
+    //         'first_name' => $request->first_name,
+    //         'last_name' => $request->last_name,
+    //         'address_line_1' => $request->address_line_1,
+    //         'address_line_2' => $request->address_line_2,
+    //         'city' => $request->city,
+    //         'state' => $request->state,
+    //         'postal_code' => $request->postal_code,
+    //         'country' => $request->country ?? 'USA',
+    //         'order_address_default' => $request->order_address_default,
+
+    //         'total' => $request->total,
+    //         // 'products' => $request->products, // JSON format me save hoga
+    //         'products' => $products,
+    //     ]);
+
+    //      Cart::where('user_id', $request->user_id)->delete();
+    //      $user= User::find($request->user_id);
+    //     // Session::forget('cart');
+    //     try {
+    //         // Customer email
+    //         Mail::to($user->email)->send(new OrderMail($order));
+
+    //         sleep(1);
+    //         // Admin email
+    //         Mail::to(env('MAIL_FROM_ADDRESS'))->send(new AdminOrderMail($order));
+
+    //     } catch (\Exception $e) {
+
+    //         // Log error
+    //         Log::error('Order Email Error: '.$e->getMessage());
+
+    //         // Show warning but DO NOT stop order creation
+    //         return redirect()
+    //             ->route('checkout.page')
+    //             ->with('warning', 'Order placed but email failed to send. Please contact support.');
+    //     }
+
+    //     return redirect()->route('checkout.page')->with('success', 'Order submitted successfully.');
+    // }
 
     // This is admin dashboard. Edit order
     public function edit($id)

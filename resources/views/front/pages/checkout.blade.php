@@ -432,7 +432,7 @@
                                                     <div class="product__thumbnail border-radius-5">
                                                         <a class="display-block" href="{{ route('product.view', $id) }}">
                                                             <img class="display-block border-radius-5"
-                                                                src="{{ $item->product->feature_image ? asset('public/images/parts/feature/' . $item->product->feature_image) : asset('public/assets/front/img/product/default.webp') }}"
+                                                                src="{{ $item['image'] ? asset('public/images/parts/feature/' . $item['image']) : asset('public/assets/front/img/product/default.webp') }}"
                                                                 alt="cart-product">
                                                         </a>
                                                         <span

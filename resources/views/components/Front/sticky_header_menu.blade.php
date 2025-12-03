@@ -1,8 +1,17 @@
- @php
+ {{-- @php
      use App\Models\Cart;
 
      $userId = auth()->id();
-     $cartItems = Cart::where('user_id', $userId)->get();
+     $sessionId = session()->getId();
+     //  dump($sessionId);
+
+     $cartItems = Cart::where(function ($q) use ($userId, $sessionId) {
+         if ($userId) {
+             $q->where('user_id', $userId);
+         } else {
+             $q->where('session_id', $sessionId);
+         }
+     })->get();
 
      $cartCount = $cartItems->count();
 
@@ -11,6 +20,32 @@
          $price = $item->sale_price ?? ($item->original_price ?? 0);
          $cartTotal += $price * $item->quantity;
      }
+     //  $userId = auth()->id();
+     //  $cartItems = Cart::where('user_id', $userId)->get();
+
+     //  $cartCount = $cartItems->count();
+
+     //  $cartTotal = 0;
+     //  foreach ($cartItems as $item) {
+     //      $price = $item->sale_price ?? ($item->original_price ?? 0);
+     //      $cartTotal += $price * $item->quantity;
+     //  }
+ @endphp --}}
+
+ @php
+     use App\Models\Product;
+
+     $cart = session()->get('cart', []);
+
+     $cartCount = 0;
+     $cartTotal = 0;
+
+     foreach ($cart as $item) {
+         $price = $item['sale_price'] ?? ($item['original_price'] ?? 0);
+         $cartTotal += $price * $item['quantity'];
+         //  $cartCount += $item['quantity'];
+     }
+     $cartCount = count($cart);
  @endphp
 
  <div class="main__header header__sticky">
