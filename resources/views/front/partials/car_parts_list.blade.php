@@ -92,8 +92,16 @@
             href="http://wa.me/+96176380584" class="text-black">WhatsApp</a> for available alternatives.</h3>
 @endif
 
-<div class="pagination__area d-flex justify-content-center">
+<div class="pagination__area d-none d-sm-flex justify-content-center">
+    {{ $carParts->links('pagination::bootstrap-4') }}
+</div>
+
+{{-- Mobile Pagination (Prev/Next Only) --}}
+<div class="pagination__area d-flex d-sm-none justify-content-center">
+    {{ $carParts->links('pagination::simple-bootstrap-4') }}
+</div>
+{{-- <div class="pagination__area d-flex justify-content-center">
 
     {{ $carParts->links('pagination::bootstrap-4') }}
 
-</div>
+</div> --}}
