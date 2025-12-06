@@ -154,7 +154,7 @@
                                     class="account__login--btn primary__btn text-center">Back</a>
                             </div>
 
-                            @if ($order->status !== 'cancel' && $order->status === 'review')
+                            @if (!in_array($order->status, ['cancel', 'process', 'deliver', 'complete']))
                                 <div class="col-3">
                                     <form action="{{ route('orders.update', $order->id) }}" method="POST">
                                         @csrf

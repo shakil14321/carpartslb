@@ -116,8 +116,8 @@
                                                                 data-target="#deleteModal{{ $carModel->id }}"
                                                                 data-id="{{ $carModel->id }}"><i></i></span>
                                                         </a>
-                                                        <a href="{{ route('brand.show', $carModel->id) }}"
-                                                            class="view-icon"><i class="fa fa-eye"></i></a>
+                                                        {{-- <a href="{{ route('brand.show', $carModel->id) }}"
+                                                            class="view-icon"><i class="fa fa-eye"></i></a> --}}
                                                     </div>
                                                 </td>
                                         @endforeach
