@@ -8,7 +8,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
 <!-- Custom my js -->
-<script src="{{ asset('public/assets/front/js/custom.js') }}?v=1.0.1"></script>
+<script src="{{ asset('public/assets/front/js/custom.js') }}?v=2.0.1"></script>
 
 <!-- Customscript js -->
 <script src="{{ asset('public/assets/front/js/script.js') }}?v=1.0.1"></script>

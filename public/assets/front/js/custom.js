@@ -166,6 +166,91 @@ if (window.location.pathname.includes('/brand/')) {
     brandPageScript();
 }
 
+
+// Brand by page script.
+if (window.location.pathname.includes('/part-brand/')) {
+    function brandPageScript() {
+        if (window.location.pathname.includes('/part-brand')) {
+            document.addEventListener('DOMContentLoaded', function () {
+                const container = document.getElementById('car-parts-container');
+                const sortSelect = document.getElementById('sort_by');
+                const priceForm = document.getElementById('price-filter-form');
+
+                if (!container) return;
+
+                function loadContent(url) {
+                    fetch(url, {
+                        method: 'GET',
+                        credentials: 'same-origin',
+                        headers: {
+                            'X-Requested-With': 'XMLHttpRequest'
+                        }
+                    })
+                        .then(response => response.text())
+                        .then(html => {
+                            container.innerHTML = html;
+                            history.replaceState({}, '', url);
+                            bindPaginationLinks();
+                        })
+                        .catch(err => console.error('AJAX error:', err));
+                }
+
+                function bindPaginationLinks() {
+                    const links = container.querySelectorAll('.pagination a');
+                    links.forEach(link => {
+                        link.addEventListener('click', function (e) {
+                            e.preventDefault();
+                            const url = new URL(this.href);
+                            if (sortSelect && sortSelect.value) url.searchParams.set('sort', sortSelect.value);
+                            if (priceForm) {
+                                const minPrice = priceForm.querySelector('input[name="min_price"]').value;
+                                const maxPrice = priceForm.querySelector('input[name="max_price"]').value;
+                                if (minPrice) url.searchParams.set('min_price', minPrice);
+                                if (maxPrice) url.searchParams.set('max_price', maxPrice);
+                            }
+                            loadContent(url.toString());
+                        });
+                    });
+                }
+
+                if (sortSelect) {
+                    sortSelect.addEventListener('change', function () {
+                        const url = new URL(window.location.href);
+                        url.searchParams.set('sort', this.value);
+                        url.searchParams.delete('page');
+                        if (priceForm) {
+                            const minPrice = priceForm.querySelector('input[name="min_price"]').value;
+                            const maxPrice = priceForm.querySelector('input[name="max_price"]').value;
+                            if (minPrice) url.searchParams.set('min_price', minPrice);
+                            if (maxPrice) url.searchParams.set('max_price', maxPrice);
+                        }
+                        loadContent(url.toString());
+                    });
+                }
+
+                if (priceForm) {
+                    priceForm.addEventListener('submit', function (e) {
+                        e.preventDefault();
+                        const url = new URL(window.location.href);
+                        const minPrice = priceForm.querySelector('input[name="min_price"]').value;
+                        const maxPrice = priceForm.querySelector('input[name="max_price"]').value;
+                        if (minPrice) url.searchParams.set('min_price', minPrice);
+                        else url.searchParams.delete('min_price');
+                        if (maxPrice) url.searchParams.set('max_price', maxPrice);
+                        else url.searchParams.delete('max_price');
+                        url.searchParams.delete('page');
+                        if (sortSelect && sortSelect.value) url.searchParams.set('sort', sortSelect.value);
+                        loadContent(url.toString());
+                    });
+                }
+
+                bindPaginationLinks();
+            });
+        }
+    }
+    brandPageScript();
+}
+
 // Cart part type page script.
 if (window.location.pathname.includes('/type/')) {
     function typePageScript() {

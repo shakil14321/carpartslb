@@ -30,14 +30,29 @@
     </style>
 
     <!-- Main content -->
+
+    @if (session('success'))
+        <div class="alert alert-success alert-dismissible notic_bar" style="margin:20px;">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            {{ session('success') }}
+        </div>
+    @endif
+
+    @if (session('error'))
+        <div class="alert alert-danger alert-dismissible notic_bar" style="margin:20px;">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            {{ session('error') }}
+        </div>
+    @endif
     <section class="content py-4">
         <div class="container">
             <!-- Back Button -->
             <div class="mb-3 header-actions">
                 <a href="{{ route('orderView.admin') }}"
                     class="btn btn-outline-success btn-sm d-inline-flex align-items-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" stroke="currentColor"
-                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="me-1">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="me-1">
                         <path d="M6 8L2 12L6 16" />
                         <path d="M2 12H22" />
                     </svg>
@@ -132,8 +147,8 @@
                                                                     d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 1 8 0a8 8 0 0 1 0 16z" />
                                                                 <path
                                                                     d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1
-                                                                                                                            .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8
-                                                                                                                            4.646 5.354a.5.5 0 0 1 0-.708z" />
+                                                                                                                                .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8
+                                                                                                                                4.646 5.354a.5.5 0 0 1 0-.708z" />
                                                             </svg>
                                                         </button>
                                                     </form>

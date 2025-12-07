@@ -119,7 +119,7 @@
             <p>This code will expire in <strong>20 minutes</strong>.</p>
             <p>If you did not request this verification, please ignore this email.</p>
 
-            <p style="margin-top:25px;">Thanks,<br><strong>carpartslb Support Team</strong></p>
+            <p style="margin-top:25px;">Thanks,<br><strong>CAR AUTO LB</strong></p>
         </div>
 
         <!-- Footer -->

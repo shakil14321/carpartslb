@@ -102,9 +102,12 @@
                                         <tr>
                                             <th>Sr. #</th>
                                             <th>Product Name</th>
+                                            <th>SKU</th>
                                             <th>Part Number</th>
                                             <th>Quantity</th>
-                                            <th>SKU</th>
+                                            {{-- <th>Price</th> --}}
+                                            <th>Total Price</th>
+
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -112,12 +115,25 @@
                                             <tr>
                                                 <td>{{ $loop->iteration }}</td>
                                                 <td>{{ $product['title'] ?? '' }}</td>
-                                                <td>{{ $product['part_number'] ?? '' }}</td>
-                                                <td>{{ $product['quantity'] ?? '' }}</td>
                                                 <td>{{ $product['sku'] ?? '' }}</td>
+                                                <td>{{ $product['part_number'] ?? '' }}</td>
+                                                <td>{{ $product['quantity'] }} * ${{ $product['sale_price'] }}</td>
+                                                <!-- Price -->
+                                                {{-- <td>{{ number_format($product['sale_price'], 2) }}</td> --}}
+
+                                                <!-- Total Price -->
+                                                <td>${{ number_format($product['sale_price'] * $product['quantity'], 2) }}
+                                                </td>
+
                                             </tr>
                                         @endforeach
                                     </tbody>
+                                    <tfoot>
+                                        <tr class="fw-bold table-light">
+                                            <td colspan="5" class="text-end">Grand Total:</td>
+                                            <td>${{ number_format($order->total, 2) }}</td>
+                                        </tr>
+                                    </tfoot>
                                 </table>
                             </div>
                         </div>

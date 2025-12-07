@@ -123,7 +123,8 @@
                                                 <td class="account__table--body__child--items">
                                                     {{ ucwords($order->status) ?? '' }}</td>
                                                 <td class="account__table--body__child--items">
-                                                    {{ $order->total ? $order->total : '' }}</td>
+                                                    $ {{ isset($order->total) ? $order->total : '' }}
+                                                </td>
                                                 <td>
                                                     <div class="action-container">
                                                         <a href="{{ route('order.edit', $order->id) }}"

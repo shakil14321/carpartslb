@@ -75,6 +75,8 @@ class CarPartsImport implements ToModel, WithHeadingRow, WithValidation, WithChu
             'gallery_images'     => !empty($galleryImages) ? json_encode($galleryImages) : json_encode([]),
             'description'        => $row['description'],
             'short_description'  => $row['short_description'],
+            'meta_title'         => $row['meta_title'],
+            'meta_description'   => $row['meta_description']
         ]);
     }
 

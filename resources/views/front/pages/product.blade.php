@@ -271,7 +271,7 @@
                                         <p class="product__details--info__meta--list"><strong>SKU:</strong> <span>
                                                 {{ ucwords($carPart->sku) ?? '' }}</span> </p>
                                         <p class="product__details--info__meta--list"><strong>Stock:</strong>
-                                            <span>{{ $carPart->stock_type ? 'In Stock' : 'Out of Stock' }}</span>
+                                            <span>{{ $carPart->stock_type === 'in' ? 'In Stock' : 'Out of Stock' }}</span>
                                         </p>
                                         <p class="product__details--info__meta--list"><strong>Category:</strong>
                                             <span>{{ $carPart->carPartType->title ?? 'None' }}</span>

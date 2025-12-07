@@ -132,6 +132,8 @@ class CarPartController extends Controller
             "short_description" => $request->short_description,
             "meta_title" => $request->meta_title,
             "meta_description" => $request->meta_description,
+            'stock_type' => $request->stock_type,
+            'stock_quantity' => $request->stock_quantity,
         ]);
 
         return redirect()->route('product.index')->with('success', 'Product Added Successfully');
@@ -266,6 +268,8 @@ class CarPartController extends Controller
             "fav_product" => $request->fav_product,
             "original_price" => $request->original_price,
             "sale_price" => $request->sale_price,
+            'stock_type' => $request->stock_type,
+            'stock_quantity' => $request->stock_quantity,
             "description" => $request->description,
             "meta_title" => $request->meta_title,
             "meta_description" => $request->meta_description,

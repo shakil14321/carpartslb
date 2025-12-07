@@ -50,7 +50,7 @@
     </p>
 
     <p>We’ll notify you once your order is shipped.</p>
-    <p>– The Car Auto LB Team</p>
+    <p>– CAR AUTO LB</p>
   </div>
 </body>
 </html>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Mail\AdminOrderMail;
+use App\Mail\OrderCancelledByCustomerMail;
 use App\Models\Order;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
@@ -10,6 +11,7 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\OrderMail;
+use App\Mail\OrderStatusUpdatedMail;
 use App\Models\Cart;
 use App\Models\OrderItem;
 use App\Models\User;
@@ -432,6 +434,11 @@ class OrderController extends Controller
             'status' => $request->status,
         ]);
 
+        if ($order->user && $order->user->email) {
+            Mail::to($order->user->email)
+                ->send(new OrderStatusUpdatedMail($order, $request->status));
+        }
+
         return redirect()->back()
                          ->with('success', 'Order updated successfully.');
     }
@@ -446,6 +453,10 @@ class OrderController extends Controller
         $order->update([
             'status' => $request->status,
         ]);
+
+        if($request->status === 'cancel'){
+            Mail::to(env('MAIL_FROM_ADDRESS'))->send(new OrderCancelledByCustomerMail($order));
+        }
 
         return redirect()->back()
                          ->with('success', 'Order cancel successfully.');
@@ -620,7 +631,7 @@ class OrderController extends Controller
     {
         $request->validate([
             'order_id' => 'required|exists:orders,id',
-            'sku' => 'required|string',
+            'sku'      => 'required|string',
         ]);
 
         $order = Order::find($request->order_id);
@@ -630,9 +641,9 @@ class OrderController extends Controller
             return back()->with('error', 'You cannot cancel items in this order.');
         }
 
-        $products = $order->products; // this is a JSON decoded array
+        $products = $order->products; // this is decoded JSON array
 
-        // Find the key of the product by SKU
+        // Find product by SKU
         $productKey = null;
         foreach ($products as $key => $p) {
             if ($p['sku'] === $request->sku) {
@@ -641,28 +652,79 @@ class OrderController extends Controller
             }
         }
 
-        if (!$productKey) {
+        if ($productKey === null) {
             return back()->with('error', 'Product not found in order.');
         }
 
-        // Remove the product
-        unset($products[$productKey]);
+        // ❗ Change quantity to 0 instead of deleting
+        $products[$productKey]['quantity'] = 0;
 
-        // Recalculate total
+        // Recalculate total ignoring canceled items
         $total = 0;
         foreach ($products as $p) {
-            $price = $p['sale_price'] ?? $p['original_price'] ?? 0;
-            $total += $price * $p['quantity'];
+            if (($p['quantity'] ?? 0) > 0) { // ← ignore canceled products
+                $price = $p['sale_price'] ?? $p['original_price'] ?? 0;
+                $total += $price * $p['quantity'];
+            }
         }
 
-        // Update the order
+        // Update database
         $order->update([
             'products' => $products,
-            'total' => $total,
+            'total'    => $total,
         ]);
-
-        return back()->with('success', 'Product canceled successfully.');
+        return redirect()->back()->with('success', 'Product canceled successfully.');
     }
+
+
+
+    // public function cancelItem(Request $request)
+    // {
+    //     $request->validate([
+    //         'order_id' => 'required|exists:orders,id',
+    //         'sku' => 'required|string',
+    //     ]);
+
+    //     $order = Order::find($request->order_id);
+
+    //     // Only allow cancel if order status allows it
+    //     if (!in_array($order->status, ['pending', 'process', 'review'])) {
+    //         return back()->with('error', 'You cannot cancel items in this order.');
+    //     }
+
+    //     $products = $order->products; // this is a JSON decoded array
+
+    //     // Find the key of the product by SKU
+    //     $productKey = null;
+    //     foreach ($products as $key => $p) {
+    //         if ($p['sku'] === $request->sku) {
+    //             $productKey = $key;
+    //             break;
+    //         }
+    //     }
+
+    //     if (!$productKey) {
+    //         return back()->with('error', 'Product not found in order.');
+    //     }
+
+    //     // Remove the product
+    //     unset($products[$productKey]);
+
+    //     // Recalculate total
+    //     $total = 0;
+    //     foreach ($products as $p) {
+    //         $price = $p['sale_price'] ?? $p['original_price'] ?? 0;
+    //         $total += $price * $p['quantity'];
+    //     }
+
+    //     // Update the order
+    //     $order->update([
+    //         'products' => $products,
+    //         'total' => $total,
+    //     ]);
+
+    //     return back()->with('success', 'Product canceled successfully.');
+    // }
 
 
 }

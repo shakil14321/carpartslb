@@ -79,7 +79,7 @@
             {{ $order->country }}
         </p>
 
-        <p>– The Car Auto LB Team</p>
+        <p>– CAR AUTO LB</p>
     </div>
 </body>
 

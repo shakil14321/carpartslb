@@ -37,6 +37,8 @@ class CarPartsExport implements FromQuery, WithMapping, WithHeadings
             implode('|', is_array($carPart->gallery_images) ? $carPart->gallery_images : json_decode($carPart->gallery_images ?? '[]', true)),
             $carPart->description,
             $carPart->short_description,
+            $carPart->meta_title,
+            $carPart->meta_description
         ];
     }
 
@@ -61,7 +63,9 @@ class CarPartsExport implements FromQuery, WithMapping, WithHeadings
             'Feature Image',
             'Gallery Images',
             'Description',
-            'Short Description'
+            'Short Description',
+            'meta_title',
+            'meta_description'
         ];
     }
 }
