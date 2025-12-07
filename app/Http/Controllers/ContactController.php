@@ -33,7 +33,7 @@ class ContactController extends Controller
 
             try {
                 // Send email
-                Mail::to('info@carpartslb.com')->send(new contactMail($validated));
+                Mail::to(env('MAIL_FROM_ADDRESS'))->send(new contactMail($validated));
             } catch (\Exception $e) {
                 // If email fails, do NOT stop storing the message
                 \Log::error('Contact form email failed: '.$e->getMessage());

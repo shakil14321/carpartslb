@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
@@ -7,87 +7,172 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background: #f8f8f8;
-            padding: 20px;
+            background-color: #f8f8f8;
+            margin: 0;
+            padding: 0;
         }
 
-        .container {
-            background: white;
-            padding: 20px;
+        .email-container {
+            max-width: 700px;
+            margin: 30px auto;
+            background-color: #ffffff;
+            padding: 30px;
             border-radius: 8px;
-            max-width: 600px;
-            margin: auto;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
         }
 
-        h2 {
-            color: #333;
+        h1,
+        h2,
+        h3 {
+            margin: 0 0 15px;
+            color: #333333;
+        }
+
+        p {
+            line-height: 1.6;
+            color: #555555;
+        }
+
+        .status-panel {
+            padding: 15px;
+            border-radius: 5px;
+            color: #fff;
+            font-weight: bold;
+            margin-bottom: 25px;
+        }
+
+        .status-pending {
+            background-color: #f0ad4e;
+        }
+
+        .status-confirmed {
+            background-color: #5cb85c;
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 20px;
+            margin-bottom: 25px;
         }
 
-        th,
-        td {
+        table th,
+        table td {
             border: 1px solid #ddd;
-            padding: 8px;
-            text-align: left;
+            padding: 12px;
+            text-align: center;
         }
 
-        th {
-            background: #007bff;
-            color: white;
+        table th {
+            background-color: #f0f0f0;
+        }
+
+        table td.total {
+            font-weight: bold;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: #0275d8;
+            color: #ffffff !important;
+            text-decoration: none;
+            padding: 12px 25px;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+
+        .view_btn {
+            margin-bottom: 10px;
+        }
+
+        .footer {
+            font-size: 12px;
+            color: #999999;
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 3px 8px;
+            font-size: 12px;
+            font-weight: bold;
+            color: #fff;
+            border-radius: 4px;
         }
     </style>
 </head>
 
 <body>
-    <div class="container">
-        <h2>Order Confirmation - {{ $order->order_number }}</h2>
-        <p>Hi {{ $order->first_name }} {{ $order->last_name }},</p>
-        <p>Thank you for your order! Here are your order details:</p>
+    <div class="email-container">
+        <h1>Hello {{ $order->first_name }} {{ $order->last_name }},</h1>
+        <p>Thank you for your order! We're excited to confirm that your order
+            <strong>#{{ $order->order_number }}</strong> has been successfully received.
+        </p>
 
+        {{-- Customer Information --}}
+        <p>
+            {{-- <strong>Order Number:</strong> #{{ $order->order_number }}<br> --}}
+            <strong>Customer Name:</strong> {{ $order->first_name }} {{ $order->last_name }}<br>
+            <strong>Email:</strong> {{ $order->user->email ?? '-' }}<br>
+        </p>
+
+        {{-- Status Panel --}}
+        @php
+            $statusLabels = [
+                'confirmed' => ['label' => '✅ Order Confirmed', 'class' => 'status-confirmed'],
+            ];
+            $currentStatus = $statusLabels[$order->status] ?? [
+                'label' => ucfirst($order->status),
+                'class' => 'status-confirmed',
+            ];
+        @endphp
+        <div class="status-panel {{ $currentStatus['class'] }}">
+            Status: {{ $currentStatus['label'] }}
+        </div>
+
+        <h2>Order Summary</h2>
         <table>
             <thead>
                 <tr>
-                    <th>#</th>
-                    <th>Product Title</th>
+                    <th>Item</th>
                     <th>Part Number</th>
-                    <th>SKU</th>
                     <th>Quantity</th>
                     <th>Price</th>
                     <th>Total</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach ($order->products as $index => $product)
+                @foreach ($order->products as $product)
                     <tr>
-                        <td>{{ $index + 1 }}</td>
-                        <td>{{ $product['title'] ?? '' }}</td>
+                        <td>{{ $product['title'] ?? '-' }}</td>
                         <td>{{ $product['part_number'] ?? '' }}</td>
-                        <td>{{ $product['sku'] ?? '' }}</td>
                         <td>{{ $product['quantity'] ?? 0 }}</td>
-                        <td>${{ number_format(($product['sale_price'] ?? 0) * ($product['quantity'] ?? 0), 2) }}</td>
                         <td>${{ number_format($product['sale_price'] ?? 0, 2) }}</td>
+                        <td>${{ number_format(($product['sale_price'] ?? 0) * ($product['quantity'] ?? 0), 2) }}</td>
                     </tr>
                 @endforeach
+                <tr>
+                    <td colspan="4" class="total">Grand Total</td>
+                    <td class="total">${{ number_format($order->total ?? 0, 2) }}</td>
+                </tr>
             </tbody>
         </table>
 
-        <p><strong>Total:</strong> {{ $order->total }}</p>
-        <p><strong>Payment Method:</strong> {{ ucfirst($order->payment_method) }}</p>
-        <p><strong>Status:</strong> {{ ucfirst($order->status) }}</p>
+        <a href="{{ route('orderView.customer', $order->id) }}" class="btn view_btn">View Your Order</a>
 
-        <p>Shipping Address:<br>
-            {{ $order->address_line_1 }}<br>
+        <h2>Shipping Address</h2>
+        <p>
+            <strong>{{ $order->address_line_1 }}</strong><br>
             {{ $order->city }}, {{ $order->state }} {{ $order->postal_code }}<br>
             {{ $order->country }}
         </p>
 
-        <p>We’ll notify you once your order is shipped.</p>
-        <p>– Car Parts Lb Support Team</p>
+        <p>If you have any questions about your order, feel free to reply to this email or contact our support team.</p>
+
+        <div class="footer">
+            Thanks,<br>
+            <strong>Car Parts Lb Support Team</strong>
+        </div>
     </div>
 </body>
 
