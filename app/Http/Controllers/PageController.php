@@ -47,7 +47,8 @@ class PageController extends Controller
 
     // Contact us page.
     public function contactPage(){
-        return view('front.pages.contact');
+        $setting = SiteSetting::first();
+        return view('front.pages.contact', compact('setting'));
     }
 
     // terms and condtitions page

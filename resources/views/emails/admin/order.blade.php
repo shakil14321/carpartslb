@@ -68,8 +68,8 @@
                         <td>{{ $product['part_number'] ?? '' }}</td>
                         <td>{{ $product['sku'] ?? '' }}</td>
                         <td>{{ $product['quantity'] ?? 0 }}</td>
-                        <td>${{ number_format(($product['sale_price'] ?? 0) * ($product['quantity'] ?? 0), 2) }}</td>
                         <td>${{ number_format($product['sale_price'] ?? 0, 2) }}</td>
+                        <td>${{ number_format(($product['sale_price'] ?? 0) * ($product['quantity'] ?? 0), 2) }}</td>
                     </tr>
                 @endforeach
             </tbody>

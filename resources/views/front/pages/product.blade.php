@@ -297,7 +297,7 @@
                                 <ul class="quickview__social--wrapper mt-0 d-flex">
                                     <li class="quickview__social--list">
                                         <a class="quickview__social--icon" target="_blank"
-                                            href="https://www.facebook.com">
+                                            href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode(request()->fullUrl()) }}">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="7.667" height="16.524"
                                                 viewBox="0 0 7.667 16.524">
                                                 <path data-name="Path 237"
@@ -738,82 +738,90 @@
 
     <!-- End shipping section -->
     <script>
-        document.querySelectorAll('.quantity-selector').forEach(selector => {
-            const input = selector.querySelector('.quantity-input');
-            const increment = selector.querySelector('.increment');
-            const decrement = selector.querySelector('.decrement');
-
-            // Find the closest product container
-            const productDetails = selector.closest('.product__variant').parentElement;
-            const currentPriceElem = productDetails.querySelector('.current__price');
-            const oldPriceElem = productDetails.querySelector('.old__price');
-
-            // Store base prices
-            const baseSalePrice = parseFloat(currentPriceElem.textContent.replace('$', '')) || 0;
-            const baseOriginalPrice = oldPriceElem ? parseFloat(oldPriceElem.textContent.replace('$', '')) || 0 : 0;
-
-            function updatePrice() {
-                const qty = parseInt(input.value) || 1;
-                currentPriceElem.textContent = '$' + (baseSalePrice * qty).toFixed(2);
-                if (oldPriceElem && baseOriginalPrice > 0) {
-                    oldPriceElem.textContent = '$' + (baseOriginalPrice * qty).toFixed(2);
+        < script >
+            function shareProduct() {
+                if (navigator.share) {
+                    navigator.share({
+                        title: "{{ $carPart->slug }}",
+                        text: "Check out this product!",
+                        url: "{{ request()->fullUrl() }}"
+                    });
+                } else {
+                    alert('Sharing not supported');
                 }
             }
+    </script>~
+    document.querySelectorAll('.quantity-selector').forEach(selector => {
+    const input = selector.querySelector('.quantity-input');
+    const increment = selector.querySelector('.increment');
+    const decrement = selector.querySelector('.decrement');
 
-            increment.addEventListener('click', () => {
-                input.value = parseInt(input.value) + 1;
-                updatePrice();
-            });
+    // Find the closest product container
+    const productDetails = selector.closest('.product__variant').parentElement;
+    const currentPriceElem = productDetails.querySelector('.current__price');
+    const oldPriceElem = productDetails.querySelector('.old__price');
 
-            decrement.addEventListener('click', () => {
-                if (parseInt(input.value) > 1) {
-                    input.value = parseInt(input.value) - 1;
-                    updatePrice();
-                }
-            });
+    // Store base prices
+    const baseSalePrice = parseFloat(currentPriceElem.textContent.replace('$', '')) || 0;
+    const baseOriginalPrice = oldPriceElem ? parseFloat(oldPriceElem.textContent.replace('$', '')) || 0 : 0;
 
-            input.addEventListener('input', () => {
-                if (parseInt(input.value) < 1 || isNaN(input.value)) input.value = 1;
-                updatePrice();
-            });
+    function updatePrice() {
+    const qty = parseInt(input.value) || 1;
+    currentPriceElem.textContent = '$' + (baseSalePrice * qty).toFixed(2);
+    if (oldPriceElem && baseOriginalPrice > 0) {
+    oldPriceElem.textContent = '$' + (baseOriginalPrice * qty).toFixed(2);
+    }
+    }
+
+    increment.addEventListener('click', () => {
+    input.value = parseInt(input.value) + 1;
+    updatePrice();
+    });
+
+    decrement.addEventListener('click', () => {
+    if (parseInt(input.value) > 1) {
+    input.value = parseInt(input.value) - 1;
+    updatePrice();
+    }
+    });
+
+    input.addEventListener('input', () => {
+    if (parseInt(input.value) < 1 || isNaN(input.value)) input.value=1; updatePrice(); }); }); // Pass quantity to Add To
+        Cart document.querySelectorAll('.add-to-cart-btn').forEach(btn=> {
+        btn.addEventListener('click', function() {
+        const quantity = this.closest('.product__variant--list').querySelector('.quantity-input')
+        .value;
+        console.log('Quantity for this product:', quantity);
+        // Include quantity in your AJAX call here
         });
-
-        // Pass quantity to Add To Cart
-        document.querySelectorAll('.add-to-cart-btn').forEach(btn => {
-            btn.addEventListener('click', function() {
-                const quantity = this.closest('.product__variant--list').querySelector('.quantity-input')
-                    .value;
-                console.log('Quantity for this product:', quantity);
-                // Include quantity in your AJAX call here
-            });
         });
-    </script>
+        </script>
 
-    <script>
-        // document.querySelectorAll('.quantity-selector').forEach(selector => {
-        //     const input = selector.querySelector('.quantity-input');
-        //     const increment = selector.querySelector('.increment');
-        //     const decrement = selector.querySelector('.decrement');
+        <script>
+            // document.querySelectorAll('.quantity-selector').forEach(selector => {
+            //     const input = selector.querySelector('.quantity-input');
+            //     const increment = selector.querySelector('.increment');
+            //     const decrement = selector.querySelector('.decrement');
 
-        //     increment.addEventListener('click', () => {
-        //         input.value = parseInt(input.value) + 1;
-        //     });
+            //     increment.addEventListener('click', () => {
+            //         input.value = parseInt(input.value) + 1;
+            //     });
 
-        //     decrement.addEventListener('click', () => {
-        //         if (parseInt(input.value) > 1) {
-        //             input.value = parseInt(input.value) - 1;
-        //         }
-        //     });
-        // });
+            //     decrement.addEventListener('click', () => {
+            //         if (parseInt(input.value) > 1) {
+            //             input.value = parseInt(input.value) - 1;
+            //         }
+            //     });
+            // });
 
-        // // Optional: include quantity in Add To Cart button data
-        // document.querySelectorAll('.add-to-cart-btn').forEach(btn => {
-        //     btn.addEventListener('click', function() {
-        //         const quantity = this.closest('.product__variant--list').querySelector('.quantity-input')
-        //             .value;
-        //         console.log('Add to cart quantity:', quantity);
-        //         // Pass quantity along with other product data to your AJAX or form
-        //     });
-        // });
-    </script>
-@endsection
+            // // Optional: include quantity in Add To Cart button data
+            // document.querySelectorAll('.add-to-cart-btn').forEach(btn => {
+            //     btn.addEventListener('click', function() {
+            //         const quantity = this.closest('.product__variant--list').querySelector('.quantity-input')
+            //             .value;
+            //         console.log('Add to cart quantity:', quantity);
+            //         // Pass quantity along with other product data to your AJAX or form
+            //     });
+            // });
+        </script>
+    @endsection

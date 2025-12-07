@@ -146,7 +146,8 @@
                         <h3 class="contact__info--content__title text-white mb-15">Follow Us</h3>
                         <ul class="contact__info--social d-flex">
                             <li class="contact__info--social__list">
-                                <a class="contact__info--social__icon" target="_blank" href="https://www.facebook.com">
+                                <a class="contact__info--social__icon" target="_blank"
+                                    href="{{ $setting && $setting->footer_facebook_link ? $setting->footer_facebook_link : 'javascript:void(0)' }}">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="7.667" height="16.524"
                                         viewBox="0 0 7.667 16.524">
                                         <path data-name="Path 237"
@@ -157,7 +158,8 @@
                                 </a>
                             </li>
                             <li class="contact__info--social__list">
-                                <a class="contact__info--social__icon" target="_blank" href="https://www.instagram.com">
+                                <a class="contact__info--social__icon" target="_blank"
+                                    href="{{ $setting && $setting->footer_instagram_link ? $setting->footer_instagram_link : 'javascript:void(0)' }}">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16.497" height="16.492"
                                         viewBox="0 0 19.497 19.492">
                                         <path data-name="Icon awesome-instagram"
