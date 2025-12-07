@@ -102,6 +102,10 @@
             margin-top: 10px;
         }
 
+        .view_btn {
+            margin-bottom: 10px;
+        }
+
         .footer {
             font-size: 12px;
             color: #999999;
@@ -147,6 +151,7 @@
             <thead>
                 <tr>
                     <th>Item</th>
+                    <th>Part Number</th>
                     <th>Quantity</th>
                     <th>Price</th>
                     <th>Total</th>
@@ -156,25 +161,26 @@
                 @foreach ($order->products as $product)
                     <tr>
                         <td>{{ $product['title'] ?? '-' }}</td>
+                        <td>{{ $product['part_number'] ?? '' }}</td>
                         <td>{{ $product['quantity'] ?? 0 }}</td>
                         <td>${{ number_format($product['sale_price'] ?? 0, 2) }}</td>
                         <td>${{ number_format(($product['sale_price'] ?? 0) * ($product['quantity'] ?? 0), 2) }}</td>
                     </tr>
                 @endforeach
                 <tr>
-                    <td colspan="3" class="total">Grand Total</td>
+                    <td colspan="4" class="total">Grand Total</td>
                     <td class="total">${{ number_format($order->total ?? 0, 2) }}</td>
                 </tr>
             </tbody>
         </table>
 
-        <a href="{{ route('orderView.customer', $order->id) }}" class="btn">View Your Order</a>
+        <a href="{{ route('orderView.customer', $order->id) }}" class="btn view_btn">View Your Order</a>
 
         <p>If you have any questions about your order, feel free to reply to this email or contact our support team.</p>
 
         <div class="footer">
             Thanks,<br>
-            <strong>CAR AUTO LB</strong>
+            <strong>Car Parts Lb Support Team</strong>
         </div>
     </div>
 </body>

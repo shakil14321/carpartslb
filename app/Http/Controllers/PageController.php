@@ -133,13 +133,30 @@ class PageController extends Controller
 
         $query = CarPart::where('part_type_id', $partType->id);
 
+        $rawMinPrice = CarPart::min('sale_price') ?? 0;
+        $rawMaxPrice = CarPart::max('sale_price');
+
+        $globalMinPrice = floor($rawMinPrice); // round down
+        $globalMaxPrice = ceil($rawMaxPrice);  // round up
+
+        // --- Price Filter ---
+        $minPrice = $request->input('min_price', $globalMinPrice);
+        $maxPrice = $request->input('max_price', $globalMaxPrice);
+
+
         // Price filter logic
-        if ($request->filled('min_price')) {
-            $query->where('sale_price', '>=', $request->min_price);
+         if ($minPrice) {
+            $query->where('sale_price', '>=', $minPrice);
         }
-        if ($request->filled('max_price')) {
-            $query->where('sale_price', '<=', $request->max_price);
+        if ($maxPrice) {
+            $query->where('sale_price', '<=', $maxPrice);
         }
+        // if ($request->filled('min_price')) {
+        //     $query->where('sale_price', '>=', $request->min_price);
+        // }
+        // if ($request->filled('max_price')) {
+        //     $query->where('sale_price', '<=', $request->max_price);
+        // }
 
         // Sorting
         $sort = $request->query('sort', '1');
@@ -159,7 +176,7 @@ class PageController extends Controller
             return view('front.partials.car_parts_list', compact('carParts'))->render();
         }
 
-        return view('front.pages.type', compact('partType', 'carParts', 'carPartTypes', 'carPartsFav'));
+        return view('front.pages.type', compact('partType', 'carParts', 'carPartTypes', 'carPartsFav', 'globalMinPrice', 'globalMaxPrice', 'minPrice', 'maxPrice'));
     }
 
     // Product show by car brand. It is brand archive page.
@@ -215,13 +232,29 @@ class PageController extends Controller
 
         $query = CarPart::where('part_brand_id', $partBrand->id);
 
+        $rawMinPrice = CarPart::min('sale_price') ?? 0;
+        $rawMaxPrice = CarPart::max('sale_price');
+
+        $globalMinPrice = floor($rawMinPrice); // round down
+        $globalMaxPrice = ceil($rawMaxPrice);  // round up
+
+        // --- Price Filter ---
+        $minPrice = $request->input('min_price', $globalMinPrice);
+        $maxPrice = $request->input('max_price', $globalMaxPrice);
+
         // Price filter logic
-        if ($request->filled('min_price')) {
-            $query->where('sale_price', '>=', $request->min_price);
+        if ($minPrice) {
+            $query->where('sale_price', '>=', $minPrice);
         }
-        if ($request->filled('max_price')) {
-            $query->where('sale_price', '<=', $request->max_price);
+        if ($maxPrice) {
+            $query->where('sale_price', '<=', $maxPrice);
         }
+        // if ($request->filled('min_price')) {
+        //     $query->where('sale_price', '>=', $request->min_price);
+        // }
+        // if ($request->filled('max_price')) {
+        //     $query->where('sale_price', '<=', $request->max_price);
+        // }
 
         // Sorting
         $sort = $request->query('sort', '1');
@@ -241,7 +274,7 @@ class PageController extends Controller
             return view('front.partials.car_parts_list', compact('carParts'))->render();
         }
 
-        return view('front.pages.part-brand', compact('setting','partBrand', 'carParts', 'carPartTypes', 'carPartsFav', 'title', 'meta_des'));
+        return view('front.pages.part-brand', compact('setting','partBrand', 'carParts', 'carPartTypes', 'carPartsFav', 'title', 'meta_des', 'globalMinPrice', 'globalMaxPrice', 'minPrice', 'maxPrice'));
     }
 
     //It is refund policy page.

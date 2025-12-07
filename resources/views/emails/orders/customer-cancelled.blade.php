@@ -76,6 +76,7 @@
             <thead>
                 <tr>
                     <th>Item</th>
+                    <th>Part Number</th>
                     <th>Quantity</th>
                     <th>Price</th>
                     <th>Total</th>
@@ -85,20 +86,21 @@
                 @foreach ($order->products as $product)
                     <tr>
                         <td>{{ $product['title'] ?? '-' }}</td>
+                        <td>{{ $product['part_number'] ?? '' }}</td>
                         <td>{{ $product['quantity'] ?? 0 }}</td>
                         <td>${{ number_format($product['sale_price'] ?? 0, 2) }}</td>
                         <td>${{ number_format(($product['sale_price'] ?? 0) * ($product['quantity'] ?? 0), 2) }}</td>
                     </tr>
                 @endforeach
                 <tr>
-                    <td colspan="3" class="total">Grand Total</td>
+                    <td colspan="4" class="total">Grand Total</td>
                     <td class="total">${{ number_format($order->total ?? 0, 2) }}</td>
                 </tr>
             </tbody>
         </table>
 
         <div class="footer">
-            This is an automated notification from <strong> CAR AUTO LB</strong>.
+            This is an automated notification from <strong> Car Parts Lb Support Team</strong>.
         </div>
     </div>
 </body>

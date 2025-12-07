@@ -41,8 +41,8 @@
                                         <div class="price__filter--input d-flex align-items-center">
                                             <span class="price__filter--currency">$</span>
                                             <input class="price__filter--input__field border-0 custom_price_field"
-                                                name="min_price" id="Filter-Price-GTE" type="number" placeholder="0"
-                                                value="{{ $minPrice }}">
+                                                name="min_price" id="Filter-Price-GTE" type="number"
+                                                placeholder="{{ $minPrice }}" value="{{ $minPrice }}">
                                         </div>
                                     </div>
                                     <div class="price__divider"><span>-</span></div>
@@ -51,8 +51,8 @@
                                         <div class="price__filter--input d-flex align-items-center">
                                             <span class="price__filter--currency">$</span>
                                             <input class="price__filter--input__field border-0 custom_price_field"
-                                                name="max_price" id="Filter-Price-LTE" type="number" placeholder="250"
-                                                value="{{ $maxPrice }}">
+                                                name="max_price" id="Filter-Price-LTE" type="number"
+                                                placeholder="{{ $maxPrice }}" value="{{ $maxPrice }}">
                                         </div>
                                     </div>
                                 </div>

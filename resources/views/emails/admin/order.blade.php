@@ -55,6 +55,9 @@
                     <th>Product Title</th>
                     <th>Part Number</th>
                     <th>SKU</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                    <th>Total</th>
                 </tr>
             </thead>
             <tbody>
@@ -64,6 +67,9 @@
                         <td>{{ $product['title'] ?? '' }}</td>
                         <td>{{ $product['part_number'] ?? '' }}</td>
                         <td>{{ $product['sku'] ?? '' }}</td>
+                        <td>{{ $product['quantity'] ?? 0 }}</td>
+                        <td>${{ number_format(($product['sale_price'] ?? 0) * ($product['quantity'] ?? 0), 2) }}</td>
+                        <td>${{ number_format($product['sale_price'] ?? 0, 2) }}</td>
                     </tr>
                 @endforeach
             </tbody>
@@ -79,7 +85,7 @@
             {{ $order->country }}
         </p>
 
-        <p>– CAR AUTO LB</p>
+        <p>– Car Parts Lb Support Team</p>
     </div>
 </body>
 

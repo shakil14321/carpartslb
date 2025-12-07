@@ -119,12 +119,12 @@
             <p>This code will expire in <strong>20 minutes</strong>.</p>
             <p>If you did not request this, you can safely ignore this email.</p>
 
-            <p style="margin-top:25px;">Thanks,<br><strong>CAR AUTO LB</strong></p>
+            <p style="margin-top:25px;">Thanks,<br><strong>Car Parts Lb Support Team</strong></p>
         </div>
 
         <!-- Footer -->
         <div class="email-footer">
-            <p>© {{ date('Y') }} Car Auto LB. All rights reserved.</p>
+            <p>© {{ date('Y') }} carpartslb.com. All rights reserved.</p>
         </div>
     </div>
 
