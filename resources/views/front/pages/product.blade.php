@@ -1,13 +1,13 @@
 @extends('layouts.front.front-layout')
 
 @section('seo')
-    <title>{{ $carPart->meta_title ?? '' }}</title>
+    <title>{{ $carPart->title ?? '' }}</title>
     <meta name="description" content="{{ $carPart->meta_description ?? '' }}">
 
     <link rel="canonical" href="{{ url()->current() }}">
 
     <!-- Open Graph (for Facebook, WhatsApp etc.) -->
-    <meta property="og:title" content="{{ $carPart->meta_title ?? '' }}">
+    <meta property="og:title" content="{{ $carPart->meta_title ?? $carPart->title }}">
     <meta property="og:description" content="{{ $carPart->meta_description ?? '' }}">
     <meta property="og:type" content="website">
     <meta property="og:url" content="{{ url()->current() }}">
@@ -16,7 +16,7 @@
 
     <!-- Twitter Card (for Twitter share) -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="{{ $carPart->meta_title ?? '' }}">
+    <meta name="twitter:title" content="{{ $carPart->meta_title ?? $carPart->title }}">
     <meta name="twitter:description" content="{{ $carPart->meta_description ?? '' }}">
     <meta name="twitter:image"
         content="{{ $carPart->feature_image ? asset('public/images/parts/feature/' . $carPart->feature_image) : '' }}">
@@ -292,6 +292,46 @@
                                     </div>
                                 </div>
                             </div>
+
+                            {{-- <div class="quickview__social d-flex align-items-center mb-15">
+                                <label class="quickview__social--title">Share:</label>
+                                <ul class="quickview__social--wrapper mt-0 d-flex gap-2">
+
+                                    <!-- Facebook Share -->
+                                    <li>
+                                        <a target="_blank"
+                                            href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode(request()->fullUrl()) }}">
+                                            Facebook
+                                        </a>
+                                    </li>
+
+                                    <!-- WhatsApp Share -->
+                                    <li>
+                                        <a target="_blank"
+                                            href="https://api.whatsapp.com/send?text={{ urlencode($carPart->title . ' ' . request()->fullUrl()) }}">
+                                            WhatsApp
+                                        </a>
+                                    </li>
+
+                                    <!-- Twitter (X) Share -->
+                                    <li>
+                                        <a target="_blank"
+                                            href="https://twitter.com/intent/tweet?text={{ urlencode($carPart->title) }}&url={{ urlencode(request()->fullUrl()) }}">
+                                            Twitter
+                                        </a>
+                                    </li>
+
+                                    <!-- LinkedIn Share -->
+                                    <li>
+                                        <a target="_blank"
+                                            href="https://www.linkedin.com/sharing/share-offsite/?url={{ urlencode(request()->fullUrl()) }}">
+                                            LinkedIn
+                                        </a>
+                                    </li>
+
+                                </ul>
+                            </div> --}}
+
                             <div class="quickview__social d-flex align-items-center mb-15">
                                 <label class="quickview__social--title">Social Share:</label>
                                 <ul class="quickview__social--wrapper mt-0 d-flex">
@@ -308,8 +348,8 @@
                                         </a>
                                     </li>
                                     <li class="quickview__social--list">
-                                        <a class="quickview__social--icon" target="_blank"
-                                            href="https://www.instagram.com">
+                                        <a class="quickview__social--icon" href="javascript:void(0)"
+                                            onclick="copyLink()">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="17.497" height="17.492"
                                                 viewBox="0 0 19.497 19.492">
                                                 <path data-name="Icon awesome-instagram"
@@ -738,90 +778,90 @@
 
     <!-- End shipping section -->
     <script>
-        < script >
-            function shareProduct() {
-                if (navigator.share) {
-                    navigator.share({
-                        title: "{{ $carPart->slug }}",
-                        text: "Check out this product!",
-                        url: "{{ request()->fullUrl() }}"
-                    });
-                } else {
-                    alert('Sharing not supported');
+        function copyLink() {
+            navigator.clipboard.writeText("{{ request()->fullUrl() }}")
+                .then(() => {
+                    alert("Product link copied! You can paste it in Instagram.");
+                });
+        }
+    </script>
+
+
+    <script>
+        document.querySelectorAll('.quantity-selector').forEach(selector => {
+            const input = selector.querySelector('.quantity-input');
+            const increment = selector.querySelector('.increment');
+            const decrement = selector.querySelector('.decrement');
+
+            // Find the closest product container
+            const productDetails = selector.closest('.product__variant').parentElement;
+            const currentPriceElem = productDetails.querySelector('.current__price');
+            const oldPriceElem = productDetails.querySelector('.old__price');
+
+            // Store base prices
+            const baseSalePrice = parseFloat(currentPriceElem.textContent.replace('$', '')) || 0;
+            const baseOriginalPrice = oldPriceElem ? parseFloat(oldPriceElem.textContent.replace('$', '')) || 0 : 0;
+
+            function updatePrice() {
+                const qty = parseInt(input.value) || 1;
+                currentPriceElem.textContent = '$' + (baseSalePrice * qty).toFixed(2);
+                if (oldPriceElem && baseOriginalPrice > 0) {
+                    oldPriceElem.textContent = '$' + (baseOriginalPrice * qty).toFixed(2);
                 }
             }
-    </script>~
-    document.querySelectorAll('.quantity-selector').forEach(selector => {
-    const input = selector.querySelector('.quantity-input');
-    const increment = selector.querySelector('.increment');
-    const decrement = selector.querySelector('.decrement');
 
-    // Find the closest product container
-    const productDetails = selector.closest('.product__variant').parentElement;
-    const currentPriceElem = productDetails.querySelector('.current__price');
-    const oldPriceElem = productDetails.querySelector('.old__price');
+            increment.addEventListener('click', () => {
+                input.value = parseInt(input.value) + 1;
+                updatePrice();
+            });
 
-    // Store base prices
-    const baseSalePrice = parseFloat(currentPriceElem.textContent.replace('$', '')) || 0;
-    const baseOriginalPrice = oldPriceElem ? parseFloat(oldPriceElem.textContent.replace('$', '')) || 0 : 0;
+            decrement.addEventListener('click', () => {
+                if (parseInt(input.value) > 1) {
+                    input.value = parseInt(input.value) - 1;
+                    updatePrice();
+                }
+            });
 
-    function updatePrice() {
-    const qty = parseInt(input.value) || 1;
-    currentPriceElem.textContent = '$' + (baseSalePrice * qty).toFixed(2);
-    if (oldPriceElem && baseOriginalPrice > 0) {
-    oldPriceElem.textContent = '$' + (baseOriginalPrice * qty).toFixed(2);
-    }
-    }
-
-    increment.addEventListener('click', () => {
-    input.value = parseInt(input.value) + 1;
-    updatePrice();
-    });
-
-    decrement.addEventListener('click', () => {
-    if (parseInt(input.value) > 1) {
-    input.value = parseInt(input.value) - 1;
-    updatePrice();
-    }
-    });
-
-    input.addEventListener('input', () => {
-    if (parseInt(input.value) < 1 || isNaN(input.value)) input.value=1; updatePrice(); }); }); // Pass quantity to Add To
-        Cart document.querySelectorAll('.add-to-cart-btn').forEach(btn=> {
-        btn.addEventListener('click', function() {
-        const quantity = this.closest('.product__variant--list').querySelector('.quantity-input')
-        .value;
-        console.log('Quantity for this product:', quantity);
-        // Include quantity in your AJAX call here
+            input.addEventListener('input', () => {
+                if (parseInt(input.value) < 1 || isNaN(input.value)) input.value = 1;
+                updatePrice();
+            });
+        }); // Pass quantity to Add To
+        document.querySelectorAll('.add-to-cart-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const quantity = this.closest('.product__variant--list').querySelector('.quantity-input')
+                    .value;
+                console.log('Quantity for this product:', quantity);
+                // Include quantity in your AJAX call here
+            });
         });
-        });
-        </script>
+    </script>
 
-        <script>
-            // document.querySelectorAll('.quantity-selector').forEach(selector => {
-            //     const input = selector.querySelector('.quantity-input');
-            //     const increment = selector.querySelector('.increment');
-            //     const decrement = selector.querySelector('.decrement');
+    <script>
+        // document.querySelectorAll('.quantity-selector').forEach(selector => {
+        //     const input = selector.querySelector('.quantity-input');
+        //     const increment = selector.querySelector('.increment');
+        //     const decrement = selector.querySelector('.decrement');
 
-            //     increment.addEventListener('click', () => {
-            //         input.value = parseInt(input.value) + 1;
-            //     });
+        //     increment.addEventListener('click', () => {
+        //         input.value = parseInt(input.value) + 1;
+        //     });
 
-            //     decrement.addEventListener('click', () => {
-            //         if (parseInt(input.value) > 1) {
-            //             input.value = parseInt(input.value) - 1;
-            //         }
-            //     });
-            // });
+        //     decrement.addEventListener('click', () => {
+        //         if (parseInt(input.value) > 1) {
+        //             input.value = parseInt(input.value) - 1;
+        //         }
+        //     });
+        // });
 
-            // // Optional: include quantity in Add To Cart button data
-            // document.querySelectorAll('.add-to-cart-btn').forEach(btn => {
-            //     btn.addEventListener('click', function() {
-            //         const quantity = this.closest('.product__variant--list').querySelector('.quantity-input')
-            //             .value;
-            //         console.log('Add to cart quantity:', quantity);
-            //         // Pass quantity along with other product data to your AJAX or form
-            //     });
-            // });
-        </script>
-    @endsection
+        // // Optional: include quantity in Add To Cart button data
+        // document.querySelectorAll('.add-to-cart-btn').forEach(btn => {
+        //     btn.addEventListener('click', function() {
+        //         const quantity = this.closest('.product__variant--list').querySelector('.quantity-input')
+        //             .value;
+        //         console.log('Add to cart quantity:', quantity);
+        //         // Pass quantity along with other product data to your AJAX or form
+        //     });
+        // });
+    </script>
+@endsection
