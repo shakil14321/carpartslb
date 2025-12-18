@@ -23,6 +23,9 @@ use App\Http\Controllers\Frontend\Auth\RegisterController;
 use App\Http\Controllers\Frontend\Auth\VerificationController;
 use App\Http\Controllers\Frontend\Auth\PasswordResetController;
 
+use App\Http\Controllers\ShippingController;
+
+
 // Fronted pages
 Route::get('/cc', [PageController::class, 'cacheClear'])->name('cacheClear');
 Route::get('/', [PageController::class, 'index'])->name('home');
@@ -53,24 +56,24 @@ Route::get('/search-products', [PageController::class, 'search'])->name('product
 // Cart functionality routes
 
 // Cart
-Route::get('/cart/data', [CartController::class,'data'])->name('cart.data');
-Route::post('/cart/add', [CartController::class,'addToCart'])->name('cart.add');
-Route::post('/cart/updateQuantity', [CartController::class,'updateQuantity'])->name('cart.update.quantity');
-Route::post('/cart/remove', [CartController::class,'removeFromCart'])->name('cart.remove');
+Route::get('/cart/data', [CartController::class, 'data'])->name('cart.data');
+Route::post('/cart/add', [CartController::class, 'addToCart'])->name('cart.add');
+Route::post('/cart/updateQuantity', [CartController::class, 'updateQuantity'])->name('cart.update.quantity');
+Route::post('/cart/remove', [CartController::class, 'removeFromCart'])->name('cart.remove');
 
-Route::get('/checkout', [CartController::class,'checkoutPage'])->name('checkout.page')->middleware('auth');
-Route::post('/order/store', [OrderController::class,'store'])->name('order.store');
+Route::get('/checkout', [CartController::class, 'checkoutPage'])->name('checkout.page')->middleware('auth');
+Route::post('/order/store', [OrderController::class, 'store'])->name('order.store');
 Route::post('/order-default', [OrderController::class, 'storeDefault'])->name('order.default');
 
 // Reviews functionality routes
 Route::post('/submit-review', [ReviewController::class, 'store'])->name('review.store');
 
 // Middleware on specious front pages
-Route::middleware(['guest','prevent-back-history'])->group(function() {
+Route::middleware(['guest', 'prevent-back-history'])->group(function () {
 
     // Front registration & login
-    Route::get('registration', [RegisterController::class,'showForm'])->name('register.form');
-    Route::post('registration', [RegisterController::class,'register'])->name('register');
+    Route::get('registration', [RegisterController::class, 'showForm'])->name('register.form');
+    Route::post('registration', [RegisterController::class, 'register'])->name('register');
 
     Route::get('/auto/admin/login', [LoginController::class, 'adminLoginPage'])->name('adminLogin.view');
     Route::post('/auto/admin/login', [LoginController::class, 'adminLogin'])->name('adminLogin');
@@ -78,26 +81,26 @@ Route::middleware(['guest','prevent-back-history'])->group(function() {
     Route::get('auto/author/login', [LoginController::class, 'authorLoginPage'])->name('authorLogin.view');
     Route::post('auto/author/login', [LoginController::class, 'authorLogin'])->name('authorLogin');
 
-    Route::get('login', [LoginController::class,'showForm'])->name('login.form');
-    Route::post('login', [LoginController::class,'login'])->name('login');
+    Route::get('login', [LoginController::class, 'showForm'])->name('login.form');
+    Route::post('login', [LoginController::class, 'login'])->name('login');
 
-    Route::get('verify-email', [VerificationController::class,'showForm'])->name('verify.form');
-    Route::post('verify-email', [VerificationController::class,'verify'])->name('verify');
-    Route::get('resend-code-verify-email', [VerificationController::class,'resendView'])->name('resend.view');
-    Route::post('resend-code-verify-email', [VerificationController::class,'resend'])->name('verify.resend');
+    Route::get('verify-email', [VerificationController::class, 'showForm'])->name('verify.form');
+    Route::post('verify-email', [VerificationController::class, 'verify'])->name('verify');
+    Route::get('resend-code-verify-email', [VerificationController::class, 'resendView'])->name('resend.view');
+    Route::post('resend-code-verify-email', [VerificationController::class, 'resend'])->name('verify.resend');
 
     // Password reset
-    Route::get('password-reset', [PasswordResetController::class,'showRequestForm'])->name('password.request');
-    Route::post('password-reset', [PasswordResetController::class,'sendCode'])->name('password.send');
-    Route::get('password-reset/verify', [PasswordResetController::class,'showVerifyForm'])->name('password.verify.form');
-    Route::post('password-reset/verify', [PasswordResetController::class,'verifyCode'])->name('password.verify');
-    Route::post('password-reset/update', [PasswordResetController::class,'updatePassword'])->name('password.update');
+    Route::get('password-reset', [PasswordResetController::class, 'showRequestForm'])->name('password.request');
+    Route::post('password-reset', [PasswordResetController::class, 'sendCode'])->name('password.send');
+    Route::get('password-reset/verify', [PasswordResetController::class, 'showVerifyForm'])->name('password.verify.form');
+    Route::post('password-reset/verify', [PasswordResetController::class, 'verifyCode'])->name('password.verify');
+    Route::post('password-reset/update', [PasswordResetController::class, 'updatePassword'])->name('password.update');
 });
 
 // Customer dashboard
-Route::prefix('customer')->middleware(['auth', 'role:customer', 'prevent-back-history'])->group(function(){
+Route::prefix('customer')->middleware(['auth', 'role:customer', 'prevent-back-history'])->group(function () {
     Route::get('/dashboard', [AddressController::class, 'index'])->name('customerDashboard');
-    Route::put('/update',[AuthController::class, 'updateCustomer'])->name('customer.update');
+    Route::put('/update', [AuthController::class, 'updateCustomer'])->name('customer.update');
     Route::resource('/address', AddressController::class)->except(['show']);
     Route::get('/order/view/{id}', [OrderController::class, 'orderView'])->name('orderView.customer');
     Route::put('/order/{id}', [OrderController::class, 'updateCustomer'])->name('orders.update');
@@ -105,12 +108,12 @@ Route::prefix('customer')->middleware(['auth', 'role:customer', 'prevent-back-hi
 });
 
 // Logout route
-Route::middleware(['auth','prevent-back-history'])->group(function() {
-    Route::post('logout',[LoginController::class,'logout'])->name('logout');
+Route::middleware(['auth', 'prevent-back-history'])->group(function () {
+    Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 });
 
 // Admin and Author routes
-Route::prefix('panel')->middleware(['auth', 'role:admin|author', 'prevent-back-history'])->group(function(){
+Route::prefix('panel')->middleware(['auth', 'role:admin|author', 'prevent-back-history'])->group(function () {
 
     Route::get('/author/dashboard', [LoginController::class, 'authorDashboard'])->name('authorDashboard.view');
 
@@ -140,7 +143,7 @@ Route::prefix('panel')->middleware(['auth', 'role:admin|author', 'prevent-back-h
     Route::post('simple-cache', [PageController::class, 'simpleCache'])->name('simple.cache');
     Route::post('/all-cache', [PageController::class, 'allCache'])->name('all.cache');
 
-     // Mulitiple products/parts delete routes
+    // Mulitiple products/parts delete routes
     Route::post('product/delete-selected', [CarPartController::class, 'deleteSelected'])->name('product.deleteSelected');
 
     // Mulitiple car brands delete routes
@@ -190,36 +193,36 @@ Route::prefix('panel')->middleware(['auth', 'role:admin|author', 'prevent-back-h
     Route::delete('/feature-images/delete', [MediaController::class, 'deleteSelected'])->name('featureImage.deleteSelected');
     // Feature image single delete
     Route::delete('/feature-image/delete', [MediaController::class, 'deleteSingle'])
-    ->where('filename', '.*')
-    ->name('featureImage.deleteSingle');
+        ->where('filename', '.*')
+        ->name('featureImage.deleteSingle');
 
     // Gallery images multi selected deleted
     Route::delete('/gallery-images/delete', [MediaController::class, 'deleteSelectedGallery'])->name('galleryImage.deleteSelected');
     // Gallery image single delete
-     Route::delete('/gallery-image/delete', [MediaController::class, 'deleteSingleGallery'])
-    ->where('filename', '.*')
-    ->name('galleryImage.deleteSingle');
+    Route::delete('/gallery-image/delete', [MediaController::class, 'deleteSingleGallery'])
+        ->where('filename', '.*')
+        ->name('galleryImage.deleteSingle');
 
-     // Product category images multi selected deleted
+    // Product category images multi selected deleted
     Route::delete('/type-images/delete', [MediaController::class, 'deleteSelectedCategory'])->name('categoryImage.deleteSelected');
     // Product category single delete
-     Route::delete('/type-image/delete', [MediaController::class, 'deleteSingleCategory'])
-    ->where('filename', '.*')
-    ->name('categoryImage.deleteSingle');
+    Route::delete('/type-image/delete', [MediaController::class, 'deleteSingleCategory'])
+        ->where('filename', '.*')
+        ->name('categoryImage.deleteSingle');
 
-     // Brand images multi selected deleted
+    // Brand images multi selected deleted
     Route::delete('/brand-images/delete', [MediaController::class, 'deleteSelectedBrand'])->name('brandImage.deleteSelected');
     // Brand single delete
-     Route::delete('/brand-image/delete', [MediaController::class, 'deleteSingleBrand'])
-    ->where('filename', '.*')
-    ->name('brandImage.deleteSingle');
+    Route::delete('/brand-image/delete', [MediaController::class, 'deleteSingleBrand'])
+        ->where('filename', '.*')
+        ->name('brandImage.deleteSingle');
 
-     // Model images multi selected deleted
+    // Model images multi selected deleted
     Route::delete('/model-images/delete', [MediaController::class, 'deleteSelectedModel'])->name('modelImage.deleteSelected');
     // Model single delete
-     Route::delete('/model-image/delete', [MediaController::class, 'deleteSingleModel'])
-    ->where('filename', '.*')
-    ->name('modelImage.deleteSingle');
+    Route::delete('/model-image/delete', [MediaController::class, 'deleteSingleModel'])
+        ->where('filename', '.*')
+        ->name('modelImage.deleteSingle');
 
     // Model search Route
     Route::get('/model-images/search', [MediaController::class, 'searchModelImages'])->name('modelImage.search');
@@ -229,7 +232,7 @@ Route::prefix('panel')->middleware(['auth', 'role:admin|author', 'prevent-back-h
 });
 
 // Admin routes
-Route::prefix('panel')->middleware(['auth','role:admin','prevent-back-history'])->group(function(){
+Route::prefix('panel')->middleware(['auth', 'role:admin', 'prevent-back-history'])->group(function () {
 
     Route::get('/admin/dashboard', [LoginController::class, 'adminDashboard'])->name('dashboard');
 
@@ -285,12 +288,35 @@ Route::prefix('panel')->middleware(['auth','role:admin','prevent-back-history'])
     Route::delete('/order/{id}/delete', [OrderController::class, 'destroy'])->name('order.destroy');
     Route::delete('/orders/delete-all', [OrderController::class, 'deleteAll'])->name('orders.deleteAll');
 
-      // User images multi selected deleted
+
+
+    // Standard shipping
+
+Route::prefix('shipping/standard')->middleware(['auth', 'role:admin', 'prevent-back-history'])->group(function () {
+    Route::get('/', [ShippingController::class, 'standardIndex'])->name('shipping.standard.index');
+    Route::get('/edit/{id}', [ShippingController::class, 'standardEdit'])->name('shipping.standard.edit');
+    Route::get('/add', [ShippingController::class, 'standardAdd'])->name('shipping.standard.add');
+    Route::post('/update/{id}', [ShippingController::class, 'standardUpdate'])->name('shipping.standard.update');
+    Route::delete('/delete/{id}', [ShippingController::class, 'standardDelete'])->name('shipping.standard.delete');
+});
+
+// Distance based shipping routes
+Route::prefix('shipping/distance')->middleware(['auth', 'role:admin', 'prevent-back-history'])->group(function () {
+    Route::get('/', [ShippingController::class, 'distanceIndex'])->name('shipping.distance.index');
+    Route::get('/add', [ShippingController::class, 'distanceAdd'])->name('shipping.distance.add');
+
+});
+
+
+
+
+
+    // User images multi selected deleted
     Route::delete('/user-images/delete', [MediaController::class, 'deleteSelectedUser'])->name('userImage.deleteSelected');
     // User single delete
-     Route::delete('/user-image/delete', [MediaController::class, 'deleteSingleUser'])
-    ->where('filename', '.*')
-    ->name('userImage.deleteSingle');
+    Route::delete('/user-image/delete', [MediaController::class, 'deleteSingleUser'])
+        ->where('filename', '.*')
+        ->name('userImage.deleteSingle');
 
     // Contact routes
     Route::get('/contacts', [ContactController::class, 'index'])->name('contact.index');

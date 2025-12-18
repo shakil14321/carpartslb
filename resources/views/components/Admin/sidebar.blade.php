@@ -168,6 +168,37 @@
                      </ul>
                  </li>
 
+
+
+                <li class="treeview {{ request()->routeIs('shipping.*') ? 'menu-open active' : '' }}">
+                    <a href="#">
+                        <i class="fa fa-compass"></i>
+                        <span>Shipping Type</span>
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </a>
+
+                    <ul class="treeview-menu"
+                        style="{{ request()->routeIs('shipping.*') ? 'display: block;' : '' }}">
+
+                        {{-- Standard Shipping --}}
+                        <li class="{{ request()->routeIs('shipping.standard.*') ? 'active' : '' }}">
+                            <a href="{{ route('shipping.standard.index') }}">
+                                <i class="fa fa-circle-o"></i> Standard Shipping
+                            </a>
+                        </li>
+
+                        {{-- Distance Based Shipping --}}
+                        <li class="{{ request()->routeIs('shipping.distance.*') ? 'active' : '' }}">
+                            <a href="{{ route('shipping.distance.add') }}">
+                                <i class="fa fa-circle-o"></i> Distance Based Shipping
+                            </a>
+                        </li>
+
+                    </ul>
+                </li>
+
+
+
                  <!-- Contact links -->
                  <li class="treeview {{ request()->routeIs('contact.*') ? 'menu-open active' : '' }}">
                      <a href="#">
