@@ -7,6 +7,8 @@ use App\Models\CarPart;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Cart;
+use App\Models\DistanceShipping;
+use App\Models\StandardShipping;
 use Illuminate\Support\Facades\Auth;
 
 class CartController extends Controller
@@ -274,7 +276,11 @@ class CartController extends Controller
             $count += $item['quantity']; // total quantity of items
         }
 
-        return view('front.pages.checkout', compact('user', 'addresses', 'defaultAddress', 'cartItems', 'total', 'count'));
+        $standardShippings = StandardShipping::where('status', 1)->get();
+    $distanceShippings = DistanceShipping::where('status', 1)->get();
+
+        return view('front.pages.checkout', compact('user', 'addresses', 'defaultAddress', 'cartItems', 'total', 'count',   'standardShippings',
+    'distanceShippings' ));
     }
 
 }

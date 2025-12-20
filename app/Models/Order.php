@@ -30,6 +30,7 @@ class Order extends Model
         "order_address_default",
         "total",
         "products",
+        'shipping_method', 'shipping_cost'
     ];
 
     public function user(){

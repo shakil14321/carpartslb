@@ -13,7 +13,9 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\OrderMail;
 use App\Mail\OrderStatusUpdatedMail;
 use App\Models\Cart;
+use App\Models\DistanceShipping;
 use App\Models\OrderItem;
+use App\Models\StandardShipping;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
@@ -29,42 +31,48 @@ class OrderController extends Controller
     }
 
     // Show review orders in admin dashboard
-    public function reviewOrders(){
+    public function reviewOrders()
+    {
         $orders = Order::where('status', 'review')->latest()->paginate(100);
 
         return view('admin.order.review', compact('orders'));
     }
 
     // Show process orders in admin dashboard
-    public function processOrders(){
+    public function processOrders()
+    {
         $orders = Order::where('status', 'process')->latest()->paginate(100);
 
         return view('admin.order.process', compact('orders'));
     }
 
     // Show deliver order in admin dashboard
-    public function deliverOrders(){
+    public function deliverOrders()
+    {
         $orders = Order::where('status', 'deliver')->latest()->paginate(100);
 
         return view('admin.order.deliver', compact('orders'));
     }
 
     // Show complete order in admin dashboard
-    public function completeOrders(){
+    public function completeOrders()
+    {
         $orders = Order::where('status', 'complete')->latest()->paginate(100);
 
         return view('admin.order.complete', compact('orders'));
     }
 
     // Show cancel order in admin dashboard
-    public function cancelOrders(){
+    public function cancelOrders()
+    {
         $orders = Order::where('status', 'cancel')->latest()->paginate(100);
 
         return view('admin.order.cancel', compact('orders'));
     }
 
     // Single Order details in customer dashboard
-    public function orderView($id){
+    public function orderView($id)
+    {
         $order = Order::findOrFail($id);
 
         return view('customer.order.show', compact('order'));
@@ -150,32 +158,57 @@ class OrderController extends Controller
     // }
     public function store(Request $request)
     {
-        $user_id = Auth::id(); // may be null if guest
-
-        // Get cart from session
+        $user_id = Auth::id();
         $cartItems = session()->get('cart', []);
 
         if (empty($cartItems)) {
             return back()->with('error', 'Cart is empty.');
         }
 
-        $total = 0;
+        $subtotal = 0;
         $products = [];
 
         foreach ($cartItems as $item) {
-            $price = $item['sale_price'] ?? $item['original_price'] ?? 0;
-            $total += $price * $item['quantity'];
+            $price = $item['sale_price'] ?? $item['original_price'];
+            $subtotal += $price * $item['quantity'];
 
             $products[$item['product_id']] = [
-                'title' => $item['title'] ?? '',
+                'title' => $item['title'],
                 'sale_price' => $item['sale_price'] ?? 0,
                 'original_price' => $item['original_price'] ?? 0,
                 'quantity' => $item['quantity'],
                 'slug' => $item['slug'] ?? '',
                 'sku' => $item['sku'] ?? '',
-                'part_number' => $item['part_number'] ?? ''
+                'part_number' => $item['part_number'] ?? '',
             ];
         }
+
+        // SHIPPING
+        $shippingCost = 0;
+        $shippingMethod = $request->shippingMethod;
+
+        if ($shippingMethod) {
+            if (str_starts_with($shippingMethod, 'standard_')) {
+                $id = (int) str_replace('standard_', '', $shippingMethod);
+                $shipping = StandardShipping::find($id);
+                $shippingCost = $shipping?->cost ?? 0;
+            }
+
+            if (str_starts_with($shippingMethod, 'distance_')) {
+                $id = (int) str_replace('distance_', '', $shippingMethod);
+                $shipping = DistanceShipping::find($id);
+                $shippingCost = $shipping?->per_km_price ?? 0;
+            }
+        }
+
+        $total = $subtotal + $shippingCost;
+        // dd(
+        //     $request->shippingMethod,
+        //     $shippingCost,
+        //     $subtotal,
+        //     $total
+        // );
+
 
         $order = Order::create([
             'user_id' => $user_id,
@@ -188,7 +221,7 @@ class OrderController extends Controller
             'country' => $request->country,
             'postal_code' => $request->postal_code,
             'order_notes' => $request->order_notes,
-            'total' => $total,
+            'total' => number_format($total, 2, '.', ''),
             'payment_method' => $request->payment_method ?? 'cod',
             'status' => 'pending',
             'order_number' => Str::upper(Str::random(10)),
@@ -196,27 +229,9 @@ class OrderController extends Controller
             'products' => $products,
         ]);
 
-        // Clear session cart after order
         session()->forget('cart');
 
-        try {
-            if ($user_id) {
-                $user = Auth::user();
-                Mail::to($user->email)->send(new OrderMail($order));
-            }
-
-            // Admin notification
-            Mail::to(env('MAIL_FROM_ADDRESS'))->send(new AdminOrderMail($order));
-
-        } catch (\Exception $e) {
-            Log::error('Order Email Error: '.$e->getMessage());
-
-            return redirect()
-                ->route('checkout.page')
-                ->with('warning', 'Order placed but email failed to send. Please contact support.');
-        }
-
-        return redirect()->route('checkout.page', $order->id)
+        return redirect()->route('checkout.page')
             ->with('success', 'Order placed successfully!');
     }
 
@@ -230,7 +245,6 @@ class OrderController extends Controller
             'order_notes' => 'nullable|string',
             'payment_method' => 'required|string',
             'status' => 'nullable|string|in:review,processing,complete,cancel',
-
             'first_name' => 'required|string',
             'last_name' => 'required|string',
             'address_line_1' => 'required|string',
@@ -242,16 +256,13 @@ class OrderController extends Controller
             'order_address_default' => 'nullable|string',
         ]);
 
-        // Get cart from session
         $cartItems = session()->get('cart', []);
-
         if (empty($cartItems)) {
             return back()->with('error', 'Cart is empty.');
         }
 
         $total = 0;
         $products = [];
-
         foreach ($cartItems as $item) {
             $price = $item['sale_price'] ?? $item['original_price'] ?? 0;
             $total += $price * $item['quantity'];
@@ -267,17 +278,31 @@ class OrderController extends Controller
             ];
         }
 
-        $randomOrderNumber = 'ORD-' . Str::upper(Str::random(8));
+        // Shipping
+        $shippingCost = 0;
+        $shippingMethod = $request->shippingMethod ?? null;
 
-        // Create order
+        if ($shippingMethod) {
+            if (str_starts_with($shippingMethod, 'standard_')) {
+                $id = intval(str_replace('standard_', '', $shippingMethod));
+                $shipping = StandardShipping::find($id);
+                $shippingCost = $shipping ? $shipping->cost : 0;
+            } elseif (str_starts_with($shippingMethod, 'distance_')) {
+                $id = intval(str_replace('distance_', '', $shippingMethod));
+                $shipping = DistanceShipping::find($id);
+                $shippingCost = $shipping ? $shipping->per_km_price : 0;
+            }
+        }
+
+        $total += $shippingCost; // add shipping to total
+
         $order = Order::create([
             'user_id' => $request->user_id,
             'address_id' => $request->address_id,
-            'order_number' => $randomOrderNumber,
+            'order_number' => 'ORD-' . Str::upper(Str::random(8)),
             'order_notes' => $request->order_notes,
             'payment_method' => $request->payment_method,
             'status' => $request->status ?? 'review',
-
             'first_name' => $request->first_name,
             'last_name' => $request->last_name,
             'address_line_1' => $request->address_line_1,
@@ -287,27 +312,20 @@ class OrderController extends Controller
             'postal_code' => $request->postal_code,
             'country' => $request->country ?? 'USA',
             'order_address_default' => $request->order_address_default,
-
-            'total' => $total,
+            'total' => number_format($total, 2, '.', ''), // total includes shipping
             'products' => $products,
         ]);
 
-        // Clear session cart
         session()->forget('cart');
 
-        // Send emails
         try {
             $user = User::find($request->user_id);
             if ($user) {
                 Mail::to($user->email)->send(new OrderMail($order));
             }
-
-            // Admin notification
             Mail::to(env('MAIL_FROM_ADDRESS'))->send(new AdminOrderMail($order));
-
         } catch (\Exception $e) {
             Log::error('Order Email Error: ' . $e->getMessage());
-
             return redirect()
                 ->route('checkout.page')
                 ->with('warning', 'Order placed but email failed to send. Please contact support.');
@@ -316,6 +334,8 @@ class OrderController extends Controller
         return redirect()->route('checkout.page')
             ->with('success', 'Order submitted successfully.');
     }
+
+
 
     // public function storeDefault(Request $request)
     // {
@@ -440,10 +460,11 @@ class OrderController extends Controller
         }
 
         return redirect()->back()
-                         ->with('success', 'Order updated successfully.');
+            ->with('success', 'Order updated successfully.');
     }
 
-    public function updateCustomer(Request $request, $id){
+    public function updateCustomer(Request $request, $id)
+    {
         $request->validate([
             'status' => 'required|string',
         ]);
@@ -454,12 +475,12 @@ class OrderController extends Controller
             'status' => $request->status,
         ]);
 
-        if($request->status === 'cancel'){
+        if ($request->status === 'cancel') {
             Mail::to(env('MAIL_FROM_ADDRESS'))->send(new OrderCancelledByCustomerMail($order));
         }
 
         return redirect()->back()
-                         ->with('success', 'Order cancel successfully.');
+            ->with('success', 'Order cancel successfully.');
     }
 
 
@@ -474,12 +495,12 @@ class OrderController extends Controller
     // Multiple selected delete items
     public function deleteSelected(Request $request)
     {
-       $ids = $request->ids;
+        $ids = $request->ids;
 
-       if($ids){
-           Order::whereIn('id', $ids)->delete();
+        if ($ids) {
+            Order::whereIn('id', $ids)->delete();
             return redirect()->route('orderView.admin')->with('success', 'Selected orders deleted successfully.');
-       }
+        }
         return redirect()->route('orderView.admin')->with('error', 'No data found.');
     }
 
@@ -512,7 +533,7 @@ class OrderController extends Controller
     }
 
     // search functionality for review orders
-   public function orderReviewSearch(Request $request)
+    public function orderReviewSearch(Request $request)
     {
         $q = trim($request->input('q', ''));
 
@@ -522,10 +543,10 @@ class OrderController extends Controller
 
         $orders = Order::query()
             ->where('status', 'review')
-            ->where(function($query) use ($q) {
+            ->where(function ($query) use ($q) {
                 $query->where('order_number', 'LIKE', "%{$q}%")
-                      ->orWhere('first_name', 'LIKE', "%{$q}%")
-                      ->orWhere('last_name', 'LIKE', "%{$q}%");
+                    ->orWhere('first_name', 'LIKE', "%{$q}%")
+                    ->orWhere('last_name', 'LIKE', "%{$q}%");
             })
             ->latest()
             ->paginate(100)
@@ -535,7 +556,7 @@ class OrderController extends Controller
     }
 
     // search functionality for processing orders
-   public function orderProcessSearch(Request $request)
+    public function orderProcessSearch(Request $request)
     {
         $q = trim($request->input('q', ''));
 
@@ -545,10 +566,10 @@ class OrderController extends Controller
 
         $orders = Order::query()
             ->where('status', 'process')
-            ->where(function($query) use ($q) {
+            ->where(function ($query) use ($q) {
                 $query->where('order_number', 'LIKE', "%{$q}%")
-                      ->orWhere('first_name', 'LIKE', "%{$q}%")
-                      ->orWhere('last_name', 'LIKE', "%{$q}%");
+                    ->orWhere('first_name', 'LIKE', "%{$q}%")
+                    ->orWhere('last_name', 'LIKE', "%{$q}%");
             })
             ->latest()
             ->paginate(100)
@@ -558,7 +579,7 @@ class OrderController extends Controller
     }
 
     // search functionality for deliver orders
-   public function orderDeliverSearch(Request $request)
+    public function orderDeliverSearch(Request $request)
     {
         $q = trim($request->input('q', ''));
 
@@ -568,10 +589,10 @@ class OrderController extends Controller
 
         $orders = Order::query()
             ->where('status', 'deliver')
-            ->where(function($query) use ($q) {
+            ->where(function ($query) use ($q) {
                 $query->where('order_number', 'LIKE', "%{$q}%")
-                      ->orWhere('first_name', 'LIKE', "%{$q}%")
-                      ->orWhere('last_name', 'LIKE', "%{$q}%");
+                    ->orWhere('first_name', 'LIKE', "%{$q}%")
+                    ->orWhere('last_name', 'LIKE', "%{$q}%");
             })
             ->latest()
             ->paginate(100)
@@ -581,7 +602,7 @@ class OrderController extends Controller
     }
 
     // search functionality for complete orders
-   public function orderCompleteSearch(Request $request)
+    public function orderCompleteSearch(Request $request)
     {
         $q = trim($request->input('q', ''));
 
@@ -591,10 +612,10 @@ class OrderController extends Controller
 
         $orders = Order::query()
             ->where('status', 'complete')
-            ->where(function($query) use ($q) {
+            ->where(function ($query) use ($q) {
                 $query->where('order_number', 'LIKE', "%{$q}%")
-                      ->orWhere('first_name', 'LIKE', "%{$q}%")
-                      ->orWhere('last_name', 'LIKE', "%{$q}%");
+                    ->orWhere('first_name', 'LIKE', "%{$q}%")
+                    ->orWhere('last_name', 'LIKE', "%{$q}%");
             })
             ->latest()
             ->paginate(100)
@@ -604,7 +625,7 @@ class OrderController extends Controller
     }
 
     // search functionality for cancel orders
-   public function orderCancelSearch(Request $request)
+    public function orderCancelSearch(Request $request)
     {
         $q = trim($request->input('q', ''));
 
@@ -614,10 +635,10 @@ class OrderController extends Controller
 
         $orders = Order::query()
             ->where('status', 'cancel')
-            ->where(function($query) use ($q) {
+            ->where(function ($query) use ($q) {
                 $query->where('order_number', 'LIKE', "%{$q}%")
-                      ->orWhere('first_name', 'LIKE', "%{$q}%")
-                      ->orWhere('last_name', 'LIKE', "%{$q}%");
+                    ->orWhere('first_name', 'LIKE', "%{$q}%")
+                    ->orWhere('last_name', 'LIKE', "%{$q}%");
             })
             ->latest()
             ->paginate(100)

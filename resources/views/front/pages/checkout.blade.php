@@ -69,6 +69,10 @@
                             {{-- New addresss section --}}
                             <details id="new_address_form_sec">
                                 <summary class="checkout__checkbox mb-20">
+
+
+
+
                                     <input class="checkout__checkbox--input checkbox" type="checkbox" id="new_checkbox">
                                     <span class="checkout__checkbox--checkmark checkmark"></span>
                                     <span class="checkout__checkbox--label add_label" id="newAdd">Ship order to new
@@ -78,6 +82,8 @@
                                     <div class="row">
                                         <form action="{{ route('order.store') }}" method="post" id="new_address_form">
                                             @csrf
+                                            <input type="hidden" name="shippingMethod" id="shippingMethodInput">
+                                            <input type="hidden" name="total" id="totalAmountHiddenInput">
 
                                             @foreach ($cartItems as $id => $product)
                                                 <input type="hidden" name="products[{{ $id }}][title]"
@@ -86,8 +92,7 @@
                                                     <input type="hidden" name="products[{{ $id }}][sale_price]"
                                                         value="{{ $product['sale_price'] ?? '' }}">
                                                 @else
-                                                    <input type="hidden"
-                                                        name="products[{{ $id }}][original_price]"
+                                                    <input type="hidden" name="products[{{ $id }}][original_price]"
                                                         value="{{ $product['original_price'] ?? '' }}">
                                                 @endif
                                                 <input type="hidden" name="products[{{ $id }}][stock_quantity]"
@@ -117,9 +122,8 @@
                                                             Name
                                                             <span class="checkout__input--label__star">*</span></label>
                                                         <input class="checkout__input--field border-radius-5"
-                                                            placeholder="First name (optional)" id="firstName"
-                                                            type="text" value="{{ old('first_name') }}"
-                                                            name="first_name">
+                                                            placeholder="First name (optional)" id="firstName" type="text"
+                                                            value="{{ old('first_name') }}" name="first_name">
                                                     </div>
                                                 </div>
 
@@ -142,9 +146,8 @@
                                                     <label class="checkout__input--label mb-5" for="input10">Address
                                                         <span class="checkout__input--label__star">*</span></label>
                                                     <input class="checkout__input--field border-radius-5"
-                                                        placeholder="House number, Street name" id="addLineOne"
-                                                        type="text" value="{{ old('address_line_1') }}"
-                                                        name="address_line_1">
+                                                        placeholder="House number, Street name" id="addLineOne" type="text"
+                                                        value="{{ old('address_line_1') }}" name="address_line_1">
                                                 </div>
                                             </div>
 
@@ -162,8 +165,7 @@
                                                 {{-- town or city --}}
                                                 <div class="col-lg-6 mb-20">
                                                     <div class="checkout__input--list">
-                                                        <label class="checkout__input--label mb-5"
-                                                            for="input11">Town/City
+                                                        <label class="checkout__input--label mb-5" for="input11">Town/City
                                                             <span class="checkout__input--label__star">*</span></label>
                                                         <input class="checkout__input--field border-radius-5"
                                                             placeholder="City" id="addCity" type="text"
@@ -217,8 +219,10 @@
                                             <div class="order-notes mb-20">
                                                 <label class="checkout__input--label mb-5" for="order">Order Notes
                                                     <span class="checkout__input--label__star">*</span></label>
-                                                <textarea class="checkout__notes--textarea__field border-radius-5" id="orderNotes"
-                                                    placeholder="Notes about your order, e.g. special notes for delivery." spellcheck="false" name="order_notes"></textarea>
+                                                <textarea class="checkout__notes--textarea__field border-radius-5"
+                                                    id="orderNotes"
+                                                    placeholder="Notes about your order, e.g. special notes for delivery."
+                                                    spellcheck="false" name="order_notes"></textarea>
                                             </div>
                                         </form>
                                     </div>
@@ -230,8 +234,10 @@
                             @if ($user && $defaultAddress)
                                 <details id="default_address_form_sec">
                                     <summary class="checkout__checkbox mb-20">
-                                        <input class="checkout__checkbox--input checkbox" type="checkbox"
-                                            id="default_checkbox">
+                                        <input class="checkout__checkbox--input checkbox" type="checkbox" id="default_checkbox">
+
+
+
                                         <span class="checkout__checkbox--checkmark checkmark"></span>
                                         <span class="checkout__checkbox--label add_label" id="defaulAdd">Ship to a
                                             default
@@ -239,35 +245,32 @@
                                     </summary>
                                     <div class="section__shipping--address__content">
                                         <div class="row">
-                                            <form action="{{ route('order.default') }}" method="post"
-                                                id="defaul_address_form">
+                                            <form action="{{ route('order.default') }}" method="post" id="defaul_address_form">
                                                 @csrf
+
+                                                <input type="hidden" name="shippingMethod" id="shippingMethodInputDefault">
+                                                <input type="hidden" name="total" id="defaultTotalAmountHiddenInput">
 
                                                 @foreach ($cartItems as $id => $product)
                                                     <input type="hidden" name="products[{{ $id }}][title]"
                                                         value="{{ $product['title'] }}">
                                                     @if ($product['sale_price'])
-                                                        <input type="hidden"
-                                                            name="products[{{ $id }}][sale_price]"
+                                                        <input type="hidden" name="products[{{ $id }}][sale_price]"
                                                             value="{{ $product['sale_price'] ?? '' }}">
                                                     @else
-                                                        <input type="hidden"
-                                                            name="products[{{ $id }}][original_price]"
+                                                        <input type="hidden" name="products[{{ $id }}][original_price]"
                                                             value="{{ $product['original_price'] ?? '' }}">
                                                     @endif
-                                                    <input type="hidden"
-                                                        name="products[{{ $id }}][stock_quantity]"
+                                                    <input type="hidden" name="products[{{ $id }}][stock_quantity]"
                                                         value="{{ $product['quantity'] ?? 0 }}">
                                                     <input type="hidden" name="products[{{ $id }}][slug]"
                                                         value="{{ $product['slug'] ?? '' }}">
-                                                    <input type="hidden"
-                                                        name="products[{{ $id }}][part_number]"
+                                                    <input type="hidden" name="products[{{ $id }}][part_number]"
                                                         value="{{ $product['part_number'] ?? '' }}">
                                                 @endforeach
 
                                                 {{-- product summary subtotal, total, taxes hidden input fields --}}
-                                                <input type="hidden" name="total" id="defaultTotalAmountHiddenInput"
-                                                    value="">
+                                                <input type="hidden" name="total" id="defaultTotalAmountHiddenInput" value="">
                                                 <input type="hidden" name="payment_method" value="cod"
                                                     id="paymentMethodHiddenInput"> {{-- COD, CARD etc. --}}
                                                 <input type="hidden" name="status">
@@ -283,8 +286,8 @@
                                                                 Name
                                                                 <span class="checkout__input--label__star">*</span></label>
                                                             <input class="checkout__input--field border-radius-5"
-                                                                placeholder="First name (optional)" id="input7"
-                                                                type="text" name="first_name"
+                                                                placeholder="First name (optional)" id="input7" type="text"
+                                                                name="first_name"
                                                                 value="{{ old('first_name', $defaultAddress->user->first_name) }}"
                                                                 readonly>
                                                         </div>
@@ -297,8 +300,7 @@
                                                                 Name
                                                                 <span class="checkout__input--label__star">*</span></label>
                                                             <input class="checkout__input--field border-radius-5"
-                                                                placeholder="Last name" id="input8" type="text"
-                                                                name="last_name"
+                                                                placeholder="Last name" id="input8" type="text" name="last_name"
                                                                 value="{{ old('last_name', $defaultAddress->user->last_name) }}"
                                                                 readonly>
                                                         </div>
@@ -311,8 +313,8 @@
                                                         <label class="checkout__input--label mb-5" for="input10">Address
                                                             <span class="checkout__input--label__star">*</span></label>
                                                         <input class="checkout__input--field border-radius-5"
-                                                            placeholder="House number, Street name" id="input10"
-                                                            type="text" name="address_line_1"
+                                                            placeholder="House number, Street name" id="input10" type="text"
+                                                            name="address_line_1"
                                                             value="{{ old('address_line_1', $defaultAddress->address_line_1) }}"
                                                             readonly>
                                                     </div>
@@ -333,12 +335,10 @@
                                                     {{-- city or town --}}
                                                     <div class="col-lg-6 mb-20">
                                                         <div class="checkout__input--list">
-                                                            <label class="checkout__input--label mb-5"
-                                                                for="input11">Town/City
+                                                            <label class="checkout__input--label mb-5" for="input11">Town/City
                                                                 <span class="checkout__input--label__star">*</span></label>
                                                             <input class="checkout__input--field border-radius-5"
-                                                                placeholder="City" id="input11" type="text"
-                                                                name="city"
+                                                                placeholder="City" id="input11" type="text" name="city"
                                                                 value="{{ old('city', $defaultAddress->city) }}" readonly>
                                                         </div>
                                                     </div>
@@ -350,10 +350,8 @@
                                                                 for="input11">State/Province
                                                                 <span class="checkout__input--label__star">*</span></label>
                                                             <input class="checkout__input--field border-radius-5"
-                                                                placeholder="City" id="input11" type="text"
-                                                                name="state"
-                                                                value="{{ old('state', $defaultAddress->state) }}"
-                                                                readonly>
+                                                                placeholder="City" id="input11" type="text" name="state"
+                                                                value="{{ old('state', $defaultAddress->state) }}" readonly>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -366,8 +364,7 @@
                                                                 for="country2">Country/region
                                                                 <span class="checkout__input--label__star">*</span></label>
                                                             <div class="checkout__input--select select">
-                                                                <select
-                                                                    class="checkout__input--select__field border-radius-5"
+                                                                <select class="checkout__input--select__field border-radius-5"
                                                                     id="country2" name="country" readonly>
                                                                     <option
                                                                         value="{{ old('country', $defaultAddress->country) }}"
@@ -382,8 +379,7 @@
                                                     {{-- postal code --}}
                                                     <div class="col-lg-6 mb-20">
                                                         <div class="checkout__input--list">
-                                                            <label class="checkout__input--label mb-5"
-                                                                for="input12">Postal
+                                                            <label class="checkout__input--label mb-5" for="input12">Postal
                                                                 Code
                                                                 <span class="checkout__input--label__star">*</span></label>
                                                             <input class="checkout__input--field border-radius-5"
@@ -398,8 +394,10 @@
                                                 <div class="order-notes mb-20">
                                                     <label class="checkout__input--label mb-5" for="order">Order
                                                         Notes <span class="checkout__input--label__star">*</span></label>
-                                                    <textarea class="checkout__notes--textarea__field border-radius-5" name="order_notes" id="order"
-                                                        placeholder="Notes about your order, e.g. special notes for delivery." spellcheck="false"></textarea>
+                                                    <textarea class="checkout__notes--textarea__field border-radius-5"
+                                                        name="order_notes" id="order"
+                                                        placeholder="Notes about your order, e.g. special notes for delivery."
+                                                        spellcheck="false"></textarea>
                                                 </div>
                                             </form>
                                         </div>
@@ -464,6 +462,27 @@
                                 </tbody>
                             </table>
                         </div>
+
+                        {{-- Shipping dropdown --}}
+                        <div class="checkout__shipping mb-20 mt-20">
+                            <h4 class="mb-10">Choose Shipping Method</h4>
+                            <div class="">
+                                <select id="shippingMethod">
+                                    @foreach($standardShippings as $shipping)
+                                        <option value="standard_{{ $shipping->id }}" data-cost="{{ $shipping->cost }}">
+                                            {{ $shipping->title }} - ${{ number_format($shipping->cost, 2) }}
+                                        </option>
+                                    @endforeach
+
+                                    @foreach($distanceShippings as $shipping)
+                                        <option value="distance_{{ $shipping->id }}" data-cost="{{ $shipping->per_km_price }}">
+                                            Distance Shipping - ${{ number_format($shipping->per_km_price, 2) }} per km
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+
                         {{-- Coupon section --}}
                         {{-- <div class="checkout__discount--code">
                             <form class="d-flex" action="#">
@@ -495,8 +514,7 @@
                                         <td class="checkout__total--footer__title checkout__total--footer__list text-left">
                                             Total </td>
                                         <td class="checkout__total--footer__amount checkout__total--footer__list text-right"
-                                            id="totalAmount">
-                                            ${{ number_format($total, 2) }}</td>
+                                            id="totalAmount">${{ number_format($total, 2) }}</td>
                                     </tr>
                                 </tfoot>
                             </table>
@@ -509,7 +527,7 @@
                                     <div class="checkout__input--select select">
                                         <select class="checkout__input--select__field border-radius-5" id="orderType">
                                             {{-- <option value="{{ old('order_type') }}">
-                                                                    {{ old('order_type') }}</option> --}}
+                                                {{ old('order_type') }}</option> --}}
                                             <option value="usa">Cash On Delivery</option>
                                         </select>
                                     </div>
@@ -530,3 +548,52 @@
     @include('front.partials.shipping_sec')
     <!-- End shipping section -->
 @endsection
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+
+        const shippingSelect = document.getElementById('shippingMethod');
+        const totalAmountEl = document.getElementById('totalAmount');
+
+        if (!shippingSelect || !totalAmountEl) return;
+
+        const totalHiddenInput = document.getElementById('totalAmountHiddenInput');
+        const defaultTotalHiddenInput = document.getElementById('defaultTotalAmountHiddenInput');
+
+        const shippingHiddenInput = document.getElementById('shippingMethodInput');
+        const shippingHiddenInputDefault = document.getElementById('shippingMethodInputDefault');
+
+        let originalTotal = Number("{{ $total }}") || 0;
+
+        let shippingCostEl = document.getElementById('shippingCost');
+
+        if (!shippingCostEl) {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+            <td class="checkout__total--title">Shipping</td>
+            <td class="checkout__total--amount text-right" id="shippingCost">$0.00</td>
+        `;
+            totalAmountEl.closest('table').querySelector('tbody').appendChild(row);
+            shippingCostEl = document.getElementById('shippingCost');
+        }
+
+        function updateTotal() {
+            const option = shippingSelect.options[shippingSelect.selectedIndex];
+            const shippingCost = option?.dataset?.cost ? parseFloat(option.dataset.cost) : 0;
+
+            if (shippingHiddenInput) shippingHiddenInput.value = shippingSelect.value;
+            if (shippingHiddenInputDefault) shippingHiddenInputDefault.value = shippingSelect.value;
+
+            const finalTotal = originalTotal + shippingCost;
+
+            shippingCostEl.innerText = '$' + shippingCost.toFixed(2);
+            totalAmountEl.innerText = '$' + finalTotal.toFixed(2);
+
+            if (totalHiddenInput) totalHiddenInput.value = finalTotal.toFixed(2);
+            if (defaultTotalHiddenInput) defaultTotalHiddenInput.value = finalTotal.toFixed(2);
+        }
+
+        shippingSelect.addEventListener('change', updateTotal);
+        updateTotal();
+    });
+</script>
