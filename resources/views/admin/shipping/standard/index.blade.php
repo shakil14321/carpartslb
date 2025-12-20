@@ -10,7 +10,6 @@
                     {{-- Card --}}
                     <div class="card shadow-sm">
                         <div class="card-header d-flex justify-content-between align-items-center">
-                            
                             {{-- <a href="{{ route('shipping.standard.create') }}" class="btn btn-primary btn-sm">Add
                                 New</a> --}}
                         </div>
@@ -33,143 +32,93 @@
                             </div>
                         </div>
 
-
-
-
-
                         <div class="col-xs-12">
 
                             <div class="box">
                                 <div class="main-flex">
                                     <h3 class="box-title">All Standard Shipping</h3>
-                                    <a href="{{ route('shipping.standard.add') }}" class="btn btn-primary btn-sm">Add New Standard Shipping</a>
+                                    <a href="{{ route('shipping.standard.add') }}" class="btn btn-primary btn-sm">
+                                        Add New Standard Shipping
+                                    </a>
                                 </div><!-- /.box-header -->
+
                                 <div class="box-body">
-                                    <form action="#" method="POST">
-                                        @csrf
 
-                                        <button type="submit" class="btn btn-danger" style="margin-bottom:10px;">Delete
-                                            Selected</button>
-                                        <table id="example1" class="table table-bordered table-striped">
-                                            <thead>
-                                                <tr>
-                                                    <th class="account__table--header__child--items" style="width:60px;">
-                                                        <input type="checkbox" id="selectAll"> All
-                                                    </th>
-                                                    <th>Sr #</th>
-                                                    <th>Name</th>
-                                                    <th>Cost</th>
-                                                    <th>Status</th>
-                                                    <th>Action</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
+                                    <table id="example1" class="table table-bordered table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th class="account__table--header__child--items" style="width:60px;">
+                                                    <input type="checkbox" id="selectAll"> All
+                                                </th>
+                                                <th>Sr #</th>
+                                                <th>Name</th>
+                                                <th>Cost</th>
+                                                <th>Status</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
 
+                                            @foreach ($standardShippings as $key => $shipping)
                                                 <tr>
                                                     <td>
-                                                        <input type="checkbox" name="ids[]" 
+                                                        <input type="checkbox" name="ids[]" value="{{ $shipping->id }}"
                                                             class="checkbox">
                                                     </td>
-                                                    <td>1</td>
-                                                    
-                                                    <td><a class="all-title">Inside Beirut,same day 3 to 5 kg </a></td>
-                                                    <td>$5</td>
-                                                    <td><span class="badge badge-success">Active</span></td>
+
+                                                    <td>{{ $standardShippings->firstItem() + $key }}</td>
+
+                                                    <td>
+                                                        <a class="all-title">{{ $shipping->title }}</a>
+                                                    </td>
+
+                                                    <td>${{ number_format($shipping->cost, 2) }}</td>
+
+                                                    <td>
+                                                        @if ($shipping->status == 1)
+                                                            <span class="badge badge-success">Active</span>
+                                                        @else
+                                                            <span class="badge badge-danger">Inactive</span>
+                                                        @endif
+                                                    </td>
+
                                                     <td>
                                                         <div class="action-container">
-                                                            <a href="{{ route('shipping.standard.edit', 1) }}"
-                                                                class="edit-icon"><i class="fa fa-edit"></i></a>
-                                                            <a href="javascript:void(0)">
-                                                                
+                                                            <a href="{{ route('shipping.standard.edit', $shipping->id) }}"
+                                                                class="edit-icon">
+                                                                <i class="fa fa-edit"></i>
                                                             </a>
-                                                            <a href="#"
-                                                                class="view-icon"><i class="delete-icon fa fa-trash-o"></i></a>
+
+                                                            <form
+                                                                action="{{ route('shipping.standard.delete', $shipping->id) }}"
+                                                                method="POST" style="display:inline-block;">
+                                                                @csrf
+                                                                @method('DELETE')
+                                                                <button type="submit" class="btn btn-link p-0 m-0"
+                                                                    onclick="return confirm('Are you sure you want to delete this item?');">
+                                                                    <i class="delete-icon fa fa-trash-o"></i>
+                                                                </button>
+                                                            </form>
+
                                                         </div>
                                                     </td>
                                                 </tr>
-                                                <tr>
-                                                    <td>
-                                                        <input type="checkbox" name="ids[]" 
-                                                            class="checkbox">
-                                                    </td>
-                                                    <td>2</td>
-                                                    
-                                                    <td><a class="all-title">Outside Beirut,3 to 5 days delivery</a></td>
-                                                    <td>$5</td>
-                                                    <td><span class="badge badge-success">Active</span></td>
-                                                    <td>
-                                                        <div class="action-container">
-                                                            <a href="{{ route('shipping.standard.edit', 2) }}"
-                                                                class="edit-icon"><i class="fa fa-edit"></i></a>
-                                                            <a href="javascript:void(0)">
-                                                                
-                                                            </a>
-                                                            <a href="#"
-                                                                class="view-icon"><i class="delete-icon fa fa-trash-o"></i></a>
-                                                        </div>
-                                                    </td>
-                                                </tr>
+                                            @endforeach
 
+                                            @if ($standardShippings->count() == 0)
                                                 <tr>
-                                                    <td>
-                                                        <input type="checkbox" name="ids[]" 
-                                                            class="checkbox">
-                                                    </td>
-                                                    <td>3</td>
-                                                    
-                                                    <td><a class="all-title">Inside Beirut same day delivery big Package 5 to 50 kg</a></td>
-                                                    <td>$15</td>
-                                                    <td><span class="badge badge-success">Active</span></td>
-                                                    <td>
-                                                        <div class="action-container">
-                                                            <a href="{{ route('shipping.standard.edit', 3) }}"
-                                                                class="edit-icon"><i class="fa fa-edit"></i></a>
-                                                            <a href="javascript:void(0)">
-                                                                
-                                                            </a>
-                                                            <a href="#"
-                                                                class="view-icon"><i class="delete-icon fa fa-trash-o"></i></a>
-                                                        </div>
+                                                    <td colspan="6" class="text-center">
+                                                        No standard shipping found
                                                     </td>
                                                 </tr>
+                                            @endif
 
-                                                <tr>
-                                                    <td>
-                                                        <input type="checkbox" name="ids[]" 
-                                                            class="checkbox">
-                                                    </td>
-                                                    <td>4</td>
-                                                    
-                                                    <td><a class="all-title">outside Beirut same day 3 to 5 kg</a></td>
-                                                    <td>$30</td>
-                                                    <td><span class="badge badge-success">Active</span></td>
-                                                    <td>
-                                                        <div class="action-container">
-                                                            <a href="{{ route('shipping.standard.edit', 4) }}"
-                                                                class="edit-icon"><i class="fa fa-edit"></i></a>
-                                                            <a href="javascript:void(0)">
-                                                                
-                                                            </a>
-                                                            <a href="#"
-                                                                class="view-icon"><i class="delete-icon fa fa-trash-o"></i></a>
-                                                        </div>
-                                                    </td>
-                                                </tr>
+                                        </tbody>
+                                    </table>
 
-                                            </tbody>
-                                            {{-- <tfoot>
-                                                <tr>
-                                                    <th>Rendering engine</th>
-                                                    <th>Browser</th>
-                                                    <th>Platform(s)</th>
-                                                    <th>Engine version</th>
-                                                    <th>CSS grade</th>
-                                                </tr>
-                                            </tfoot> --}}
-                                        </table>
-                                    </form>
                                     <!-- Pagination Links -->
-                                    {{-- {{ $carBrands->links('pagination::bootstrap-4') }} --}}
+                                    {{ $standardShippings->links('pagination::bootstrap-4') }}
+
                                 </div><!-- /.box-body -->
                             </div><!-- /.box -->
                         </div><!-- /.col -->
@@ -180,54 +129,17 @@
         </div>
     </section>
 
-    {{-- Delete Modals --}}
-    <div class="modal fade" id="deleteModal1" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
-            <div class="modal-content">
-                <div class="modal-header bg-danger text-white">
-                    <h5 class="modal-title">Confirm Delete</h5>
-                    <button type="button" class="close text-white" data-dismiss="modal">&times;</button>
-                </div>
-                <div class="modal-body">
-                    Are you sure you want to delete <strong>Standard Shipping 1</strong>?
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-danger btn-sm">Delete</button>
-                </div>
-            </div>
-        </div>
-    </div>
 
-    <div class="modal fade" id="deleteModal2" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
-            <div class="modal-content">
-                <div class="modal-header bg-danger text-white">
-                    <h5 class="modal-title">Confirm Delete</h5>
-                    <button type="button" class="close text-white" data-dismiss="modal">&times;</button>
-                </div>
-                <div class="modal-body">
-                    Are you sure you want to delete <strong>Standard Shipping 2</strong>?
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-danger btn-sm">Delete</button>
-                </div>
-            </div>
-        </div>
-    </div>
 
-    {{-- Select all checkbox JS --}}
-    @push('scripts')
-        <script>
-            document.addEventListener("DOMContentLoaded", function () {
-                const selectAll = document.getElementById('selectAll');
-                const checkboxes = document.querySelectorAll('input[name="selected[]"]');
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const selectAll = document.getElementById('selectAll');
+            const checkboxes = document.querySelectorAll('input.checkbox');
 
-                selectAll.addEventListener('change', function () {
-                    checkboxes.forEach(cb => cb.checked = selectAll.checked);
-                });
+            selectAll.addEventListener('change', function () {
+                checkboxes.forEach(cb => cb.checked = selectAll.checked);
             });
-        </script>
-    @endpush
+        });
+    </script>
+
 @endsection

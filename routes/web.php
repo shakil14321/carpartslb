@@ -292,20 +292,23 @@ Route::prefix('panel')->middleware(['auth', 'role:admin', 'prevent-back-history'
 
     // Standard shipping
 
-Route::prefix('shipping/standard')->middleware(['auth', 'role:admin', 'prevent-back-history'])->group(function () {
-    Route::get('/', [ShippingController::class, 'standardIndex'])->name('shipping.standard.index');
-    Route::get('/edit/{id}', [ShippingController::class, 'standardEdit'])->name('shipping.standard.edit');
-    Route::get('/add', [ShippingController::class, 'standardAdd'])->name('shipping.standard.add');
-    Route::post('/update/{id}', [ShippingController::class, 'standardUpdate'])->name('shipping.standard.update');
-    Route::delete('/delete/{id}', [ShippingController::class, 'standardDelete'])->name('shipping.standard.delete');
-});
+    Route::prefix('shipping/standard')->middleware(['auth', 'role:admin', 'prevent-back-history'])->group(function () {
+        Route::get('/', [ShippingController::class, 'standardIndex'])->name('shipping.standard.index');
+        Route::get('/edit/{id}', [ShippingController::class, 'standardEdit'])->name('shipping.standard.edit');
+        Route::post('/store', [ShippingController::class, 'standardStore'])->name('shipping.standard.store');
+        Route::get('/add', [ShippingController::class, 'standardAdd'])->name('shipping.standard.add');
+        Route::put('/update/{id}', [ShippingController::class, 'standardUpdate'])->name('shipping.standard.update');
+        Route::delete('/delete/{id}', [ShippingController::class, 'standardDelete'])->name('shipping.standard.delete');
+        Route::get('/', [ShippingController::class, 'standardIndex'])->name('shipping.standard.index');
+    });
 
-// Distance based shipping routes
-Route::prefix('shipping/distance')->middleware(['auth', 'role:admin', 'prevent-back-history'])->group(function () {
-    Route::get('/', [ShippingController::class, 'distanceIndex'])->name('shipping.distance.index');
-    Route::get('/add', [ShippingController::class, 'distanceAdd'])->name('shipping.distance.add');
-
-});
+    // Distance based shipping routes
+    Route::prefix('shipping/distance')->middleware(['auth', 'role:admin', 'prevent-back-history'])->group(function () {
+        // Route::get('/', [ShippingController::class, 'distanceIndex'])->name('shipping.distance.index');
+        Route::get('/add', [ShippingController::class, 'distanceAdd'])->name('shipping.distance.add');
+        Route::post('/store', [ShippingController::class, 'distanceStore'])->name('shipping.distance.store');
+        // Route::delete('/delete/{id}', [ShippingController::class, 'distanceDelete'])->name('shipping.distance.delete');
+    });
 
 
 
