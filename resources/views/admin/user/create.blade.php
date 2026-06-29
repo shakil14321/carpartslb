@@ -90,7 +90,7 @@
                                 <label for="imageFile">User Image (Optional)</label>
                                 <input type="file" id="imageFile" name="user_image">
                                 <br>
-                                <img src="{{ old('user_image') ? asset('public/images/users/' . old('user_image')) : asset('public/images/brands/demo.png') }}"
+                                <img src="{{ old('user_image') ? asset('images/users/' . old('user_image')) : asset('images/brands/demo.png') }}"
                                     alt="" class="edit-add-image" id="brandImagePreview">
                             </div>
 

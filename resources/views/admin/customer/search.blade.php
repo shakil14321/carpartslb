@@ -11,7 +11,7 @@
             {{ session('success') }}
         </div>
         @endif
-        
+
         @if(session('error'))
             <div class="alert alert-danger alert-dismissible notic_bar" style="margin:20px;">
                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
@@ -75,7 +75,7 @@
                 <div class="box-body">
                     <form action="{{ route('user.deleteSelected') }}" method="POST">
                         @csrf
-                        
+
                         <button type="submit" class="btn btn-danger" style="margin-bottom:10px;">Delete Selected</button>
                     <table id="example1" class="table table-bordered table-striped">
                         <thead>
@@ -98,7 +98,7 @@
                             <tr>
                                 <td><input type="checkbox" name="ids[]" value="{{ $user->id }}" class="checkbox"></td>
                                 <td>{{ $loop->iteration }}</td>
-                                <td><img src="{{ ($user->user_image) ? asset('public/images/users/' . $user->user_image) : asset('public/images/brands/demo.png') ; }}"
+                                <td><img src="{{ ($user->user_image) ? asset('images/users/' . $user->user_image) : asset('images/brands/demo.png') ; }}"
                                         alt="{{ $user->user_image }}" class="table-brand-image"></td>
                                 <td><a href="#" class="all-title">{{ $user->name ?? '' }}</a></td>
                                 <td><a href="#" class="all-email">{{ $user->email ?? '' }}</a></td>

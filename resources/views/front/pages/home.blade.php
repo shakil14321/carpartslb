@@ -1,5 +1,50 @@
 @extends('layouts.front.front-layout')
+<style>
+    /*.brand_heading{*/
+    /*    display:inline-flex;*/
+    /*    align-items:center;*/
+    /*    justify-content:center;*/
+    /*    min-width:200px;*/
+    /*    height:40px;*/
+    /*    background:#ef2020;*/
+    /*    border-radius:.5rem;*/
+    /*}*/
 
+    .brand_heading h2{
+        margin:0;
+        color:#fff !important;
+        font-size:20px;
+        font-weight:400;
+        background:none !important;
+    }
+
+    .brand_heading{
+        display:inline-flex;
+        align-items:center;
+        justify-content:center;
+        min-width:200px;
+        height:40px;
+        background:#ef2020;
+        border-radius:.5rem;
+        margin-left:0 !important;
+    }
+
+    .brands_section .col-12{
+        text-align:left !important;
+    }
+
+    .brand_heading::before,
+    .brand_heading::after,
+    .brand_heading h2::before,
+    .brand_heading h2::after{
+        display:none !important;
+        content:none !important;
+    }
+
+    .home2-slider1-bg{
+        background: transparent !important;
+    }
+</style>
 @section('seo')
     <title>{{ $title ?? 'Home - Carpartsld' }}</title>
     <meta name="description" content="{{ $meta_des ?? 'Best auto parts store' }}">
@@ -8,7 +53,7 @@
     <!-- OG tags -->
     <meta property="og:title" content="{{ $title ?? 'Home - Your Website' }}">
     <meta property="og:description" content="{{ $meta_des ?? 'Best auto parts store' }}">
-    <meta property="og:image" content="{{ asset('public/assets/front/img/logo/seo_image.png') }}">
+    <meta property="og:image" content="{{ asset('assets/front/img/logo/seo_image.png') }}">
     <meta property="og:image:type" content="image/png" />
     <meta property="og:url" content="{{ url()->current() }}">
 
@@ -74,7 +119,7 @@ $schema = [
                                     <div class="hero__slider--layer__style2">
 
                                         <img class="slider__layer--img "
-                                            src="{{ $setting && $setting->carousel_image_one ? asset('public/images/banners/' . $setting->carousel_image_one) : asset('public/assets/front/img/slider/home-slider1-layer.png') }}"
+                                            src="{{ $setting && $setting->carousel_image_one ? asset('images/banners/' . $setting->carousel_image_one) : asset('assets/front/img/slider/home-slider1-layer.png') }}"
                                             alt="slider-img">
                                     </div>
                                 </div>
@@ -105,7 +150,7 @@ $schema = [
                                     </div>
                                     <div class="hero__slider--layer__style2">
                                         <img class="slider__layer--img "
-                                            src="{{ $setting && $setting->carousel_image_two ? asset('public/images/banners/' . $setting->carousel_image_two) : asset('public/assets/front/img/slider/home-slider2-layer.png') }}"
+                                            src="{{ $setting && $setting->carousel_image_two ? asset('images/banners/' . $setting->carousel_image_two) : asset('assets/front/img/slider/home-slider2-layer.png') }}"
                                             alt="slider-img">
                                     </div>
                                 </div>
@@ -136,7 +181,7 @@ $schema = [
                                     </div>
                                     <div class="hero__slider--layer__style2">
                                         <img class="slider__layer--img "
-                                            src="{{ $setting && $setting->carousel_image_three ? asset('public/images/banners/' . $setting->carousel_image_three) : asset('public/assets/front/img/slider/home-slider4-layer.png') }}"
+                                            src="{{ $setting && $setting->carousel_image_three ? asset('images/banners/' . $setting->carousel_image_three) : asset('assets/front/img/slider/home-slider4-layer.png') }}"
                                             alt="slider-img">
                                     </div>
                                 </div>
@@ -165,23 +210,27 @@ $schema = [
     </section>
     <!-- End slider section -->
 
+    <!-- Start shipping section -->
+    @include('front.partials.shipping_sec')
+    <!-- End shipping section -->
+
     {{-- Brands section start --}}
     <section class="brands_section">
         <div class="container">
-            <div class="row justify-content-center align-items-center">
-                <div class="col-10 col-md-4 text-center">
-                    <div class="brand_heading text-center section__heading--maintitle">
-                        <h2>Select By Brand</h2>
+            <div class="row">
+                <div class="col-12">
+                    <div class="brand_heading section__heading--maintitle">
+                        <h2>Top Categories</h2>
                     </div>
                 </div>
             </div>
             <div class="row">
                 @if ($carBrands->count() > 0)
                     @foreach ($carBrands as $carBrand)
-                        <div class="col-12 col-sm-6 col-md-4 justify-content-center align-items-center">
+                        <div class="col-12 col-sm-6 col-md-3 justify-content-center align-items-center">
                             <div class="brand_img_wrap card mb-4">
                                 <a href="{{ route('brand.view', $carBrand->slug) }}"><img
-                                        src="{{ $carBrand->brand_image ? asset('public/images/brands/' . $carBrand->brand_image) : asset('public/images/brands/demo.png') }}"
+                                        src="{{ $carBrand->brand_image ? asset('images/brands/' . $carBrand->brand_image) : asset('images/brands/demo.png') }}"
                                         alt="{{ $carBrand->title }}"></a>
                             </div>
                         </div>
@@ -291,7 +340,7 @@ $schema = [
                                             href="{{ route('type.view', $type10->slug) }}">
                                             <div class="categories__thumbnail">
                                                 <img class="categories__thumbnail--img"
-                                                    src="{{ asset('public/assets/front/img/categories/categories-product1.webp') }}"
+                                                    src="{{ asset('assets/front/img/categories/categories-product1.webp') }}"
                                                     alt="categories-img">
                                             </div>
                                             <div class="categories__content">
@@ -323,7 +372,7 @@ $schema = [
                                             href="{{ route('type.view', $type20->slug) }}">
                                             <div class="categories__thumbnail">
                                                 <img class="categories__thumbnail--img"
-                                                    src="{{ asset('public/assets/front/img/categories/categories-product1.webp') }}"
+                                                    src="{{ asset('assets/front/img/categories/categories-product1.webp') }}"
                                                     alt="categories-img">
                                             </div>
                                             <div class="categories__content">
@@ -355,7 +404,7 @@ $schema = [
                                             href="{{ route('type.view', $type30->slug) }}">
                                             <div class="categories__thumbnail">
                                                 <img class="categories__thumbnail--img"
-                                                    src="{{ asset('public/assets/front/img/categories/categories-product1.webp') }}"
+                                                    src="{{ asset('assets/front/img/categories/categories-product1.webp') }}"
                                                     alt="categories-img">
                                             </div>
                                             <div class="categories__content">
@@ -386,7 +435,7 @@ $schema = [
                                         href="{{ route('type.view', $type40->slug) }}">
                                         <div class="categories__thumbnail">
                                             <img class="categories__thumbnail--img"
-                                                src="{{ asset('public/assets/front/img/categories/categories-product1.webp') }}"
+                                                src="{{ asset('assets/front/img/categories/categories-product1.webp') }}"
                                                 alt="categories-img">
                                         </div>
                                         <div class="categories__content">
@@ -416,7 +465,7 @@ $schema = [
                                         href="{{ route('type.view', $type50->slug) }}">
                                         <div class="categories__thumbnail">
                                             <img class="categories__thumbnail--img"
-                                                src="{{ asset('public/assets/front/img/categories/categories-product1.webp') }}"
+                                                src="{{ asset('assets/front/img/categories/categories-product1.webp') }}"
                                                 alt="categories-img">
                                         </div>
                                         <div class="categories__content">
@@ -447,7 +496,7 @@ $schema = [
                                             href="{{ route('type.view', $type60->slug) }}">
                                             <div class="categories__thumbnail">
                                                 <img class="categories__thumbnail--img"
-                                                    src="{{ asset('public/assets/front/img/categories/categories-product1.webp') }}"
+                                                    src="{{ asset('assets/front/img/categories/categories-product1.webp') }}"
                                                     alt="categories-img">
                                             </div>
                                             <div class="categories__content">
@@ -479,7 +528,7 @@ $schema = [
                                             href="{{ route('type.view', $type70->slug) }}">
                                             <div class="categories__thumbnail">
                                                 <img class="categories__thumbnail--img"
-                                                    src="{{ asset('public/assets/front/img/categories/categories-product1.webp') }}"
+                                                    src="{{ asset('assets/front/img/categories/categories-product1.webp') }}"
                                                     alt="categories-img">
                                             </div>
                                             <div class="categories__content">
@@ -511,7 +560,7 @@ $schema = [
                                             href="{{ route('type.view', $type80->slug) }}">
                                             <div class="categories__thumbnail">
                                                 <img class="categories__thumbnail--img"
-                                                    src="{{ asset('public/assets/front/img/categories/categories-product1.webp') }}"
+                                                    src="{{ asset('assets/front/img/categories/categories-product1.webp') }}"
                                                     alt="categories-img">
                                             </div>
                                             <div class="categories__content">
@@ -622,7 +671,5 @@ $schema = [
     {{-- End choose confirmation section --}}
 
 
-    <!-- Start shipping section -->
-    @include('front.partials.shipping_sec')
-    <!-- End shipping section -->
+
 @endsection

@@ -7,7 +7,7 @@
     <div class="container">
         <div class="main__footer">
             <div class="row ">
-                <div class="col-lg-6 col-md-10">
+                <div class="col-lg-4 col-md-6">
                     <div class="footer__widget">
                         <h2 class="footer__widget--title">About Us <button class="footer__widget--button"
                                 aria-label="footer widget button"></button>
@@ -35,7 +35,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-6 col-md-4 text-lg-end">
+                <div class="col-lg-4 col-md-6 text-lg-center">
                     <div class="footer__widget">
                         <h2 class="footer__widget--title">My Account <button class="footer__widget--button"
                                 aria-label="footer widget button"></button>
@@ -69,6 +69,46 @@
                                 <li class="footer__widget--menu__list"><a class="footer__widget--menu__text"
                                         href="{{ route('register.form') }}">Register</a></li>
                             </ul> --}}
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="col-lg-4 col-md-6 text-lg-end">
+                    <div class="footer__widget">
+                        <h2 class="footer__widget--title">Important Links
+                            <button class="footer__widget--button" aria-label="footer widget button"></button>
+                            <svg class="footer__widget--title__arrowdown--icon" xmlns="http://www.w3.org/2000/svg"
+                                 width="12.355" height="8.394" viewBox="0 0 10.355 6.394">
+                                <path d="M15.138,8.59l-3.961,3.952L7.217,8.59,6,9.807l5.178,5.178,5.178-5.178Z"
+                                      transform="translate(-6 -8.59)" fill="currentColor"></path>
+                            </svg>
+                        </h2>
+
+                        <div class="footer__widget--inner">
+                            <ul class="footer__widget--menu footer__widget--inner flex-column"
+                                style="display:block !important;">
+                                <li>
+                                    <a href="javascript:void(0)" style="color: var(--foreground-sub-color);">
+                                        Privacy and Policy
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0)" class="mt-3" style="color: var(--foreground-sub-color);">
+                                        Terms and Condition
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0)" class="mt-3" style="color: var(--foreground-sub-color);">
+                                        Refund Policy
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ route('contact') }}" class="mt-3" style="color: var(--foreground-sub-color);">
+                                        Contact
+                                    </a>
+                                </li>
+                            </ul>
                         </div>
                     </div>
                 </div>
@@ -109,7 +149,7 @@
             <div class="footer__bottom--inenr d-flex justify-content-between align-items-center">
                 <p class="copyright__content"><span class="text__secondary">© 2025 . All Rights Reserved.</p>
                 <div class="footer__payment">
-                    <!--<img src="{{ asset('public/assets/front/img/icon/payment-img.webp') }}" alt="payment-img">-->
+                    <!--<img src="{{ asset('assets/front/img/icon/payment-img.webp') }}" alt="payment-img">-->
                 </div>
             </div>
         </div>

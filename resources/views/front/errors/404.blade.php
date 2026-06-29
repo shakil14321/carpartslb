@@ -7,7 +7,7 @@
         <div class="row row-cols-1">
             <div class="col">
                 <div class="error__content text-center">
-                    <img class="error__content--img display-block mb-50" src="{{ asset('public/assets/front/img/other/404-thumb.webp') }}"
+                    <img class="error__content--img display-block mb-50" src="{{ asset('assets/front/img/other/404-thumb.webp') }}"
                         alt="error-img">
                     <h2 class="error__content--title">Opps ! We,ar Not Found This Page </h2>
                     <p class="error__content--desc">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Excepturi
@@ -26,7 +26,7 @@
         <div class="shipping__inner style2 d-flex">
             <div class="shipping__items style2 d-flex align-items-center">
                 <div class="shipping__icon">
-                    <img src="{{ asset('public/assets/front/img/other/shipping1.webp') }}" alt="icon-img">
+                    <img src="{{ asset('assets/front/img/other/shipping1.webp') }}" alt="icon-img">
                 </div>
                 <div class="shipping__content">
                     <h2 class="shipping__content--title h3">Free Shipping</h2>
@@ -35,7 +35,7 @@
             </div>
             <div class="shipping__items style2 d-flex align-items-center">
                 <div class="shipping__icon">
-                    <img src="{{ asset('public/assets/front/img/other/shipping2.webp') }}" alt="icon-img">
+                    <img src="{{ asset('assets/front/img/other/shipping2.webp') }}" alt="icon-img">
                 </div>
                 <div class="shipping__content">
                     <h2 class="shipping__content--title h3">Support 24/7</h2>
@@ -44,7 +44,7 @@
             </div>
             <div class="shipping__items style2 d-flex align-items-center">
                 <div class="shipping__icon">
-                    <img src="{{ asset('public/assets/front/img/other/shipping3.webp') }}" alt="icon-img">
+                    <img src="{{ asset('assets/front/img/other/shipping3.webp') }}" alt="icon-img">
                 </div>
                 <div class="shipping__content">
                     <h2 class="shipping__content--title h3">100% Money Back</h2>
@@ -53,7 +53,7 @@
             </div>
             <div class="shipping__items style2 d-flex align-items-center">
                 <div class="shipping__icon">
-                    <img src="{{ asset('public/assets/front/img/other/shipping4.webp') }}" alt="icon-img">
+                    <img src="{{ asset('assets/front/img/other/shipping4.webp') }}" alt="icon-img">
                 </div>
                 <div class="shipping__content">
                     <h2 class="shipping__content--title h3">Payment Secure</h2>

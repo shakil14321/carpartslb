@@ -72,7 +72,7 @@
                             <label for="imageFile">Brand Image</label>
                             <input type="file" id="imageFile" name="brand_image" value="{{ old('$carBrand->brand_image') }}">
                             <br>
-                            <img src="{{ ($carBrand->brand_image) ? asset('public/images/brands/' . $carBrand->brand_image) : asset('public/images/brands/demo.png') ; }}"
+                            <img src="{{ ($carBrand->brand_image) ? asset('images/brands/' . $carBrand->brand_image) : asset('images/brands/demo.png') ; }}"
                                     alt="{{ $carBrand->brand_image }}" class="edit-add-image" id="brandImagePreview">
                         </div>
                     </div><!-- /.box-body -->

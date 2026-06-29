@@ -100,7 +100,7 @@
                                                         class="checkbox">
                                                 </td>
                                                 <td>{{ $loop->iteration }}</td>
-                                                <td><img src="{{ $carBrand->brand_image ? asset('public/images/brands/' . $carBrand->brand_image) : asset('public/images/brands/demo.png') }}"
+                                                <td><img src="{{ $carBrand->brand_image ? asset('images/brands/' . $carBrand->brand_image) : asset('images/brands/demo.png') }}"
                                                         alt="{{ $carBrand->brand_image }}" class="table-brand-image"></td>
                                                 <td><a href="#" class="all-title">{{ $carBrand->title }}</a></td>
                                                 <td>

@@ -5,12 +5,13 @@ namespace App\Http\Controllers;
 use App\Models\StandardShipping;
 use App\Models\DistanceShipping;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 
 class ShippingController extends Controller
 {
     public function standardIndex(Request $request)
     {
-        $q = $request->query('q'); 
+        $q = $request->query('q');
         $standardShippings = StandardShipping::when($q, function ($query, $q) {
             $query->where('title', 'like', "%{$q}%");
         })->latest()->paginate(10);
@@ -117,6 +118,85 @@ class ShippingController extends Controller
         return redirect()->route('shipping.distance.add')
             ->with('success', 'Distance shipping added successfully');
     }
+
+    public function getDistance(Request $request)
+    {
+        $request->validate([
+            'address' => 'required|string',
+        ]);
+
+       $shopAddress = env('SHOP_ADDRESS', 'Dhaka, Bangladesh');
+        // dd(env('SHOP_ADDRESS'));
+
+        $response = Http::get('https://maps.googleapis.com/maps/api/distancematrix/json', [
+    'origins' => $shopAddress,
+    'destinations' => $request->address,
+    'mode' => 'driving',
+    'units' => 'metric',
+    'key' => config('services.google_maps.key'),
+]);
+
+
+
+
+
+
+
+
+
+        if ($response->failed() || $response['status'] !== 'OK') {
+            return response()->json(['error' => 'Distance failed'], 422);
+        }
+
+        $element = $response['rows'][0]['elements'][0];
+
+        if ($element['status'] !== 'OK') {
+            return response()->json(['error' => 'Invalid address'], 422);
+        }
+
+        $km = $element['distance']['value'] / 1000;
+
+        return response()->json([
+            'distance_km' => round($km, 2),
+        ]);
+    }
+
+    // ShippingController.php
+
+public function getDistanceFrontend(Request $request)
+{
+    $request->validate([
+        'address' => 'required|string',
+    ]);
+
+    $shopAddress = env('SHOP_ADDRESS', 'Dhaka, Bangladesh');
+
+    $response = Http::get('https://maps.googleapis.com/maps/api/distancematrix/json', [
+        'origins' => $shopAddress,
+        'destinations' => $request->address,
+        'mode' => 'driving',
+        'units' => 'metric',
+        'key' => config('services.google_maps.key'),
+    ]);
+
+    if ($response->failed() || $response['status'] !== 'OK') {
+        return response()->json(['error' => 'Distance failed'], 422);
+    }
+
+    $element = $response['rows'][0]['elements'][0];
+
+    if ($element['status'] !== 'OK') {
+        return response()->json(['error' => 'Invalid address'], 422);
+    }
+
+    $km = $element['distance']['value'] / 1000;
+
+    return response()->json([
+        'distance_km' => round($km, 2),
+    ]);
+}
+
+
 
     // Delete
     // public function distanceDelete($id)

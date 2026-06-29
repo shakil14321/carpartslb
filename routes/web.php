@@ -44,6 +44,11 @@ Route::get('/privacy-policy', [PageController::class, 'privacyPolicyPage'])->nam
 Route::get('/faq', [PageController::class, 'faqPage'])->name('faq');
 Route::get('/terms-conditions', [PageController::class, 'termsConditions'])->name('termsConditions');
 
+// routes/web.php
+Route::post('/get-distance', [ShippingController::class, 'getDistance'])
+    ->name('shipping.distance.frontend'); // no auth middleware
+
+
 // Contact page form data store Route
 Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
 
@@ -308,6 +313,10 @@ Route::prefix('panel')->middleware(['auth', 'role:admin', 'prevent-back-history'
         Route::get('/add', [ShippingController::class, 'distanceAdd'])->name('shipping.distance.add');
         Route::post('/store', [ShippingController::class, 'distanceStore'])->name('shipping.distance.store');
         // Route::delete('/delete/{id}', [ShippingController::class, 'distanceDelete'])->name('shipping.distance.delete');
+    //     Route::post('/get-distance', [ShippingController::class, 'getDistance'])
+    // ->name('shipping.distance');
+    
+
     });
 
 

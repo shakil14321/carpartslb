@@ -245,7 +245,7 @@
                                 <label for="imageFile">Product Image (Optional)</label>
                                 <input type="file" id="imageFile" name="feature_image">
                                 <br>
-                                <img src="{{ $product->feature_image ? asset('public/images/parts/feature/' . $product->feature_image) : asset('public/images/brands/demo.png') }}"
+                                <img src="{{ $product->feature_image ? asset('images/parts/feature/' . $product->feature_image) : asset('images/brands/demo.png') }}"
                                     alt="" class="edit-add-image" id="brandImagePreview">
                             </div>
 
@@ -269,7 +269,7 @@
 
                                     @foreach ($galleryImages as $galleryImage)
                                         <div class="galleryImagesWrap">
-                                            <img src="{{ asset('public/images/parts/gallery/' . $galleryImage) }}"
+                                            <img src="{{ asset('images/parts/gallery/' . $galleryImage) }}"
                                                 class="galleryPreviewImages" width="120">
                                             <span class="imageClose" data-image="{{ $galleryImage }}">
                                                 <i class="fa fa-times"></i>

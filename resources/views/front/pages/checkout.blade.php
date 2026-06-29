@@ -84,6 +84,12 @@
                                             @csrf
                                             <input type="hidden" name="shippingMethod" id="shippingMethodInput">
                                             <input type="hidden" name="total" id="totalAmountHiddenInput">
+                                            <input type="hidden" name="distance_km" id="distance_km">
+                                            <input type="hidden" name="address_line_1" id="address_line_1_hidden">
+                                            <input type="hidden" name="city" id="city_hidden">
+                                            <input type="hidden" name="country" id="country_hidden">
+
+
 
                                             @foreach ($cartItems as $id => $product)
                                                 <input type="hidden" name="products[{{ $id }}][title]"
@@ -92,7 +98,8 @@
                                                     <input type="hidden" name="products[{{ $id }}][sale_price]"
                                                         value="{{ $product['sale_price'] ?? '' }}">
                                                 @else
-                                                    <input type="hidden" name="products[{{ $id }}][original_price]"
+                                                    <input type="hidden"
+                                                        name="products[{{ $id }}][original_price]"
                                                         value="{{ $product['original_price'] ?? '' }}">
                                                 @endif
                                                 <input type="hidden" name="products[{{ $id }}][stock_quantity]"
@@ -122,8 +129,9 @@
                                                             Name
                                                             <span class="checkout__input--label__star">*</span></label>
                                                         <input class="checkout__input--field border-radius-5"
-                                                            placeholder="First name (optional)" id="firstName" type="text"
-                                                            value="{{ old('first_name') }}" name="first_name">
+                                                            placeholder="First name (optional)" id="firstName"
+                                                            type="text" value="{{ old('first_name') }}"
+                                                            name="first_name">
                                                     </div>
                                                 </div>
 
@@ -146,8 +154,9 @@
                                                     <label class="checkout__input--label mb-5" for="input10">Address
                                                         <span class="checkout__input--label__star">*</span></label>
                                                     <input class="checkout__input--field border-radius-5"
-                                                        placeholder="House number, Street name" id="addLineOne" type="text"
-                                                        value="{{ old('address_line_1') }}" name="address_line_1">
+                                                        placeholder="House number, Street name" id="addLineOne"
+                                                        type="text" value="{{ old('address_line_1') }}"
+                                                        name="address_line_1">
                                                 </div>
                                             </div>
 
@@ -165,7 +174,8 @@
                                                 {{-- town or city --}}
                                                 <div class="col-lg-6 mb-20">
                                                     <div class="checkout__input--list">
-                                                        <label class="checkout__input--label mb-5" for="input11">Town/City
+                                                        <label class="checkout__input--label mb-5"
+                                                            for="input11">Town/City
                                                             <span class="checkout__input--label__star">*</span></label>
                                                         <input class="checkout__input--field border-radius-5"
                                                             placeholder="City" id="addCity" type="text"
@@ -219,10 +229,8 @@
                                             <div class="order-notes mb-20">
                                                 <label class="checkout__input--label mb-5" for="order">Order Notes
                                                     <span class="checkout__input--label__star">*</span></label>
-                                                <textarea class="checkout__notes--textarea__field border-radius-5"
-                                                    id="orderNotes"
-                                                    placeholder="Notes about your order, e.g. special notes for delivery."
-                                                    spellcheck="false" name="order_notes"></textarea>
+                                                <textarea class="checkout__notes--textarea__field border-radius-5" id="orderNotes"
+                                                    placeholder="Notes about your order, e.g. special notes for delivery." spellcheck="false" name="order_notes"></textarea>
                                             </div>
                                         </form>
                                     </div>
@@ -234,7 +242,8 @@
                             @if ($user && $defaultAddress)
                                 <details id="default_address_form_sec">
                                     <summary class="checkout__checkbox mb-20">
-                                        <input class="checkout__checkbox--input checkbox" type="checkbox" id="default_checkbox">
+                                        <input class="checkout__checkbox--input checkbox" type="checkbox"
+                                            id="default_checkbox">
 
 
 
@@ -245,32 +254,44 @@
                                     </summary>
                                     <div class="section__shipping--address__content">
                                         <div class="row">
-                                            <form action="{{ route('order.default') }}" method="post" id="defaul_address_form">
+                                            <form action="{{ route('order.default') }}" method="post"
+                                                id="defaul_address_form">
                                                 @csrf
 
-                                                <input type="hidden" name="shippingMethod" id="shippingMethodInputDefault">
+                                                <input type="hidden" name="shippingMethod"
+                                                    id="shippingMethodInputDefault">
                                                 <input type="hidden" name="total" id="defaultTotalAmountHiddenInput">
+                                                <input type="hidden" name="distance_km" id="distance_km">
+                                                <input type="hidden" name="address_line_1" id="address_line_1_hidden">
+                                                <input type="hidden" name="city" id="city_hidden">
+                                                <input type="hidden" name="country" id="country_hidden">
+
 
                                                 @foreach ($cartItems as $id => $product)
                                                     <input type="hidden" name="products[{{ $id }}][title]"
                                                         value="{{ $product['title'] }}">
                                                     @if ($product['sale_price'])
-                                                        <input type="hidden" name="products[{{ $id }}][sale_price]"
+                                                        <input type="hidden"
+                                                            name="products[{{ $id }}][sale_price]"
                                                             value="{{ $product['sale_price'] ?? '' }}">
                                                     @else
-                                                        <input type="hidden" name="products[{{ $id }}][original_price]"
+                                                        <input type="hidden"
+                                                            name="products[{{ $id }}][original_price]"
                                                             value="{{ $product['original_price'] ?? '' }}">
                                                     @endif
-                                                    <input type="hidden" name="products[{{ $id }}][stock_quantity]"
+                                                    <input type="hidden"
+                                                        name="products[{{ $id }}][stock_quantity]"
                                                         value="{{ $product['quantity'] ?? 0 }}">
                                                     <input type="hidden" name="products[{{ $id }}][slug]"
                                                         value="{{ $product['slug'] ?? '' }}">
-                                                    <input type="hidden" name="products[{{ $id }}][part_number]"
+                                                    <input type="hidden"
+                                                        name="products[{{ $id }}][part_number]"
                                                         value="{{ $product['part_number'] ?? '' }}">
                                                 @endforeach
 
                                                 {{-- product summary subtotal, total, taxes hidden input fields --}}
-                                                <input type="hidden" name="total" id="defaultTotalAmountHiddenInput" value="">
+                                                <input type="hidden" name="total" id="defaultTotalAmountHiddenInput"
+                                                    value="">
                                                 <input type="hidden" name="payment_method" value="cod"
                                                     id="paymentMethodHiddenInput"> {{-- COD, CARD etc. --}}
                                                 <input type="hidden" name="status">
@@ -286,8 +307,8 @@
                                                                 Name
                                                                 <span class="checkout__input--label__star">*</span></label>
                                                             <input class="checkout__input--field border-radius-5"
-                                                                placeholder="First name (optional)" id="input7" type="text"
-                                                                name="first_name"
+                                                                placeholder="First name (optional)" id="input7"
+                                                                type="text" name="first_name"
                                                                 value="{{ old('first_name', $defaultAddress->user->first_name) }}"
                                                                 readonly>
                                                         </div>
@@ -300,7 +321,8 @@
                                                                 Name
                                                                 <span class="checkout__input--label__star">*</span></label>
                                                             <input class="checkout__input--field border-radius-5"
-                                                                placeholder="Last name" id="input8" type="text" name="last_name"
+                                                                placeholder="Last name" id="input8" type="text"
+                                                                name="last_name"
                                                                 value="{{ old('last_name', $defaultAddress->user->last_name) }}"
                                                                 readonly>
                                                         </div>
@@ -313,8 +335,8 @@
                                                         <label class="checkout__input--label mb-5" for="input10">Address
                                                             <span class="checkout__input--label__star">*</span></label>
                                                         <input class="checkout__input--field border-radius-5"
-                                                            placeholder="House number, Street name" id="input10" type="text"
-                                                            name="address_line_1"
+                                                            placeholder="House number, Street name" id="input10"
+                                                            type="text" name="address_line_1"
                                                             value="{{ old('address_line_1', $defaultAddress->address_line_1) }}"
                                                             readonly>
                                                     </div>
@@ -335,10 +357,12 @@
                                                     {{-- city or town --}}
                                                     <div class="col-lg-6 mb-20">
                                                         <div class="checkout__input--list">
-                                                            <label class="checkout__input--label mb-5" for="input11">Town/City
+                                                            <label class="checkout__input--label mb-5"
+                                                                for="input11">Town/City
                                                                 <span class="checkout__input--label__star">*</span></label>
                                                             <input class="checkout__input--field border-radius-5"
-                                                                placeholder="City" id="input11" type="text" name="city"
+                                                                placeholder="City" id="input11" type="text"
+                                                                name="city"
                                                                 value="{{ old('city', $defaultAddress->city) }}" readonly>
                                                         </div>
                                                     </div>
@@ -350,8 +374,10 @@
                                                                 for="input11">State/Province
                                                                 <span class="checkout__input--label__star">*</span></label>
                                                             <input class="checkout__input--field border-radius-5"
-                                                                placeholder="City" id="input11" type="text" name="state"
-                                                                value="{{ old('state', $defaultAddress->state) }}" readonly>
+                                                                placeholder="City" id="input11" type="text"
+                                                                name="state"
+                                                                value="{{ old('state', $defaultAddress->state) }}"
+                                                                readonly>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -364,7 +390,8 @@
                                                                 for="country2">Country/region
                                                                 <span class="checkout__input--label__star">*</span></label>
                                                             <div class="checkout__input--select select">
-                                                                <select class="checkout__input--select__field border-radius-5"
+                                                                <select
+                                                                    class="checkout__input--select__field border-radius-5"
                                                                     id="country2" name="country" readonly>
                                                                     <option
                                                                         value="{{ old('country', $defaultAddress->country) }}"
@@ -379,7 +406,8 @@
                                                     {{-- postal code --}}
                                                     <div class="col-lg-6 mb-20">
                                                         <div class="checkout__input--list">
-                                                            <label class="checkout__input--label mb-5" for="input12">Postal
+                                                            <label class="checkout__input--label mb-5"
+                                                                for="input12">Postal
                                                                 Code
                                                                 <span class="checkout__input--label__star">*</span></label>
                                                             <input class="checkout__input--field border-radius-5"
@@ -394,10 +422,8 @@
                                                 <div class="order-notes mb-20">
                                                     <label class="checkout__input--label mb-5" for="order">Order
                                                         Notes <span class="checkout__input--label__star">*</span></label>
-                                                    <textarea class="checkout__notes--textarea__field border-radius-5"
-                                                        name="order_notes" id="order"
-                                                        placeholder="Notes about your order, e.g. special notes for delivery."
-                                                        spellcheck="false"></textarea>
+                                                    <textarea class="checkout__notes--textarea__field border-radius-5" name="order_notes" id="order"
+                                                        placeholder="Notes about your order, e.g. special notes for delivery." spellcheck="false"></textarea>
                                                 </div>
                                             </form>
                                         </div>
@@ -430,7 +456,7 @@
                                                     <div class="product__thumbnail border-radius-5">
                                                         <a class="display-block" href="{{ route('product.view', $id) }}">
                                                             <img class="display-block border-radius-5"
-                                                                src="{{ $item['image'] ? asset('public/images/parts/feature/' . $item['image']) : asset('public/assets/front/img/product/default.webp') }}"
+                                                                src="{{ $item['image'] ? asset('images/parts/feature/' . $item['image']) : asset('assets/front/img/product/default.webp') }}"
                                                                 alt="cart-product">
                                                         </a>
                                                         <span
@@ -464,24 +490,37 @@
                         </div>
 
                         {{-- Shipping dropdown --}}
+                        {{-- Shipping dropdown --}}
                         <div class="checkout__shipping mb-20 mt-20">
                             <h4 class="mb-10">Choose Shipping Method</h4>
-                            <div class="">
-                                <select id="shippingMethod">
-                                    @foreach($standardShippings as $shipping)
+                            <div>
+                                <select id="shippingMethod" name="shippingMethod">
+                                    @foreach ($standardShippings as $shipping)
                                         <option value="standard_{{ $shipping->id }}" data-cost="{{ $shipping->cost }}">
                                             {{ $shipping->title }} - ${{ number_format($shipping->cost, 2) }}
                                         </option>
                                     @endforeach
 
-                                    @foreach($distanceShippings as $shipping)
-                                        <option value="distance_{{ $shipping->id }}" data-cost="{{ $shipping->per_km_price }}">
+                                    @foreach ($distanceShippings as $shipping)
+                                        <option value="distance_{{ $shipping->id }}"
+                                            data-cost="{{ $shipping->per_km_price }}">
                                             Distance Shipping - ${{ number_format($shipping->per_km_price, 2) }} per km
                                         </option>
                                     @endforeach
                                 </select>
                             </div>
+
+                            {{-- Hidden distance input for backend --}}
+                            <input type="hidden" name="distance_km" id="distance_km">
                         </div>
+
+                        {{-- Delivery address for distance shipping (hidden by default) --}}
+                        <div id="distanceAddressWrapper" style="display:none;" class="mt-15">
+                            <label for="delivery_address">Delivery Address</label>
+                            <input type="text" id="delivery_address" name="delivery_address" class="form-control"
+                                placeholder="Enter delivery address">
+                        </div>
+
 
                         {{-- Coupon section --}}
                         {{-- <div class="checkout__discount--code">
@@ -549,7 +588,7 @@
     <!-- End shipping section -->
 @endsection
 
-<script>
+{{-- <script>
     document.addEventListener("DOMContentLoaded", function () {
 
         const shippingSelect = document.getElementById('shippingMethod');
@@ -596,4 +635,239 @@
         shippingSelect.addEventListener('change', updateTotal);
         updateTotal();
     });
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+
+        window.shippingSelect = document.getElementById('shippingMethod');
+        const distanceWrapper = document.getElementById('distanceAddressWrapper');
+        const distanceInput = document.getElementById('distance_km');
+        const deliveryAddressInput = document.getElementById('delivery_address');
+
+        const totalAmountEl = document.getElementById('totalAmount');
+        const shippingCostEl = document.getElementById('shippingCost');
+        let originalTotal = Number("{{ $total }}") || 0;
+
+        function updateTotal(shippingCost) {
+            const finalTotal = originalTotal + shippingCost;
+            if (shippingCostEl) shippingCostEl.innerText = '$' + shippingCost.toFixed(2);
+            if (totalAmountEl) totalAmountEl.innerText = '$' + finalTotal.toFixed(2);
+        }
+
+        window.handleShippingChange = function () {
+            const selected = shippingSelect.value;
+            const option = shippingSelect.options[shippingSelect.selectedIndex];
+
+            // Standard shipping
+            if (selected.startsWith('standard_')) {
+                distanceWrapper.style.display = 'none';
+                distanceInput.value = '';
+                updateTotal(parseFloat(option.dataset.cost || 0));
+                return;
+            }
+
+            // Distance shipping
+            if (selected.startsWith('distance_')) {
+                distanceWrapper.style.display = 'block';
+
+                const address = deliveryAddressInput.value.trim();
+                if (address === '') {
+                    distanceInput.value = '';
+                    updateTotal(0);
+                    return;
+                }
+
+                fetch('{{ route('shipping.distance') }}', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+                    body: JSON.stringify({ address: address })
+                })
+                    .then(res => res.json())
+                    .then(data => {
+                        if (!data.distance_km) {
+                            distanceInput.value = '';
+                            updateTotal(0);
+                            return;
+                        }
+
+                        const distanceKm = parseFloat(data.distance_km);
+                        distanceInput.value = distanceKm;
+
+                        const perKmPrice = parseFloat(option.dataset.cost || 0);
+                        const shippingCost = perKmPrice * distanceKm;
+
+                        updateTotal(shippingCost);
+                    });
+            }
+        };
+
+        shippingSelect.addEventListener('change', handleShippingChange);
+
+        deliveryAddressInput.addEventListener('input', function () {
+            if (shippingSelect.value.startsWith('distance_')) {
+                handleShippingChange();
+            }
+        });
+
+        handleShippingChange();
+    });
+</script> --}}
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+
+        window.shippingSelect = document.getElementById('shippingMethod');
+        const deliveryAddressInput = document.getElementById('delivery_address');
+        const distanceInput = document.getElementById('distance_km');
+        const distanceWrapper = document.getElementById('distanceAddressWrapper');
+
+        const totalAmountEl = document.getElementById('totalAmount');
+
+        const shippingHiddenInput = document.getElementById('shippingMethodInput');
+        const shippingHiddenInputDefault = document.getElementById('shippingMethodInputDefault');
+        const totalHiddenInput = document.getElementById('totalAmountHiddenInput');
+        const defaultTotalHiddenInput = document.getElementById('defaultTotalAmountHiddenInput');
+
+        let originalTotal = Number("{{ $total }}") || 0;
+
+        // 🔥 ensure Shipping row exists under subtotal
+        let shippingCostEl = document.getElementById('shippingCost');
+        if (!shippingCostEl) {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+            <td class="checkout__total--title">Shipping</td>
+            <td class="checkout__total--amount text-right" id="shippingCost">$0.00</td>
+        `;
+            totalAmountEl.closest('table').querySelector('tbody').appendChild(row);
+            shippingCostEl = document.getElementById('shippingCost');
+        }
+
+        function updateUI(shippingCost) {
+            const finalTotal = originalTotal + shippingCost;
+
+            shippingCostEl.innerText = '$' + shippingCost.toFixed(2);
+            totalAmountEl.innerText = '$' + finalTotal.toFixed(2);
+
+            if (totalHiddenInput) totalHiddenInput.value = finalTotal.toFixed(2);
+            if (defaultTotalHiddenInput) defaultTotalHiddenInput.value = finalTotal.toFixed(2);
+        }
+
+        window.handleShippingChange = function() {
+
+            const selected = shippingSelect.value;
+            const option = shippingSelect.options[shippingSelect.selectedIndex];
+
+            if (shippingHiddenInput) shippingHiddenInput.value = selected;
+            if (shippingHiddenInputDefault) shippingHiddenInputDefault.value = selected;
+
+            // ✅ Standard shipping
+            if (selected.startsWith('standard_')) {
+                distanceWrapper.style.display = 'none';
+                distanceInput.value = '';
+
+                const cost = parseFloat(option.dataset.cost || 0);
+                updateUI(cost);
+                return;
+            }
+
+            // ✅ Distance shipping
+            if (selected.startsWith('distance_')) {
+                distanceWrapper.style.display = 'block';
+
+                const address = deliveryAddressInput.value.trim();
+                if (!address) {
+                    updateUI(0); // Address না দিলে cost 0 দেখাবে
+                    return;
+                }
+
+                // fetch distance from backend
+                fetch('{{ route('shipping.distance.frontend') }}', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                        },
+                        body: JSON.stringify({
+                            address: deliveryAddressInput.value
+                        })
+                    })
+
+
+                    .then(res => res.json())
+                    .then(data => {
+                        if (!data.distance_km) {
+                            updateUI(0); // যদি distance না আসে, 0 দেখাবে
+                            return;
+                        }
+
+                        const distanceKm = parseFloat(data.distance_km);
+                        distanceInput.value = distanceKm;
+
+                        const perKmPrice = parseFloat(option.dataset.cost || 0);
+                        const shippingCost = perKmPrice * distanceKm;
+
+                        updateUI(shippingCost); // subtotal এর নিচে shipping cost দেখাবে
+                    })
+                    .catch(() => {
+                        updateUI(0); // network error বা invalid response হলে 0 দেখাবে
+                    });
+            }
+
+        };
+
+        shippingSelect.addEventListener('change', handleShippingChange);
+
+        deliveryAddressInput.addEventListener('input', function() {
+            document.getElementById('address_line_1_hidden').value = this.value;
+            document.getElementById('city_hidden').value = 'Dhaka';
+            document.getElementById('country_hidden').value = 'Bangladesh';
+            document.getElementById('delivery_address_hidden').value = this.value;
+        });
+
+
+        // initial load
+        handleShippingChange();
+
+
+
+    });
+</script>
+
+
+
+<script
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBnixfXy8E40ErO2rAsnspY8HiPwFWxvPs&libraries=places&callback=initAutocomplete"
+    async defer></script>
+
+<script>
+    let autocomplete;
+
+    function initAutocomplete() {
+        const input = document.getElementById('delivery_address');
+
+        autocomplete = new google.maps.places.Autocomplete(input, {
+            types: ['geocode'],
+            componentRestrictions: {
+                country: 'bd'
+            }
+        });
+
+        autocomplete.addListener('place_changed', function() {
+            const place = autocomplete.getPlace();
+
+            if (!place.formatted_address) return;
+
+            input.value = place.formatted_address;
+
+            // 🔥 trigger distance calculation automatically
+            if (window.shippingSelect && shippingSelect.value.startsWith('distance_')) {
+                window.handleShippingChange();
+            }
+        });
+    }
 </script>

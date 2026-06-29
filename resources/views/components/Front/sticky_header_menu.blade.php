@@ -69,7 +69,7 @@
              <div class="main__logo">
                  <h1 class="main__logo--title"><a class="main__logo--link" href="{{ route('home') }}"><img
                              class="main__logo--img"
-                             src="{{ asset($setting && $setting->site_logo ? 'public/images/logos/' . $setting->site_logo : 'public/images/logos/demo.png') }}"
+                             src="{{ asset($setting && $setting->site_logo ? 'images/logos/' . $setting->site_logo : 'images/logos/demo.png') }}"
                              alt="logo-img" width="175px"></a></h1>
              </div>
              {{-- Search input field --}}

@@ -12,14 +12,14 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="{{ url()->current() }}">
     <meta property="og:image"
-        content="{{ $carPart->feature_image ? asset('public/images/parts/feature/' . $carPart->feature_image) : '' }}">
+        content="{{ $carPart->feature_image ? asset('images/parts/feature/' . $carPart->feature_image) : '' }}">
 
     <!-- Twitter Card (for Twitter share) -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="{{ $carPart->meta_title ?? $carPart->title }}">
     <meta name="twitter:description" content="{{ $carPart->meta_description ?? '' }}">
     <meta name="twitter:image"
-        content="{{ $carPart->feature_image ? asset('public/images/parts/feature/' . $carPart->feature_image) : '' }}">
+        content="{{ $carPart->feature_image ? asset('images/parts/feature/' . $carPart->feature_image) : '' }}">
 @endsection
 
 @section('content')
@@ -80,14 +80,14 @@
                                         <div class="product__media--preview__items">
                                             <a class="product__media--preview__items--link glightbox"
                                                 data-gallery="product-media-preview"
-                                                href="{{ asset('public/images/parts/feature/' . $carPart->feature_image) }}">
+                                                href="{{ asset('images/parts/feature/' . $carPart->feature_image) }}">
                                                 <img class="product__media--preview__items--img product-feature-img"
-                                                    src="{{ asset('public/images/parts/feature/' . $carPart->feature_image) }}"
+                                                    src="{{ asset('images/parts/feature/' . $carPart->feature_image) }}"
                                                     alt="product-feature-img">
                                             </a>
                                             <div class="product__media--view__icon">
                                                 <a class="product__media--view__icon--link glightbox"
-                                                    href="{{ asset('public/images/parts/feature/' . $carPart->feature_image) }}"
+                                                    href="{{ asset('images/parts/feature/' . $carPart->feature_image) }}"
                                                     data-gallery="product-media-zoom">
                                                     <svg class="product__items--action__btn--svg"
                                                         xmlns="http://www.w3.org/2000/svg" width="22.51" height="22.443"
@@ -114,14 +114,14 @@
                                         <div class="product__media--preview__items">
                                             <a class="product__media--preview__items--link glightbox"
                                                 data-gallery="product-media-preview"
-                                                href="{{ asset('public/images/parts/gallery/' . $img) }}">
+                                                href="{{ asset('images/parts/gallery/' . $img) }}">
                                                 <img class="product__media--preview__items--img"
-                                                    src="{{ asset('public/images/parts/gallery/' . $img) }}"
+                                                    src="{{ asset('images/parts/gallery/' . $img) }}"
                                                     alt="product-gallery-img">
                                             </a>
                                             <div class="product__media--view__icon">
                                                 <a class="product__media--view__icon--link glightbox"
-                                                    href="{{ asset('public/images/parts/gallery/' . $img) }}"
+                                                    href="{{ asset('images/parts/gallery/' . $img) }}"
                                                     data-gallery="product-media-zoom">
                                                     <svg class="product__items--action__btn--svg"
                                                         xmlns="http://www.w3.org/2000/svg" width="22.51" height="22.443"
@@ -152,7 +152,7 @@
                                     <div class="swiper-slide">
                                         <div class="product__media--nav__items">
                                             <img class="product__media--nav__items--img"
-                                                src="{{ asset('public/images/parts/feature/' . $carPart->feature_image) }}"
+                                                src="{{ asset('images/parts/feature/' . $carPart->feature_image) }}"
                                                 alt="product-nav-img">
                                         </div>
                                     </div>
@@ -161,7 +161,7 @@
                                     <div class="swiper-slide">
                                         <div class="product__media--nav__items">
                                             <img class="product__media--nav__items--img"
-                                                src="{{ asset('public/images/parts/gallery/' . $img) }}"
+                                                src="{{ asset('images/parts/gallery/' . $img) }}"
                                                 alt="product-nav-img">
                                         </div>
                                     </div>
@@ -285,7 +285,7 @@
                                         <span>{{ $carPart->stock_quantity ?? '' }}</span>
                                     </p> --}}
                                         <div class="part_brnad_image_sec">
-                                            <img src="{{ asset('public/images/brands/' . ($carPart->carPartBrand->brand_image ?? 'demo.png')) }}"
+                                            <img src="{{ asset('images/brands/' . ($carPart->carPartBrand->brand_image ?? 'demo.png')) }}"
                                                 alt="{{ $carPart->carPartBrand->title ?? 'Brand Image' }}"
                                                 style="width:120px; height:60px; border-radius:10px;" />
                                         </div>
@@ -364,7 +364,7 @@
                             {{-- <div class="guarantee__safe--checkout">
                             <h5 class="guarantee__safe--checkout__title">Guaranteed Safe Checkout</h5>
                             <img class="guarantee__safe--checkout__img"
-                                src="{{ asset('public/assets/front/img/other/safe-checkout.webp') }}" alt="Payment Image">
+                                src="{{ asset('assets/front/img/other/safe-checkout.webp') }}" alt="Payment Image">
                         </div> --}}
                         </form>
                     </div>
@@ -675,13 +675,13 @@
                                             href="{{ route('product.view', $related->slug) }}">
                                             @if ($related->feature_image)
                                                 <img class="product__card--thumbnail__img product__primary--img"
-                                                    src="{{ asset('public/images/parts/feature/' . ($related->feature_image ?? 'demo.png')) }}"
+                                                    src="{{ asset('images/parts/feature/' . ($related->feature_image ?? 'demo.png')) }}"
                                                     alt="feature_img">
                                             @endif
 
                                             @if ($related->gallery_images)
                                                 <img class="product__card--thumbnail__img product__secondary--img"
-                                                    src="{{ asset('public/images/parts/feature/' . ($related->feature_image ?? 'demo.png')) }}"
+                                                    src="{{ asset('images/parts/feature/' . ($related->feature_image ?? 'demo.png')) }}"
                                                     alt="feature_img">
                                             @endif
 
@@ -722,7 +722,7 @@
                                                 </p>
                                             </div>
                                             <div class="part_brnad_image_sec">
-                                                <img src="{{ asset('public/images/brands/' . ($related->carPartBrand->brand_image ?? 'demo.png')) }}"
+                                                <img src="{{ asset('images/brands/' . ($related->carPartBrand->brand_image ?? 'demo.png')) }}"
                                                     alt="{{ $related->carPartBrand->title ?? 'Brand Image' }}"
                                                     style="width:120px; height:60px; border:1px solid #a7a8a3; border-radius:10px;" />
                                             </div>

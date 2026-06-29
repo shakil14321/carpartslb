@@ -26,7 +26,7 @@
             <label for="imageFile">Logo Image</label>
             <input type="file" id="imageFile" name="site_logo">
             <br>
-            <img src="{{ $setting && $setting->site_logo ? asset('public/images/logos/' . $setting->site_logo) : asset('public/images/brands/demo.png') ; }}"
+            <img src="{{ $setting && $setting->site_logo ? asset('images/logos/' . $setting->site_logo) : asset('images/brands/demo.png') ; }}"
                 alt="" class="edit-add-image" id="brandImagePreview" style="width:300px !important;">
         </div>
 

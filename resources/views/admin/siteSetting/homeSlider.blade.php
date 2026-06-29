@@ -46,7 +46,7 @@
                                 <input type="file" name="carousel_image_one" class="mb-2">
 
                                 <div class="border p-2 rounded text-center">
-                                    <img src="{{ $setting && $setting->carousel_image_one ? asset('public/images/banners/' . $setting->carousel_image_one) : asset('public/assets/front/img/slider/home-slider1-layer.png') }}"
+                                    <img src="{{ $setting && $setting->carousel_image_one ? asset('images/banners/' . $setting->carousel_image_one) : asset('assets/front/img/slider/home-slider1-layer.png') }}"
                                         class="img-fluid rounded" style="max-height:180px;">
                                 </div>
                             </div>
@@ -89,7 +89,7 @@
                                 <input type="file" name="carousel_image_two" class="form-control mb-2">
 
                                 <div class="border p-2 rounded text-center">
-                                    <img src="{{ $setting && $setting->carousel_image_two ? asset('public/images/banners/' . $setting->carousel_image_two) : asset('public/assets/front/img/slider/home-slider2-layer.png') }}"
+                                    <img src="{{ $setting && $setting->carousel_image_two ? asset('images/banners/' . $setting->carousel_image_two) : asset('assets/front/img/slider/home-slider2-layer.png') }}"
                                         class="img-fluid rounded" style="max-height:180px;">
                                 </div>
                             </div>
@@ -132,7 +132,7 @@
                                 <input type="file" name="carousel_image_three" class="form-control mb-2">
 
                                 <div class="border p-2 rounded text-center">
-                                    <img src="{{ $setting && $setting->carousel_image_three ? asset('public/images/banners/' . $setting->carousel_image_three) : asset('public/assets/front/img/slider/home-slider4-layer.png') }}"
+                                    <img src="{{ $setting && $setting->carousel_image_three ? asset('images/banners/' . $setting->carousel_image_three) : asset('assets/front/img/slider/home-slider4-layer.png') }}"
                                         class="img-fluid rounded" style="max-height:180px;">
                                 </div>
                             </div>
@@ -177,7 +177,7 @@
                             <label for="imageFile">Home Slider 1st Image</label>
                             <input type="file" id="imageFile" name="carousel_image_one">
                             <br>
-                            <img src="{{ $setting && $setting->carousel_image_one ? asset('public/images/banners/' . $setting->carousel_image_one) : asset('public/assets/front/img/slider/home-slider1-layer.png') }}"
+                            <img src="{{ $setting && $setting->carousel_image_one ? asset('images/banners/' . $setting->carousel_image_one) : asset('assets/front/img/slider/home-slider1-layer.png') }}"
                                 alt="" class="edit-add-image" id="brandImagePreview">
                         </div>
                     </div>
@@ -188,7 +188,7 @@
                             <label for="imageFile">Home Slider 2nd Image</label>
                             <input type="file" id="imageFile" name="carousel_image_two">
                             <br>
-                            <img src="{{ $setting && $setting->carousel_image_two ? asset('public/images/banners/' . $setting->carousel_image_two) : asset('public/assets/front/img/slider/home-slider2-layer.png') }}"
+                            <img src="{{ $setting && $setting->carousel_image_two ? asset('images/banners/' . $setting->carousel_image_two) : asset('assets/front/img/slider/home-slider2-layer.png') }}"
                                 alt="" class="edit-add-image" id="brandImagePreview">
                         </div>
                     </div>
@@ -199,7 +199,7 @@
                             <label for="imageFile">Home Slider 3rd Image</label>
                             <input type="file" id="imageFile" name="carousel_image_three">
                             <br>
-                            <img src="{{ $setting && $setting->carousel_image_three ? asset('public/images/banners/' . $setting->carousel_image_three) : asset('public/assets/front/img/slider/home-slider4-layer.png') }}"
+                            <img src="{{ $setting && $setting->carousel_image_three ? asset('images/banners/' . $setting->carousel_image_three) : asset('assets/front/img/slider/home-slider4-layer.png') }}"
                                 alt="" class="edit-add-image" id="brandImagePreview">
                         </div>
                     </div>

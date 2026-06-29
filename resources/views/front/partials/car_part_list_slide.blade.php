@@ -7,13 +7,13 @@
                         href="{{ route('product.view', $carPart->slug) }}" style="height:210px !important;">
                         @if ($carPart->feature_image)
                             <img class="product__card--thumbnail__img product__primary--img"
-                                src="{{ asset($carPart->feature_image ? 'public/images/parts/feature/' . $carPart->feature_image : 'public/images/parts/feature/product-preview.jpg') }}"
+                                src="{{ asset($carPart->feature_image ? 'images/parts/feature/' . $carPart->feature_image : 'images/parts/feature/product-preview.jpg') }}"
                                 alt="feature_img" style="width:100%; height:100%; object-fit:cover;">
                         @endif
 
                         @if ($carPart->feature_image)
                             <img class="product__card--thumbnail__img product__secondary--img"
-                                src="{{ asset($carPart->feature_image ? 'public/images/parts/feature/' . $carPart->feature_image : 'public/images/parts/feature/product-preview.jpg') }}"
+                                src="{{ asset($carPart->feature_image ? 'images/parts/feature/' . $carPart->feature_image : 'images/parts/feature/product-preview.jpg') }}"
                                 alt="feature_img" style="width:100%; height:100%; object-fit:cover;">
                         @endif
 
@@ -48,7 +48,7 @@
                                     class="rating__review--text">{{ ucwords($carPart->part_number ?? '') }}</span></p>
                         </div>
                         <div class="part_brnad_image_sec">
-                            <img src="{{ asset('public/images/brands/' . ($carPart->carPartBrand->brand_image ?? 'demo.png')) }}"
+                            <img src="{{ asset('images/brands/' . ($carPart->carPartBrand->brand_image ?? 'demo.png')) }}"
                                 alt="{{ $carPart->carPartBrand->title ?? 'Brand Image' }}"
                                 style="width:120px; height:60px; border:1px solid #a7a8a3; border-radius:10px;" />
                         </div>

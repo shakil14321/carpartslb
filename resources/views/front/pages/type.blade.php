@@ -69,8 +69,8 @@
                                                 <label class="widget__categories--menu__label d-flex align-items-center">
                                                     <img class="widget__categories--menu__img"
                                                         src="{{ $carPartType->part_type_image
-                                                            ? asset('public/images/types/' . $carPartType->part_type_image)
-                                                            : asset('public/images/types/demo.png') }}"
+                                                            ? asset('images/types/' . $carPartType->part_type_image)
+                                                            : asset('images/types/demo.png') }}"
                                                         alt="categories-img">
 
                                                     <span
@@ -95,11 +95,11 @@
                                             <div class="small__product--thumbnail">
                                                 @if ($carPartFav->feature_image)
                                                     <img class="product__card--thumbnail__img product__primary--img"
-                                                        src="{{ asset('public/images/parts/feature/' . $carPartFav->feature_image) }}"
+                                                        src="{{ asset('images/parts/feature/' . $carPartFav->feature_image) }}"
                                                         alt="feature_img">
                                                 @else
                                                     <img class="product__card--thumbnail__img product__primary--img"
-                                                        src="{{ asset('public/images/brands/demo.png') }}" alt="no-image">
+                                                        src="{{ asset('images/brands/demo.png') }}" alt="no-image">
                                                 @endif
 
                                                 <a class="display-block"

@@ -69,7 +69,7 @@
                             <label for="imageFile">Brand Image (Optional)</label>
                             <input type="file" id="imageFile" name="brand_image">
                             <br>
-                            <img src="{{ old('brand_image') ? asset('public/images/brands/' . old('brand_image')) : asset('public/images/brands/demo.png') ; }}"
+                            <img src="{{ old('brand_image') ? asset('images/brands/' . old('brand_image')) : asset('images/brands/demo.png') ; }}"
                                 alt="" class="edit-add-image" id="brandImagePreview">
                         </div>
                     </div><!-- /.box-body -->

@@ -6,14 +6,14 @@
             <a class="product__card--thumbnail__link display-block" href="{{ route('product.view', $carPart->slug) }}" style="height:210px !important;">
                 @if($carPart->feature_image)
                     <img class="product__card--thumbnail__img product__primary--img"
-                    src="{{ asset($carPart->feature_image ? 'public/images/parts/feature/' . $carPart->feature_image : 'public/images/parts/feature/product-preview.jpg') }}"
+                    src="{{ asset($carPart->feature_image ? 'images/parts/feature/' . $carPart->feature_image : 'images/parts/feature/product-preview.jpg') }}"
                     alt="feature_img" style="width:100%; height:100%; object-fit:cover;">
 
                 @endif
-                
+
                  @if($carPart->feature_image)
                     <img class="product__card--thumbnail__img product__secondary--img"
-                    src="{{ asset($carPart->feature_image ? 'public/images/parts/feature/' . $carPart->feature_image : 'public/images/parts/feature/product-preview.jpg') }}"
+                    src="{{ asset($carPart->feature_image ? 'images/parts/feature/' . $carPart->feature_image : 'images/parts/feature/product-preview.jpg') }}"
                     alt="feature_img" style="width:100%; height:100%; object-fit:cover;">
                 @endif
 
@@ -41,29 +41,29 @@
             </ul>
         </div>
         <div class="product__card--content">
-            
+
             <h3 class="product__card--title"><a href="{{ route('product.view', $carPart->slug) }}">{{
                     $carPart->title ?? '' }}</a></h3>
-                    
+
             <div class="d-flex justify-content-between">
                 <div>
                     <p class="oth_brand_title"><span class="oth_p">Brand:</span> <span class="rating__review--text">{{
                             strtoupper($carPart->carBrand->title ?? '') }}</span></p>
-                            
+
                     {{-- <p class="oth_p_m"><span class="oth_p">Type:</span> <span class="rating__review--text">{{
                             ucwords($carPart->carPartType->title ?? '' ) }}</span></p> --}}
-                            
+
                     <p class="oth_p_part"><span class="oth_p">Part#:</span> <span class="rating__review--text">{{
                             ucwords($carPart->part_number ?? '') }}</span></p>
                 </div>
                 <div class="part_brnad_image_sec">
-                    <img 
-                        src="{{ asset('public/images/brands/' . ($carPart->carPartBrand->brand_image ?? 'demo.png')) }}" 
-                            alt="{{ $carPart->carPartBrand->title ?? 'Brand Image' }}" style="width:120px; height:60px; border:1px solid #a7a8a3; border-radius:10px;" 
+                    <img
+                        src="{{ asset('images/brands/' . ($carPart->carPartBrand->brand_image ?? 'demo.png')) }}"
+                            alt="{{ $carPart->carPartBrand->title ?? 'Brand Image' }}" style="width:120px; height:60px; border:1px solid #a7a8a3; border-radius:10px;"
                     />
                 </div>
             </div>
-                    
+
             <div class="product__card--price">
                 <span class="current__price">{{ $latestPart->sale_price ?
                     '$'.$latestPart->sale_price :
@@ -73,7 +73,7 @@
                     ''}}</span>
             </div>
             <div class="product__card--footer">
-                <button class="product__card--btn primary__btn add-to-cart-btn"  
+                <button class="product__card--btn primary__btn add-to-cart-btn"
                     data-id="{{ $carPart->id }}"
                     data-name="{{ $carPart->title }}"
                     data-price="{{ $carPart->price }}"

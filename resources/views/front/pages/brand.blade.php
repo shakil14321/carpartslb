@@ -25,7 +25,7 @@
 <div class="shop__section section--padding">
     <div class="container">
         <div class="row">
-            
+
             <div class="col-xl-3 col-lg-4 shop-col-width-lg-4">
                 <div class="shop__sidebar--widget widget__area d-none d-lg-block">
 
@@ -57,7 +57,7 @@
                             <button type="submit" class="primary__btn price__filter--btn">Filter</button>
                         </form>
                     </div>
-                    
+
 
                     <div class="single__widget widget__bg">
                         <h2 class="widget__title h3">Categories</h2>
@@ -67,9 +67,9 @@
                             <li class="widget__categories--menu__list">
                                 <a href="{{ route('type.view', $carPartType->slug) }}">
                                     <label class="widget__categories--menu__label d-flex align-items-center">
-                                        <img class="widget__categories--menu__img" src="{{ $carPartType->part_type_image 
-                                            ? asset('public/images/types/' . $carPartType->part_type_image) 
-                                            : asset('public/images/types/demo.png') }}"
+                                        <img class="widget__categories--menu__img" src="{{ $carPartType->part_type_image
+                                            ? asset('images/types/' . $carPartType->part_type_image)
+                                            : asset('images/types/demo.png') }}"
                                             alt="categories-img">
 
                                         <span class="widget__categories--menu__text lh-base">{{ $carPartType->title }}</span>
@@ -128,7 +128,7 @@
             </div>
             <div class="col-xl-9 col-lg-8 shop-col-width-lg-8">
                 @if(session('success'))
-                    <div  class="alert alert-success message_section">{{ session('success') }}</div>                    
+                    <div  class="alert alert-success message_section">{{ session('success') }}</div>
                 @endif
                 <div class="shop__right--sidebar">
                     <div class="shop__product--wrapper">
@@ -178,7 +178,7 @@
                                     </div>
                                 </div>
                             </div>
-                            
+
                         </div>
                     </div>
                 </div>

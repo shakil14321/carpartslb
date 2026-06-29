@@ -66,8 +66,8 @@
                                                 <label class="widget__categories--menu__label d-flex align-items-center">
                                                     <img class="widget__categories--menu__img"
                                                         src="{{ $carPartType->part_type_image
-                                                            ? asset('public/assets/front/img/product/small-product/' . $carPartType->part_type_image)
-                                                            : asset('public/assets/front/img/product/small-product/product1.webp') }}"
+                                                            ? asset('assets/front/img/product/small-product/' . $carPartType->part_type_image)
+                                                            : asset('assets/front/img/product/small-product/product1.webp') }}"
                                                         alt="categories-img">
 
                                                     <span
@@ -92,11 +92,11 @@
                                             <div class="small__product--thumbnail">
                                                 @if ($carPartFav->feature_image)
                                                     <img class="product__card--thumbnail__img product__primary--img"
-                                                        src="{{ asset('public/images/parts/feature/' . $carPartFav->feature_image) }}"
+                                                        src="{{ asset('images/parts/feature/' . $carPartFav->feature_image) }}"
                                                         alt="feature_img">
                                                 @else
                                                     <img class="product__card--thumbnail__img product__primary--img"
-                                                        src="{{ asset('public/images/brands/demo.png') }}" alt="no-image">
+                                                        src="{{ asset('images/brands/demo.png') }}" alt="no-image">
                                                 @endif
 
                                                 <a class="display-block"

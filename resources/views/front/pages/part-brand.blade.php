@@ -8,7 +8,7 @@
     <!-- OG tags -->
     <meta property="og:title" content="{{ $title ?? 'Home - Your Website' }}">
     <meta property="og:description" content="{{ $meta_des ?? 'Best auto parts store' }}">
-    <meta property="og:image" content="{{ asset('public/assets/front/img/logo/seo_image.png') }}">
+    <meta property="og:image" content="{{ asset('assets/front/img/logo/seo_image.png') }}">
     <meta property="og:image:type" content="image/png" />
     <meta property="og:url" content="{{ url()->current() }}">
 
@@ -108,8 +108,8 @@ $schema = [
                                                 <label class="widget__categories--menu__label d-flex align-items-center">
                                                     <img class="widget__categories--menu__img"
                                                         src="{{ $carPartType->part_type_image
-                                                            ? asset('public/images/types/' . $carPartType->part_type_image)
-                                                            : asset('public/images/types/demo.png') }}"
+                                                            ? asset('images/types/' . $carPartType->part_type_image)
+                                                            : asset('images/types/demo.png') }}"
                                                         alt="categories-img">
 
                                                     <span

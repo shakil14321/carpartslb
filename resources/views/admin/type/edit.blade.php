@@ -57,7 +57,7 @@
                                             </div><!-- /. tools -->
                                         </div><!-- /.box-header -->
                                         <div class='box-body pad'>
-                                            
+
                                             <textarea class="textarea summernote" name="description">{{ old('description', $type->description) }}</textarea>
 
                                         </div>
@@ -70,7 +70,7 @@
                             <label for="imageFile">Type Image (Optional)</label>
                             <input type="file" id="imageFile" name="part_type_image">
                             <br>
-                            <img src="{{ old('part_type_image', $type->part_type_image) ? asset('public/images/types/' . old('part_type_image', $type->part_type_image)) : asset('public/images/brands/demo.png') ; }}"
+                            <img src="{{ old('part_type_image', $type->part_type_image) ? asset('images/types/' . old('part_type_image', $type->part_type_image)) : asset('images/brands/demo.png') ; }}"
                                 alt="" class="edit-add-image" id="brandImagePreview">
                         </div>
                     </div><!-- /.box-body -->

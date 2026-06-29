@@ -53,7 +53,7 @@
                                     </div>
                                 </div>
                             </div>
-                            
+
                             <div class="row">
                                 <div class="col-md-6">
                                     {{-- Email --}}
@@ -63,7 +63,7 @@
                                             placeholder="Enter email" name="email" value="{{ old('email', $user->email) }}">
                                     </div>
                                 </div>
-                                
+
 
                                 <div class="col-md-6">
                                     {{-- Phone --}}
@@ -86,7 +86,7 @@
                                    @else
                                     <option value="author" {{ $user->role == 'author' ? 'selected' : '' }}>Author</option>
                                    @endif
-                                    
+
                                 </select>
                             </div>
 
@@ -94,7 +94,7 @@
                                 <label for="imageFile">User Image (Optional)</label>
                                 <input type="file" id="imageFile" name="user_image">
                                 <br>
-                                <img src="{{ old('user_image', $user->user_image) ? asset('public/images/users/' . old('user_image', $user->user_image)) : asset('public/images/brands/demo.png') }}"
+                                <img src="{{ old('user_image', $user->user_image) ? asset('images/users/' . old('user_image', $user->user_image)) : asset('images/brands/demo.png') }}"
                                     alt="" class="edit-add-image" id="brandImagePreview">
                             </div>
                         </div><!-- /.box-body -->

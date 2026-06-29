@@ -71,8 +71,8 @@
                                                 <label class="widget__categories--menu__label d-flex align-items-center">
                                                     <img class="widget__categories--menu__img"
                                                         src="{{ $carPartType->part_type_image
-                                                            ? asset('public/images/types/' . $carPartType->part_type_image)
-                                                            : asset('public/images/types/demo.png') }}"
+                                                            ? asset('images/types/' . $carPartType->part_type_image)
+                                                            : asset('images/types/demo.png') }}"
                                                         alt="categories-img">
 
                                                     <span
@@ -100,12 +100,12 @@
                                                     style="height:150px !important;">
                                                     @if ($carPartFav->feature_image)
                                                         <img class="product__card--thumbnail__img product__primary--img"
-                                                            src="{{ asset('public/images/parts/feature/' . $carPartFav->feature_image) }}"
+                                                            src="{{ asset('images/parts/feature/' . $carPartFav->feature_image) }}"
                                                             alt="feature_img"
                                                             style="width:100%; height:100%; object-fit:cover;">
                                                     @else
                                                         <img class="product__card--thumbnail__img product__primary--img"
-                                                            src="{{ asset('public/images/brands/demo.png') }}"
+                                                            src="{{ asset('images/brands/demo.png') }}"
                                                             alt="no-image"
                                                             style="width:100%; height:100%; object-fit:cover;">
                                                     @endif
@@ -285,7 +285,7 @@
                             <a href="{{ route('type.view', $carPartType->slug) }}">
                                 <label class="widget__categories--menu__label d-flex align-items-center">
                                     <img class="widget__categories--menu__img"
-                                        src="{{ $carPartType->part_type_image ? asset('public/images/types/' . $carPartType->part_type_image) : asset('public/images/types/demo.png') }}"
+                                        src="{{ $carPartType->part_type_image ? asset('images/types/' . $carPartType->part_type_image) : asset('images/types/demo.png') }}"
                                         alt="categories-img">
                                     <span class="widget__categories--menu__text lh-base">{{ $carPartType->title }}</span>
                                 </label>

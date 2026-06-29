@@ -101,7 +101,7 @@
                                                 <td><input type="checkbox" name="ids[]" value="{{ $user->id }}"
                                                         class="checkbox"></td>
                                                 <td>{{ $loop->iteration }}</td>
-                                                <td><img src="{{ $user->user_image ? asset('public/images/users/' . $user->user_image) : asset('public/images/brands/demo.png') }}"
+                                                <td><img src="{{ $user->user_image ? asset('images/users/' . $user->user_image) : asset('images/brands/demo.png') }}"
                                                         alt="{{ $user->user_image }}" class="table-brand-image"></td>
                                                 <td><a href="#" class="all-title">{{ $user->name ?? '' }}</a></td>
                                                 <td><a href="#" class="all-email">{{ $user->email ?? '' }}</a></td>

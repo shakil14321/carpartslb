@@ -4,7 +4,7 @@
 <title>AdminLTE 2 | Dashboard</title>
 <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
 <!-- Bootstrap 3.3.2 -->
-<link href="{{ asset("public/assets/admin/bootstrap/css/bootstrap.min.css") }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset("assets/admin/bootstrap/css/bootstrap.min.css") }}" rel="stylesheet" type="text/css" />
 <!-- Summernote CSS -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote.css" rel="stylesheet">
 <!-- FontAwesome 4.3.0 -->
@@ -13,23 +13,23 @@
 <!-- Ionicons 2.0.0 -->
 <link href="http://code.ionicframework.com/ionicons/2.0.0/css/ionicons.min.css" rel="stylesheet" type="text/css" />
 <!-- DATA TABLES -->
-<link href="{{ asset("public/assets/admin/plugins/datatables/dataTables.bootstrap.css") }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset("assets/admin/plugins/datatables/dataTables.bootstrap.css") }}" rel="stylesheet" type="text/css" />
 <!-- Theme style -->
-<link href="{{ asset("public/assets/admin/dist/css/AdminLTE.min.css") }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset("assets/admin/dist/css/AdminLTE.min.css") }}" rel="stylesheet" type="text/css" />
 <!-- AdminLTE Skins. Choose a skin from the css/skins
              folder instead of downloading all of them to reduce the load. -->
-<link href="{{ asset("public/assets/admin/dist/css/skins/_all-skins.min.css") }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset("assets/admin/dist/css/skins/_all-skins.min.css") }}" rel="stylesheet" type="text/css" />
 <!-- Morris chart -->
-<link href="{{ asset("public/assets/admin/plugins/morris/morris.css") }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset("assets/admin/plugins/morris/morris.css") }}" rel="stylesheet" type="text/css" />
 <!-- jvectormap -->
-<link href="{{ asset("public/assets/admin/plugins/jvectormap/jquery-jvectormap-1.2.2.css") }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset("assets/admin/plugins/jvectormap/jquery-jvectormap-1.2.2.css") }}" rel="stylesheet" type="text/css" />
 <!-- Date Picker -->
-<link href="{{ asset("public/assets/admin/plugins/datepicker/datepicker3.css") }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset("assets/admin/plugins/datepicker/datepicker3.css") }}" rel="stylesheet" type="text/css" />
 <!-- Daterange picker -->
-<link href="{{ asset("public/assets/admin/plugins/daterangepicker/daterangepicker-bs3.css") }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset("assets/admin/plugins/daterangepicker/daterangepicker-bs3.css") }}" rel="stylesheet" type="text/css" />
 
 <!-- Custom style css -->
-<link href="{{ asset("public/assets/admin/dist/css/custom.css") }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset("assets/admin/dist/css/custom.css") }}" rel="stylesheet" type="text/css" />
 
 <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->

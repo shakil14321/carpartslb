@@ -80,7 +80,7 @@
     <x-Front.loader />
     <x-Front.announcement_bar />
     <x-Front.header />
-    <x-Front.brands-bar />
+{{--    <x-Front.brands-bar />--}}
 
     <main class="main__content_wrapper">
         @yield('content')

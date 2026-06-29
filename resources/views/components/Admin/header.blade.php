@@ -8,9 +8,9 @@
         <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
             <span class="sr-only">Toggle navigation</span>
         </a>
-         
+
         <div class="navbar-custom-menu">
-            <ul class="nav navbar-nav">                
+            <ul class="nav navbar-nav">
                 <!-- User Account: style can be found in dropdown.less -->
                 <li class="dropdown user user-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -19,8 +19,8 @@
                     <ul class="dropdown-menu">
                         <!-- User image -->
                         <li class="user-header" style="height:110px;">
-                            <img src="{{ Auth::user()->user_image ? asset('public/images/users/' . Auth::user()->user_image) : asset('public/assets/admin/dist/img/avatar5.png') }}"
-                                class="img-circle" alt="User Image" />                           
+                            <img src="{{ Auth::user()->user_image ? asset('images/users/' . Auth::user()->user_image) : asset('assets/admin/dist/img/avatar5.png') }}"
+                                class="img-circle" alt="User Image" />
                         </li>
                         <!-- Menu Footer-->
                         <li class="user-footer">
@@ -33,7 +33,7 @@
                             </div>
                             <div class="pull-right">
                                 <form action="{{ route('logout') }}" method="post">
-                                    @csrf                                    
+                                    @csrf
                                     <button class="btn btn-default btn-flat" type="submit" class="logout_btn">Log Out</button>
                                 </form>
                             </div>
@@ -43,5 +43,5 @@
             </ul>
         </div>
     </nav>
-    
+
 </header>

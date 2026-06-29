@@ -59,7 +59,7 @@
                                             </div><!-- /. tools -->
                                         </div><!-- /.box-header -->
                                         <div class='box-body pad'>
-                                            
+
                                             <textarea class="textarea summernote" name="description">{{ old('description', $carPartBrand->description) }}</textarea>
 
                                         </div>
@@ -72,7 +72,7 @@
                             <label for="imageFile">Part Brand Image</label>
                             <input type="file" id="imageFile" name="brand_image" value="{{ old('$carPartBrand->brand_image') }}">
                             <br>
-                            <img src="{{ ($carPartBrand->brand_image) ? asset('public/images/brands/' . $carPartBrand->brand_image) : asset('public/images/brands/demo.png') }}"
+                            <img src="{{ ($carPartBrand->brand_image) ? asset('images/brands/' . $carPartBrand->brand_image) : asset('images/brands/demo.png') }}"
                                     alt="{{ $carPartBrand->brand_image }}" class="edit-add-image" id="brandImagePreview">
                         </div>
                     </div><!-- /.box-body -->

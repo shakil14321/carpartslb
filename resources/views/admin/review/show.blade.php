@@ -3,7 +3,7 @@
 @section('content')
 <section class="content py-4">
   <div class="container">
-    
+
     <!-- Back Button -->
     <div class="mb-3">
       <a href="{{ url()->previous() }}" class="btn btn-outline-success btn-sm d-inline-flex align-items-center">
@@ -28,8 +28,8 @@
 
             <!-- User Image -->
             <div class="col-md-3 text-center">
-              <img src="{{ $review->user_image ? asset('public/images/users/' . $review->user_image) : asset('public/images/users/user.png') }}"
-                   alt="{{ $review->username }}" 
+              <img src="{{ $review->user_image ? asset('images/users/' . $review->user_image) : asset('images/users/user.png') }}"
+                   alt="{{ $review->username }}"
                    class="img-fluid rounded-circle shadow-sm"
                    style="width:130px; height:130px; object-fit:cover;">
             </div>

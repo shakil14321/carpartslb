@@ -15,18 +15,18 @@
                 @foreach($partTypes as $partType)
                 <div class="col-6 col-sm-6 col-md-3 justify-content-center align-items-center mb-5">
                     <div class="brand_img_wrap card mb-4 border">
-                        <a href="{{ route('types.view', $partType->slug) }}"><img src="{{ $partType->part_type_image ? asset('public/images/types/' . $partType->part_type_image) : asset('public/images/types/demo.png') }}" alt="{{ $partType->title }}"></a>
+                        <a href="{{ route('types.view', $partType->slug) }}"><img src="{{ $partType->part_type_image ? asset('images/types/' . $partType->part_type_image) : asset('images/types/demo.png') }}" alt="{{ $partType->title }}"></a>
                     </div>
                     <h3 class="text-center">{{ $partType->title ?? '' }}</h3>
                 </div>
                 @endforeach
-                
+
             @else
             <h3 class="product__card--title">Categories not found.</h3>
             @endif
-            
+
         </div>
-        
+
         <div class="pagination__area d-flex justify-content-center">
 
     {{ $partTypes->links('pagination::bootstrap-4') }}

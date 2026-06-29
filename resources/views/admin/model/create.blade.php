@@ -56,7 +56,7 @@
                                             </div><!-- /. tools -->
                                         </div><!-- /.box-header -->
                                         <div class='box-body pad'>
-                                            
+
                                             <textarea class="textarea summernote" name="description">{{ old('description') }}</textarea>
 
                                         </div>
@@ -77,7 +77,7 @@
                                 @endforeach
                             </select>
                         </div>
-                        
+
                         <!-- Model years -->
                         <div class="form-group">
                             <label>Model Year</label>
@@ -95,7 +95,7 @@
                             <label for="imageFile">Model Image (Optional)</label>
                             <input type="file" id="imageFile" name="model_image">
                             <br>
-                            <img src="{{ old('model_image') ? asset('public/images/models/' . old('model_image')) : asset('public/images/brands/demo.png') ; }}"
+                            <img src="{{ old('model_image') ? asset('images/models/' . old('model_image')) : asset('images/brands/demo.png') ; }}"
                                 alt="" class="edit-add-image" id="brandImagePreview">
                         </div>
                     </div><!-- /.box-body -->

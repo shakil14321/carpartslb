@@ -18,6 +18,7 @@ use App\Models\OrderItem;
 use App\Models\StandardShipping;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 
 class OrderController extends Controller
@@ -183,6 +184,23 @@ class OrderController extends Controller
             ];
         }
 
+        $request->validate([
+            'user_id' => 'required|exists:users,id',
+            'address_id' => 'nullable|exists:addresses,id',
+            'order_notes' => 'nullable|string',
+            'payment_method' => 'required|string',
+            'status' => 'nullable|string|in:review,processing,complete,cancel',
+            'first_name' => 'required|string',
+            'last_name' => 'required|string',
+            'address_line_1' => 'required|string',
+            'address_line_2' => 'nullable|string',
+            'city' => 'required|string',
+            'state' => 'nullable|string',
+            'postal_code' => 'nullable|string',
+            'country' => 'nullable|string',
+            'order_address_default' => 'nullable|string',
+        ]);
+
         // SHIPPING
         $shippingCost = 0;
         $shippingMethod = $request->shippingMethod;
@@ -195,10 +213,51 @@ class OrderController extends Controller
             }
 
             if (str_starts_with($shippingMethod, 'distance_')) {
-                $id = (int) str_replace('distance_', '', $shippingMethod);
-                $shipping = DistanceShipping::find($id);
-                $shippingCost = $shipping?->per_km_price ?? 0;
+
+    $id = (int) str_replace('distance_', '', $shippingMethod);
+    $shipping = DistanceShipping::find($id);
+
+    if ($shipping) {
+
+        $shopAddress = env('SHOP_ADDRESS', 'Dhaka, Bangladesh');
+
+      $fullAddress = $request->address_line_1 
+                   ? implode(', ', array_filter([$request->address_line_1, $request->city, $request->country]))
+                   : $request->delivery_address;
+
+        // dd($request->delivery_address);
+
+                   
+        $response = Http::get('https://maps.googleapis.com/maps/api/distancematrix/json', [
+            'origins' => $shopAddress,
+            'destinations' => $fullAddress,
+            'mode' => 'driving',
+            'units' => 'metric',
+            'key' => config('services.google_maps.key'),
+        ]);
+
+        if ($response->successful() && $response['status'] === 'OK') {
+
+            $element = $response['rows'][0]['elements'][0];
+
+            if ($element['status'] === 'OK') {
+
+                $distanceKm = $element['distance']['value'] / 1000;
+                $shippingCost = $distanceKm * $shipping->per_km_price;
+
+                // min / max
+                if ($shippingCost < $shipping->min_cost) {
+                    $shippingCost = $shipping->min_cost;
+                }
+
+                if ($shipping->max_cost && $shippingCost > $shipping->max_cost) {
+                    $shippingCost = $shipping->max_cost;
+                }
             }
+        }
+    }
+}
+
         }
 
         $total = $subtotal + $shippingCost;

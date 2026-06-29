@@ -2,7 +2,7 @@
     <div class="offcanvas__inner">
         <div class="offcanvas__logo">
             <a class="offcanvas__logo_link" href="{{ route('home') }}">
-                <img src="{{ asset('public/assets/front/img/logo/car-part-lb.jpg') }}" alt="Grocee Logo" width="158"
+                <img src="{{ asset('assets/front/img/logo/car-part-lb.jpg') }}" alt="Grocee Logo" width="158"
                     height="36">
             </a>
             <button class="offcanvas__close--btn" data-offcanvas>close</button>

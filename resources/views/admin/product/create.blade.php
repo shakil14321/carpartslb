@@ -236,7 +236,7 @@
                                 <label for="imageFile">Product Image (Optional)</label>
                                 <input type="file" id="imageFile" name="feature_image">
                                 <br>
-                                <img src="{{ old('feature_image') ? asset('public/images/parts/feature' . old('feature_image')) : asset('public/images/brands/demo.png') }}"
+                                <img src="{{ old('feature_image') ? asset('images/parts/feature' . old('feature_image')) : asset('images/brands/demo.png') }}"
                                     alt="" class="edit-add-image" id="brandImagePreview">
                             </div>
 
