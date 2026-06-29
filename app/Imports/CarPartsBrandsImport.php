@@ -2,7 +2,7 @@
 
 namespace App\Imports;
 
-use App\Models\CarPartBrand;
+use App\Models\SubCategories;
 use Illuminate\Support\Str;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
@@ -21,7 +21,7 @@ class CarPartsBrandsImport implements ToModel, WithHeadingRow
         }
 
         // try to find existing by slug
-        $brand = CarPartBrand::where('slug', $row['slug'])->first();
+        $brand = SubCategories::where('slug', $row['slug'])->first();
 
         if ($brand) {
             $brand->update([
@@ -33,7 +33,7 @@ class CarPartsBrandsImport implements ToModel, WithHeadingRow
         }
 
         // insert new
-        return new CarPartBrand([
+        return new SubCategories([
             'title'       => $row['title'],
             'slug'        => $row['slug'] ?: Str::slug($row['title']),
             'description' => $row['description'] ?? null,

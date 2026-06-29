@@ -5,20 +5,20 @@
             <div class="slide_wrapper">
                 @php
                     $setting = \App\Models\SiteSetting::first();
-                    $carBrandQuantity = $setting ? $setting->brand_quantity : 0;
-                    $carPartBrands = \App\Models\CarPartBrand::take($carBrandQuantity)->get();
+                    $brandQuantity = $setting ? $setting->brand_quantity : 0;
+                    $SubCategoriess = \App\Models\SubCategories::take($brandQuantity)->get();
                 @endphp
-                
-                @if($carPartBrands->count() > 0)
-                    @foreach($carPartBrands as $carPartBrand)
+
+                @if($SubCategoriess->count() > 0)
+                    @foreach($SubCategoriess as $SubCategories)
                         <div class="slide_item">
                             <p class="bar_brands_names">
-                                <a href="{{ route('partBrand.view', $carPartBrand->slug) }}">{{ $carPartBrand->title }}</a>
+                                <a href="{{ route('partBrand.view', $SubCategories->slug) }}">{{ $SubCategories->title }}</a>
                             </p>
                         </div>
                     @endforeach
                 @else
-                    <p class="product__card--title text-white">Car brands not found.</p> 
+                    <p class="product__card--title text-white">Car brands not found.</p>
                 @endif
             </div>
         </div>

@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('car_models', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('car_brand_id')->nullable()->constrained('car_brands')->onDelete('set null');
+            $table->foreignId('car_brand_id')->nullable()->constrained('brands')->onDelete('set null');
             $table->string('title');
             $table->string('slug')->unique();
             $table->integer('year')->nullable();
@@ -28,7 +28,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('car_parts'); // child
+        Schema::dropIfExists('products'); // child
         Schema::dropIfExists('car_models'); // parent
     }
 

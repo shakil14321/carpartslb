@@ -11,12 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('car_parts', function (Blueprint $table) {
+        Schema::create('products', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('car_brand_id')->nullable()->constrained('car_brands')->onDelete('set null');
+            $table->foreignId('car_brand_id')->nullable()->constrained('brands')->onDelete('set null');
             $table->foreignId('car_model_id')->nullable()->constrained('car_models')->onDelete('set null');
             $table->foreignId('part_type_id')->nullable()->constrained('car_part_types')->onDelete('set null');
-            $table->foreignId('part_brand_id')->nullable()->constrained('car_parts_brands')->onDelete('set null');
+            $table->foreignId('part_brand_id')->nullable()->constrained('sub_categories')->onDelete('set null');
 
             $table->string('title');
             $table->string('slug')->unique();
@@ -36,10 +36,10 @@ return new class extends Migration
 
             $table->longText('description')->nullable();
             $table->text('short_description')->nullable();
-            
+
             $table->string('meta_title')->nullable();
             $table->text('meta_description')->nullable();
-            
+
             $table->timestamps();
         });
     }
@@ -49,6 +49,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('car_parts');
+        Schema::dropIfExists('products');
     }
 };

@@ -11,25 +11,25 @@
             </div>
         </div>
         <div class="row">
-            @if($carBrands->count() > 0)
-                @foreach($carBrands as $carBrand)
+            @if($brands->count() > 0)
+                @foreach($brands as $brand)
                 <div class="col-6 col-sm-6 col-md-3 justify-content-center align-items-center mb-5">
                     <div class="brand_img_wrap card mb-4 border">
-                        <a href="{{ route('carBrands.view', $carBrand->slug) }}"><img src="{{ $carBrand->brand_image ? asset('images/brands/' . $carBrand->brand_image) : asset('images/brands/demo.png') }}" alt="{{ $carBrand->title }}"></a>
+                        <a href="{{ route('brands.view', $brand->slug) }}"><img src="{{ $brand->brand_image ? asset('images/brands/' . $brand->brand_image) : asset('images/brands/demo.png') }}" alt="{{ $brand->title }}"></a>
                     </div>
-                    <h3 class="text-center">{{ $carBrand->title ?? '' }}</h3>
+                    <h3 class="text-center">{{ $brand->title ?? '' }}</h3>
                 </div>
                 @endforeach
 
             @else
-            <h3 class="product__card--title">Part Brands not found.</h3>
+            <h3 class="product__card--title">Sub Categoriess not found.</h3>
             @endif
 
         </div>
 
         <div class="pagination__area d-flex justify-content-center">
 
-    {{ $carBrands->links('pagination::bootstrap-4') }}
+    {{ $brands->links('pagination::bootstrap-4') }}
 
 </div>
     </div>

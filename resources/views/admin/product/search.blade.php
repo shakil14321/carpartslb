@@ -112,7 +112,7 @@
                                                         class="all-title">{{ $carPart->title }}</a></td>
                                                 <td>{{ $carPart->carPartType ? $carPart->carPartType->title : '' }}</td>
                                                 <td>{{ $carPart->stock_type == 'in' ? 'In Stock' : 'Out of Stock' }}</td>
-                                                <td>{{ $carPart->carBrand ? $carPart->carBrand->title : '' }}</td>
+                                                <td>{{ $carPart->brand ? $carPart->brand->title : '' }}</td>
                                                 <td>{{ $carPart->carModel ? "{$carPart->carModel->title} ({$carPart->carModel->year})" : '' }}
                                                 </td>
                                                 <td>

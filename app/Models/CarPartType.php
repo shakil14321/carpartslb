@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Models\CarPart;
+use App\Models\products;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
@@ -20,7 +20,7 @@ class CarPartType extends Model
     ];
 
     public function carPart(){
-        return $this->hasMany(CarPart::class, 'part_type_id');
+        return $this->hasMany(product::class, 'part_type_id');
     }
 
       public static function generateSlug($title, $ignoreId = null)

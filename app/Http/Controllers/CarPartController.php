@@ -3,12 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Review;
-use App\Models\CarPart;
-use App\Models\CarBrand;
+use App\Models\product;
+use App\Models\brand;
 use App\Models\CarModel;
 use App\Models\CarPartType;
 use Illuminate\Support\Str;
-use App\Models\CarPartBrand;
+use App\Models\SubCategories;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use App\Exports\CarPartsExport;
@@ -21,25 +21,25 @@ use Illuminate\Support\Facades\Validator;
 class CarPartController extends Controller
 {
     public function index(){
-        $carParts = CarPart::latest()->paginate(200);
+        $carParts = product::latest()->paginate(200);
         return view('admin.product.index', compact('carParts'));
     }
 
     public function create(){
-        $carBrands = CarBrand::all();
+        $brands = brand::all();
         $carModels = CarModel::all();
         $partTypes = CarPartType::all();
-        $partBrands = CarPartBrand::all();
+        $partBrands = SubCategories::all();
 
         // Models grouped by brand
         $modelsByBrand = CarModel::all()->groupBy('car_brand_id');
 
-        return view('admin.product.create' , compact('carBrands' , 'carModels' , 'partTypes', 'modelsByBrand', 'partBrands'));
+        return view('admin.product.create' , compact('brands' , 'carModels' , 'partTypes', 'modelsByBrand', 'partBrands'));
     }
 
     public function show($slug){
-        $carPart = CarPart::where('slug', $slug)->firstOrFail();
-        $carPart->load(['carBrand', 'carModel', 'carPartType', 'carPartBrand']);
+        $carPart = product::where('slug', $slug)->firstOrFail();
+        $carPart->load(['brand', 'carModel', 'carPartType', 'SubCategories']);
 
         // decode gallery images JSON into array
         $carPart->gallery_images = $carPart->gallery_images
@@ -47,7 +47,7 @@ class CarPartController extends Controller
             : [];
 
             // Fetch related products (6–8 random)
-        $relatedProducts = CarPart::where('part_type_id', $carPart->part_type_id)
+        $relatedProducts = product::where('part_type_id', $carPart->part_type_id)
         ->where('id', '!=', $carPart->id) // exclude current product
         ->inRandomOrder()
         ->take(8)
@@ -62,13 +62,13 @@ class CarPartController extends Controller
 
     public function store(Request $request){
         $validation = Validator::make($request->all(), [
-            "car_brand_id" => "sometimes|nullable|integer|exists:car_brands,id",
+            "car_brand_id" => "sometimes|nullable|integer|exists:brands,id",
             "car_model_id" => "sometimes|nullable|integer|exists:car_models,id",
             "part_type_id" => "sometimes|nullable|integer|exists:car_part_types,id",
-            "part_brand_id" => "sometimes|nullable|integer|exists:CarPartBrand,id",
+            "part_brand_id" => "sometimes|nullable|integer|exists:SubCategories,id",
 
             "title" => "required|string",
-            "sku" => "required|string|unique:car_parts,sku",
+            "sku" => "required|string|unique:products,sku",
             "part_number" => "required|string",
             "vin_code" => "nullable|string",
             'fav_product' => 'nullable|in:0,1',
@@ -88,7 +88,7 @@ class CarPartController extends Controller
             "meta_description" => "nullable|string|max:170",
         ]);
 
-         $slug = CarPart::generateSlug($request->title);
+         $slug = product::generateSlug($request->title);
 
         if($validation->fails()){
             return redirect()->back()->withErrors($validation)->withInput();
@@ -113,7 +113,7 @@ class CarPartController extends Controller
         }
 
         // Create Car Part
-        $carPart = CarPart::create([
+        $carPart = product::create([
             "car_brand_id" => $request->car_brand_id ?: null,
             "car_model_id" => $request->car_model_id ?: null,
             "part_type_id" => $request->part_type_id ?: null,
@@ -140,28 +140,28 @@ class CarPartController extends Controller
     }
 
     public function edit($id){
-        $product = CarPart::findOrFail($id);
-        $carBrands = CarBrand::all();
+        $product = product::findOrFail($id);
+        $brands = brand::all();
         $carModels = CarModel::all();
         $partTypes = CarPartType::all();
-        $partBrands = CarPartBrand::all();
+        $partBrands = SubCategories::all();
 
         $modelsByBrand = CarModel::all()->groupBy('car_brand_id');
 
-        return view('admin.product.edit', compact('product', 'carBrands', 'carModels', 'partTypes', 'modelsByBrand', 'partBrands'));
+        return view('admin.product.edit', compact('product', 'brands', 'carModels', 'partTypes', 'modelsByBrand', 'partBrands'));
     }
 
     public function update(Request $request, $id){
-        $carPart = CarPart::findOrFail($id);
+        $carPart = product::findOrFail($id);
 
         $validation = Validator::make($request->all(), [
-            "car_brand_id" => "sometimes|nullable|integer|exists:car_brands,id",
+            "car_brand_id" => "sometimes|nullable|integer|exists:brands,id",
             "car_model_id" => "sometimes|nullable|integer|exists:car_models,id",
             "part_type_id" => "sometimes|nullable|integer|exists:car_part_types,id",
-            "part_brand_id" => "sometimes|nullable|integer|exists:car_parts_brands,id",
+            "part_brand_id" => "sometimes|nullable|integer|exists:sub_categories,id",
 
             "title" => "required|string",
-            "sku"   => "required|string|unique:car_parts,sku,".$id,
+            "sku"   => "required|string|unique:products,sku,".$id,
             "part_number" => "required|string",
             "vin_code" => "nullable|string",
             'fav_product' => 'nullable|in:0,1',
@@ -187,7 +187,7 @@ class CarPartController extends Controller
         // Agar user ne manually slug bheja ho (form mein ek input rakho 'slug' ka)
         if ($request->filled('slug')) {
             $candidate = Str::slug($request->input('slug'));
-            $exists = DB::table('car_parts')
+            $exists = DB::table('products')
                         ->where('slug', $candidate)
                         ->where('id', '!=', $carPart->id)
                         ->exists();
@@ -280,7 +280,7 @@ class CarPartController extends Controller
     }
 
     public function destroy($id){
-        $carPart = CarPart::findOrFail($id);
+        $carPart = product::findOrFail($id);
 
         // Delete feature image (if file exists)
         if (!empty($carPart->feature_image)) {
@@ -311,11 +311,11 @@ class CarPartController extends Controller
     public function deleteGalleryImage(Request $request)
     {
         $request->validate([
-            'product_id' => 'required|integer|exists:car_parts,id', // ✅ correct table
+            'product_id' => 'required|integer|exists:products,id', // ✅ correct table
             'image'      => 'required|string'
         ]);
 
-        $product = CarPart::findOrFail($request->product_id); // ✅ model bhi CarPart use karo
+        $product = product::findOrFail($request->product_id); // ✅ model bhi products use karo
         $imageToDelete = $request->image;
 
         $gallery = json_decode($product->gallery_images, true) ?? [];
@@ -349,7 +349,7 @@ class CarPartController extends Controller
         ]);
 
         try {
-            CarPart::truncate();
+            product::truncate();
             Excel::import(new CarPartsImport, $request->file('file'));
         } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
             $failures = $e->failures();
@@ -362,7 +362,7 @@ class CarPartController extends Controller
 
     public function exportExcel()
     {
-        $fileName = 'car_parts_' . now()->format('Y_m_d_H_i_s') . '.xlsx';
+        $fileName = 'products' . now()->format('Y_m_d_H_i_s') . '.xlsx';
         return Excel::download(new CarPartsExport, $fileName);
     }
 
@@ -376,7 +376,7 @@ class CarPartController extends Controller
         }
 
         // Get brands
-        $carParts = CarPart::whereIn('id', $ids)->get();
+        $carParts = product::whereIn('id', $ids)->get();
 
         foreach ($carParts as $carPart) {
             if (!empty($carPart->feature_image)) {
@@ -389,7 +389,7 @@ class CarPartController extends Controller
         }
 
         // Delete from database
-        CarPart::whereIn('id', $ids)->delete();
+        product::whereIn('id', $ids)->delete();
 
         return redirect()->route('product.index')
             ->with('success', 'Selected Products Deleted Successfully!');
@@ -402,11 +402,11 @@ class CarPartController extends Controller
         if ($q === '') {
             return redirect()->back()->with('error', 'Write something in search box.');
         } else {
-            $carParts = CarPart::query()
+            $carParts = product::query()
                 ->where('title', 'LIKE', "%{$q}%")
                 ->orWhere('sku', 'LIKE', "%{$q}%")
                 ->orWhere('part_number', 'LIKE', "%{$q}%")
-                ->orWhereHas('carBrand', function ($qbr) use ($q) {
+                ->orWhereHas('brand', function ($qbr) use ($q) {
                     $qbr->where('title', 'LIKE', "%{$q}%");
                 })
                 ->latest()

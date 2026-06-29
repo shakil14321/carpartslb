@@ -224,51 +224,93 @@ $schema = [
                     </div>
                 </div>
             </div>
+
+
+
             <div class="row">
-                @if ($carBrands->count() > 0)
-                    @foreach ($carBrands as $carBrand)
-                        <div class="col-12 col-sm-6 col-md-3 justify-content-center align-items-center">
+                @if ($Brands->count() > 0)
+                    @foreach ($Brands->take(4) as $brand)
+                        <div class="col-12 col-sm-6 col-md-3">
                             <div class="brand_img_wrap card mb-4">
-                                <a href="{{ route('brand.view', $carBrand->slug) }}"><img
-                                        src="{{ $carBrand->brand_image ? asset('images/brands/' . $carBrand->brand_image) : asset('images/brands/demo.png') }}"
-                                        alt="{{ $carBrand->title }}"></a>
+                                <a href="{{ route('brand.view', $brand->slug) }}">
+                                    <img
+                                        src="{{ $brand->brand_image ? asset('images/brands/' . $brand->brand_image) : asset('images/brands/demo.png') }}"
+                                        alt="{{ $brand->title }}">
+                                </a>
                             </div>
                         </div>
                     @endforeach
                 @else
                     <h3 class="product__card--title">Brands not found.</h3>
                 @endif
-
             </div>
+{{--            <div class="row">--}}
+{{--                @if ($brands->count() > 0)--}}
+{{--                    @foreach ($brands as $brand)--}}
+{{--                        <div class="col-12 col-sm-6 col-md-3 justify-content-center align-items-center">--}}
+{{--                            <div class="brand_img_wrap card mb-4">--}}
+{{--                                <a href="{{ route('brand.view', $brand->slug) }}"><img--}}
+{{--                                        src="{{ $brand->brand_image ? asset('images/brands/' . $brand->brand_image) : asset('images/brands/demo.png') }}"--}}
+{{--                                        alt="{{ $brand->title }}"></a>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+{{--                    @endforeach--}}
+{{--                @else--}}
+{{--                    <h3 class="product__card--title">Brands not found.</h3>--}}
+{{--                @endif--}}
+
+{{--            </div>--}}
         </div>
     </section>
     {{-- End brands section --}}
 
     <!-- Start product section -->
-    <section class="product__section section--padding  pt-0">
+{{--    <section class="product__section section--padding  pt-0">--}}
+{{--        <div class="container">--}}
+{{--            <div class="section__heading border-bottom mb-30">--}}
+{{--                <h2 class="section__heading--maintitle">Featured <span>Products</span></h2>--}}
+{{--            </div>--}}
+{{--            <div class="product__section--inner pb-15">--}}
+{{--                <div class="row">--}}
+{{--                    @foreach($carParts->take(12) as $carPart)--}}
+{{--                        <div class="col-12 col-sm-6 col-md-3 mb-30">--}}
+{{--                            @include('front.partials.car_part_list_slide', ['carPart' => $carPart])--}}
+{{--                        </div>--}}
+{{--                    @endforeach--}}
+{{--                </div>--}}
+{{--            </div>--}}
+{{--                <div class="swiper__nav--btn swiper-button-next">--}}
+{{--                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"--}}
+{{--                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"--}}
+{{--                        stroke-linejoin="round" class=" -chevron-right">--}}
+{{--                        <polyline points="9 18 15 12 9 6"></polyline>--}}
+{{--                    </svg>--}}
+{{--                </div>--}}
+{{--                <div class="swiper__nav--btn swiper-button-prev">--}}
+{{--                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"--}}
+{{--                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"--}}
+{{--                        stroke-linejoin="round" class=" -chevron-left">--}}
+{{--                        <polyline points="15 18 9 12 15 6"></polyline>--}}
+{{--                    </svg>--}}
+{{--                </div>--}}
+
+{{--            </div>--}}
+{{--        </div>--}}
+{{--    </section>--}}
+
+
+    <section class="product__section section--padding pt-0">
         <div class="container">
             <div class="section__heading border-bottom mb-30">
                 <h2 class="section__heading--maintitle">Featured <span>Products</span></h2>
             </div>
-            <div class="product__section--inner pb-15 product__swiper--activation swiper">
-                <div class="swiper-wrapper">
-                    @include('front.partials.car_part_list_slide', ['carParts' => $carParts])
-                </div>
-                <div class="swiper__nav--btn swiper-button-next">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                        stroke-linejoin="round" class=" -chevron-right">
-                        <polyline points="9 18 15 12 9 6"></polyline>
-                    </svg>
-                </div>
-                <div class="swiper__nav--btn swiper-button-prev">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                        stroke-linejoin="round" class=" -chevron-left">
-                        <polyline points="15 18 9 12 15 6"></polyline>
-                    </svg>
-                </div>
 
+            <div class="product__section--inner pb-15">
+                <div class="row">
+                    @include('front.partials.car_part_list_slide', [
+                        'carParts' => $carParts->take(12)
+                    ])
+                </div>
             </div>
         </div>
     </section>

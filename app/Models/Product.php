@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Models\CarBrand;
+use App\Models\Brand;
 use App\Models\CarModel;
 use App\Models\CarPartType;
 use Illuminate\Support\Str;
@@ -10,9 +10,11 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class CarPart extends Model
+class product extends Model
 {
     Use HasFactory;
+
+    protected $table = 'products';
 
     protected $fillable = [
         'car_brand_id',
@@ -34,7 +36,17 @@ class CarPart extends Model
         'description',
         'short_description',
         'meta_title',
-        'meta_description'
+        'meta_description',
+
+
+        'source_type',
+        'source_product_id',
+        'unique_id',
+        'profit_margin',
+        'source_cat_id',
+        'source_sub_cat_id',
+        'source_cat_name',
+        'source_sub_cat_name',
     ];
 
     protected $casts = [
@@ -44,8 +56,9 @@ class CarPart extends Model
         'fav_product' => 'boolean',
     ];
 
-    public function carBrand(){
-        return $this->belongsTo(CarBrand::class, 'car_brand_id');
+    public function brand()
+    {
+        return $this->belongsTo(Brand::class, 'car_brand_id');
     }
 
     public function carModel(){
@@ -56,8 +69,8 @@ class CarPart extends Model
         return $this->belongsTo(CarPartType::class, 'part_type_id');
     }
 
-    public function carPartBrand(){
-        return $this->belongsTo(CarPartBrand::class, 'part_brand_id');
+    public function SubCategories(){
+        return $this->belongsTo(SubCategories::class, 'part_brand_id');
     }
 
    public static function generateSlug($title, $ignoreId = null)
@@ -65,7 +78,7 @@ class CarPart extends Model
         $originalSlug = Str::slug($title);
 
         // grab all slugs that start with the base (including base itself)
-        $query = DB::table('car_parts')->select('slug')->where('slug', 'like', $originalSlug . '%');
+        $query = DB::table('products')->select('slug')->where('slug', 'like', $originalSlug . '%');
         if ($ignoreId) {
             $query->where('id', '!=', $ignoreId);
         }

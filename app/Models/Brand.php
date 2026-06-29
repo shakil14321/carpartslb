@@ -2,17 +2,17 @@
 
 namespace App\Models;
 
-use App\Models\CarPart;
+use App\Models\products;
+use App\Models\CarModel;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class CarPartBrand extends Model
+class Brand extends Model
 {
     Use HasFactory;
-
-    protected $table = 'car_parts_brands';
+    protected $table = 'brands';
 
     protected $fillable = [
         'title',
@@ -22,7 +22,11 @@ class CarPartBrand extends Model
     ];
 
     public function carPart(){
-       return $this->hasMany(CarPart::class, 'part_brand_id');
+       return $this->hasMany(products::class, 'car_brand_id');
+    }
+
+    public function carModel(){
+        return $this->hasMany(CarModel::class, 'car_brand_id');
     }
 
       public static function generateSlug($title, $ignoreId = null)
@@ -30,7 +34,7 @@ class CarPartBrand extends Model
         $originalSlug = Str::slug($title);
 
         // grab all slugs that start with the base (including base itself)
-        $query = DB::table('car_parts_brands')->select('slug')->where('slug', 'like', $originalSlug . '%');
+        $query = DB::table('brands')->select('slug')->where('slug', 'like', $originalSlug . '%');
         if ($ignoreId) {
             $query->where('id', '!=', $ignoreId);
         }

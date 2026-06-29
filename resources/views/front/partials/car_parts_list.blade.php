@@ -43,7 +43,7 @@
                     <div class="d-flex justify-content-between">
                         <div>
                             <p class="oth_brand_title"><span class="oth_p">Brand:</span> <span
-                                    class="rating__review--text">{{ strtoupper($carPart->carBrand->title ?? '') }}</span>
+                                    class="rating__review--text">{{ strtoupper($carPart->brand->title ?? '') }}</span>
                             </p>
 
                             {{-- <p class="oth_p_m"><span class="oth_p">Type:</span> <span class="rating__review--text">{{
@@ -53,8 +53,8 @@
                                     class="rating__review--text">{{ ucwords($carPart->part_number ?? '') }}</span></p>
                         </div>
                         <div class="part_brnad_image_sec">
-                            <img src="{{ asset('images/brands/' . ($carPart->carPartBrand->brand_image ?? 'demo.png')) }}"
-                                alt="{{ $carPart->carPartBrand->title ?? 'Brand Image' }}"
+                            <img src="{{ asset('images/brands/' . ($carPart->SubCategories->brand_image ?? 'demo.png')) }}"
+                                alt="{{ $carPart->SubCategories->title ?? 'Brand Image' }}"
                                 style="width:120px; height:60px; border:1px solid #a7a8a3; border-radius:10px;" />
                         </div>
                     </div>

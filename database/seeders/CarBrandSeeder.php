@@ -2,12 +2,12 @@
 
 namespace Database\Seeders;
 
-use App\Models\CarBrand;
+use App\Models\brand;
 use Illuminate\Support\Str;
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Faker\Factory as Faker;
-class CarBrandSeeder extends Seeder
+class brandSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -19,7 +19,7 @@ class CarBrandSeeder extends Seeder
         $fake = Faker::create();
 
         foreach ($brands as $brand) {
-            CarBrand::create([
+            brand::create([
                 'title' => $brand,
                 'slug' => Str::slug($brand . '-'),
                 'description' => "This is description is for this brand: $brand",

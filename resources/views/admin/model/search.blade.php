@@ -105,7 +105,7 @@
                                                 <td><img src="{{ $carModel->model_image ? asset('images/models/' . $carModel->model_image) : asset('images/brands/demo.png') }}"
                                                         alt="{{ $carModel->model_image }}" class="table-brand-image"></td>
                                                 <td><a href="#" class="all-title">{{ $carModel->title }}</a></td>
-                                                <td>{{ $carModel->carBrand ? $carModel->carBrand->title : '' }}</td>
+                                                <td>{{ $carModel->brand ? $carModel->brand->title : '' }}</td>
                                                 <td>
                                                     <div class="action-container">
                                                         <a href="{{ route('model.edit', $carModel->id) }}"

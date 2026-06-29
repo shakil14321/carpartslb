@@ -49,7 +49,7 @@ $schema = [
                         <h1 class="breadcrumb__content--title">Products</h1>
                         <ul class="breadcrumb__content--menu d-flex justify-content-center">
                             <li class="breadcrumb__content--menu__items"><a href="{{ route('home') }}">Home</a></li>
-                            <li class="breadcrumb__content--menu__items"><span>By Part Brand</span></li>
+                            <li class="breadcrumb__content--menu__items"><span>By Sub Categories</span></li>
                         </ul>
                     </div>
                 </div>
@@ -219,7 +219,7 @@ $schema = [
                                 <div id="product_grid" class="tab_pane active show">
                                     <div class="product__section--inner">
                                         <div class="row mb--n30" id="car-parts-container">
-                                            @include('front.partials.car_parts_list', [
+                                            @include('front.partials.products_list', [
                                                 'carParts' => $carParts,
                                             ])
                                         </div>

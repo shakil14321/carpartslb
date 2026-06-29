@@ -2,22 +2,22 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\CarBrand;
+use App\Models\brand;
 use App\Models\CarModel;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
-use App\Exports\CarBrandsExport;
-use App\Imports\CarBrandsImport;
+use App\Exports\brandsExport;
+use App\Imports\brandsImport;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Validator;
 
-class CarBrandController extends Controller
+class brandController extends Controller
 {
     public function index(){
-        $carBrands = CarBrand::latest()->paginate(10);
-        return view('admin.brand.all', compact('carBrands'));
+        $brands = brand::latest()->paginate(10);
+        return view('admin.brand.all', compact('brands'));
     }
 
     public function create(){
@@ -31,7 +31,7 @@ class CarBrandController extends Controller
             "brand_image" => "nullable|image|mimes:jpg,jpeg,png,gif,svg,webp|max:2048",
         ]);
 
-        $slug = CarBrand::generateSlug($request->title);
+        $slug = brand::generateSlug($request->title);
 
         if ($validation->fails()) {
             return redirect()->back()->withErrors($validation)->withInput();
@@ -44,7 +44,7 @@ class CarBrandController extends Controller
             $image->move(public_path('images/brands'), $imageName);
         }
 
-        CarBrand::create([
+        brand::create([
             'title' => $request->title,
             'slug' => $slug,
             'description' => $request->description,
@@ -56,17 +56,17 @@ class CarBrandController extends Controller
 
 
     public function show($id){
-        $carBrand = CarBrand::find($id);
-        return view('admin.brand.show', compact('carBrand'));
+        $brand = brand::find($id);
+        return view('admin.brand.show', compact('brand'));
     }
 
     public function edit($id){
-        $carBrand = CarBrand::find($id);
-        return view('admin.brand.edit', compact('carBrand'));
+        $brand = brand::find($id);
+        return view('admin.brand.edit', compact('brand'));
     }
 
     public function update(Request $request, $id){
-        $carBrand = CarBrand::findOrFail($id);
+        $brand = brand::findOrFail($id);
 
         $validation = Validator::make($request->all(), [
             "title" => "required|string",
@@ -75,17 +75,17 @@ class CarBrandController extends Controller
         ]);
 
         // Slug will be untouch
-        $slug = $carBrand->slug;
+        $slug = $brand->slug;
 
         // if user change the slug manually and send then (slug should be add in table)
         if ($request->filled('slug')) {
             $candidate = Str::slug($request->input('slug'));
-            $exists = DB::table('car_brands')
+            $exists = DB::table('brands')
                         ->where('slug', $candidate)
-                        ->where('id', '!=', $carBrand->id)
+                        ->where('id', '!=', $brand->id)
                         ->exists();
             if ($exists) {
-                $candidate = $candidate . '-' . $carBrand->id;
+                $candidate = $candidate . '-' . $brand->id;
             }
             $slug = $candidate;
         }
@@ -94,8 +94,8 @@ class CarBrandController extends Controller
             return redirect()->back()->withErrors($validation)->withInput();
         }
 
-        $carBrand = CarBrand::findOrFail($id);
-        $imageName = $carBrand->brand_image; // keep old image
+        $brand = brand::findOrFail($id);
+        $imageName = $brand->brand_image; // keep old image
 
         if ($request->hasFile('brand_image')) {
             // Purani image delete karo agar exist karti hai
@@ -109,7 +109,7 @@ class CarBrandController extends Controller
             $image->move(public_path('images/brands'), $imageName);
         }
 
-        $carBrand->update([
+        $brand->update([
             'title' => $request->title,
             'slug' => $slug,
             'description' => $request->description,
@@ -122,21 +122,21 @@ class CarBrandController extends Controller
 
     public function destroy($id)
     {
-        $carBrand = CarBrand::find($id);
-    
+        $brand = brand::find($id);
+
         // check if record exists
-        if (!$carBrand) {
+        if (!$brand) {
             return redirect()->route('brand.index')->with('error', 'Car Brand not found.');
         }
-    
+
         // delete image if exists
-        if (!empty($carBrand->brand_image) && file_exists(public_path('images/models/' . $carBrand->brand_image))) {
-            unlink(public_path('images/models/' . $carBrand->brand_image));
+        if (!empty($brand->brand_image) && file_exists(public_path('images/models/' . $brand->brand_image))) {
+            unlink(public_path('images/models/' . $brand->brand_image));
         }
-    
+
         // delete record
-        $carBrand->delete();
-    
+        $brand->delete();
+
         return redirect()->route('brand.index')->with('success', 'Car Brand Deleted Successfully');
     }
 
@@ -146,7 +146,7 @@ class CarBrandController extends Controller
     }
 
     public function exportExcel(){
-        return Excel::download(new CarBrandsExport, 'car_brands.xlsx');
+        return Excel::download(new brandsExport, 'brands.xlsx');
     }
 
     public function importExcel(Request $request){
@@ -154,54 +154,54 @@ class CarBrandController extends Controller
             'file' => 'required|mimes:xlsx,csv,xls'
         ]);
 
-        Excel::import(new CarBrandsImport, $request->file('file'));
+        Excel::import(new brandsImport, $request->file('file'));
 
         return redirect()->route('brand.index')->with('success', 'Car Brands Imported Successfully!');
     }
-    
+
     public function deleteSelected(Request $request)
     {
         $ids = $request->input('ids');
-    
+
         if (empty($ids)) {
             return redirect()->route('brand.index')
                 ->with('error', 'Please select at least one brand to delete.');
         }
-    
+
         // Get brands
-        $carBrands = CarBrand::whereIn('id', $ids)->get();
-    
-        foreach ($carBrands as $brand) {
+        $brands = brand::whereIn('id', $ids)->get();
+
+        foreach ($brands as $brand) {
             if (!empty($brand->brand_image)) {
                 $imagePath = public_path('images/brands/' . $brand->brand_image);
-    
+
                 if (file_exists($imagePath)) {
                     @unlink($imagePath);
                 }
             }
         }
-    
+
         // Delete from database
-        CarBrand::whereIn('id', $ids)->delete();
-    
+        brand::whereIn('id', $ids)->delete();
+
         return redirect()->route('brand.index')
             ->with('success', 'Selected Car Brands Deleted Successfully!');
     }
 
     // seach functionality
-    public function carBrandSearch(Request $request){
+    public function brandSearch(Request $request){
         $q = trim($request->input('q', ''));
-        
+
         if($q === ''){
             return redirect()->back()->with('error', 'Write something in search box.');
         }
-        
-        $carBrands = CarBrand::query()
+
+        $brands = brand::query()
         ->where('title', 'LIKE', "%{$q}%")
         ->latest()
         ->paginate(100)
         ->appends(['q' => $request->query('q')]);
-        
-        return view('admin.brand.search', compact('carBrands', 'q'));
+
+        return view('admin.brand.search', compact('brands', 'q'));
     }
 }

@@ -2,11 +2,11 @@
 
 namespace App\Imports;
 
-use App\Models\CarPart;
-use App\Models\CarBrand;
+use App\Models\product;
+use App\Models\brand;
 use App\Models\CarModel;
 use App\Models\CarPartType;
-use App\Models\CarPartBrand;
+use App\Models\SubCategories;
 use Illuminate\Support\Str;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
@@ -22,14 +22,14 @@ class CarPartsImport implements ToModel, WithHeadingRow, WithValidation, WithChu
     public function model(array $row)
     {
 
-        if (CarPart::where('sku', $row['sku'])->exists()) {
+        if (product::where('sku', $row['sku'])->exists()) {
             return null; // Skip this row instead of inserting
         }
         // Map names to IDs
-        $carBrandId  = CarBrand::where('title', $row['car_brand_name'])->value('id');
+        $brandId  = brand::where('title', $row['car_brand_name'])->value('id');
         $carModelId  = CarModel::where('title', $row['car_model_name'])->value('id');
         $partTypeId  = CarPartType::where('title', $row['part_type_name'])->value('id');
-        $partBrandId = CarPartBrand::where('title', $row['part_brand_name'])->value('id');
+        $partBrandId = SubCategories::where('title', $row['part_brand_name'])->value('id');
 
         // ✅ Handle gallery images
         $galleryImages = [];
@@ -49,13 +49,13 @@ class CarPartsImport implements ToModel, WithHeadingRow, WithValidation, WithChu
         $slug = Str::slug($row['slug']);
         $originalSlug = $slug;
         $counter = 2;
-        while (CarPart::where('slug', $slug)->exists()) {
+        while (product::where('slug', $slug)->exists()) {
             $slug = $originalSlug . '-' . $counter;
             $counter++;
         }
 
-        return new CarPart([
-            'car_brand_id'       => $carBrandId,
+        return new product([
+            'car_brand_id'       => $brandId,
             'car_model_id'       => $carModelId,
             'part_type_id'       => $partTypeId,
             'part_brand_id'      => $partBrandId,

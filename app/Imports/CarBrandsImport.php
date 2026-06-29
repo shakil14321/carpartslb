@@ -2,12 +2,12 @@
 
 namespace App\Imports;
 
-use App\Models\CarBrand;
+use App\Models\brand;
 use Illuminate\Support\Str;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
-class CarBrandsImport implements ToModel, WithHeadingRow
+class brandsImport implements ToModel, WithHeadingRow
 {
     /**
      * Import logic:
@@ -21,7 +21,7 @@ class CarBrandsImport implements ToModel, WithHeadingRow
         }
 
         // try to find existing by slug
-        $brand = CarBrand::where('slug', $row['slug'])->first();
+        $brand = brand::where('slug', $row['slug'])->first();
 
         if ($brand) {
             $brand->update([
@@ -33,7 +33,7 @@ class CarBrandsImport implements ToModel, WithHeadingRow
         }
 
         // insert new
-        return new CarBrand([
+        return new brand([
             'title'       => $row['title'],
             'slug'        => $row['slug'] ?: Str::slug($row['title']),
             'description' => $row['description'] ?? null,

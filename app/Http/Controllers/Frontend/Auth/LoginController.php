@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Order;
-use App\Models\CarPart;
+use App\Models\products;
 use App\Models\Review;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -21,20 +21,20 @@ class LoginController extends Controller
         $completedOrders = Order::where('status', 'completed')->count();
         $canceldOrders = Order::where('status', 'cancel')->count();
         $totalRevenue = Order::where('status', 'completed')->sum('total');
-        
+
         $totalCustomers = User::where('role', 'customer')->count();
-        
-        $products = CarPart::all()->count();
-        
+
+        $products = products::all()->count();
+
         $reviews = Review::all()->count();
-        
+
         return view('admin.dashboard.index', compact('orders', 'reviewOrders', 'processOrders', 'deliverOrders', 'completedOrders', 'canceldOrders', 'totalRevenue', 'totalCustomers', 'products', 'reviews'));
     }
-    
+
     public function authorDashboard(){
         return view('admin.dashboard.author');
     }
-    
+
     public function showForm()
     {
         return view('front.pages.login');
@@ -43,7 +43,7 @@ class LoginController extends Controller
     public function adminLoginPage(){
         return view('front.pages.adminLogin');
     }
-    
+
     public function authorLoginPage(){
         return view('front.pages.authorLogin');
     }
@@ -121,7 +121,7 @@ class LoginController extends Controller
             return redirect()->route('dashboard');
         }
     }
-    
+
     public function authorLogin(Request $request)
     {
         $request->validate([
@@ -158,7 +158,7 @@ class LoginController extends Controller
             return redirect()->route('authorDashboard.view');
         }
     }
-    
+
 
     // Logout functionality
     public function logout(Request $request)

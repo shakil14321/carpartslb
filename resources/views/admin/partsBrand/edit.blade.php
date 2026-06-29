@@ -19,24 +19,24 @@
                 </div>
                 @endif
                 <div class="main-flex">
-                    <h3 class="box-title">Edit Car Part Brand</h3>
-                    <a href="{{ route('part-brand.index') }}" class="btn btn-primary btn-sm">All Part Brands</a>
+                    <h3 class="box-title">Edit Car Sub Categories</h3>
+                    <a href="{{ route('part-brand.index') }}" class="btn btn-primary btn-sm">All Sub Categoriess</a>
                 </div><!-- /.box-header -->
                 <!-- form start -->
-                <form role="form" action="{{ route('part-brand.update', $carPartBrand->id) }}" method="POST"
+                <form role="form" action="{{ route('part-brand.update', $SubCategories->id) }}" method="POST"
                     enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
                     <div class="box-body">
                         <div class="form-group">
-                            <label for="input-title">Part Brand Name</label>
+                            <label for="input-title">Sub Categories Name</label>
                             <input type="text" class="form-control brand-name" id="input-title"
                                 placeholder="Enter car brand name" name="title"
-                                value="{{ old('title', $carPartBrand->title) }}">
+                                value="{{ old('title', $SubCategories->title) }}">
                         </div>
                         <div class="input-group">
                             <input type="text" class="form-control" id="input-slug" placeholder="Slug will generate"
-                                name="slug" value="{{ old('slug', $carPartBrand->slug) }}" readonly>
+                                name="slug" value="{{ old('slug', $SubCategories->slug) }}" readonly>
                             <div class="input-group-btn">
                                 <button type="button" class="btn btn-warning" id="slug-edit-button">Edit</button>
                                 <button type="button" class="btn btn-success" id="slug-edit-save-button">Save</button>
@@ -47,7 +47,7 @@
                         <section class="content">
 
                             <div class='row'>
-                                <label for="brandName">Part Brand Description</label>
+                                <label for="brandName">Sub Categories Description</label>
                                 <div class='col-md-12'>
                                     <div class='box'>
                                         <div class='box-header'>
@@ -60,7 +60,7 @@
                                         </div><!-- /.box-header -->
                                         <div class='box-body pad'>
 
-                                            <textarea class="textarea summernote" name="description">{{ old('description', $carPartBrand->description) }}</textarea>
+                                            <textarea class="textarea summernote" name="description">{{ old('description', $SubCategories->description) }}</textarea>
 
                                         </div>
                                     </div>
@@ -69,11 +69,11 @@
                         </section><!-- /.content -->
 
                         <div class="form-group">
-                            <label for="imageFile">Part Brand Image</label>
-                            <input type="file" id="imageFile" name="brand_image" value="{{ old('$carPartBrand->brand_image') }}">
+                            <label for="imageFile">Sub Categories Image</label>
+                            <input type="file" id="imageFile" name="brand_image" value="{{ old('$SubCategories->brand_image') }}">
                             <br>
-                            <img src="{{ ($carPartBrand->brand_image) ? asset('images/brands/' . $carPartBrand->brand_image) : asset('images/brands/demo.png') }}"
-                                    alt="{{ $carPartBrand->brand_image }}" class="edit-add-image" id="brandImagePreview">
+                            <img src="{{ ($SubCategories->brand_image) ? asset('images/brands/' . $SubCategories->brand_image) : asset('images/brands/demo.png') }}"
+                                    alt="{{ $SubCategories->brand_image }}" class="edit-add-image" id="brandImagePreview">
                         </div>
                     </div><!-- /.box-body -->
 

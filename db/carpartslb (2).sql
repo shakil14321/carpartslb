@@ -106,10 +106,10 @@ INSERT INTO `carts` (`id`, `user_id`, `session_id`, `product_id`, `quantity`, `s
 -- --------------------------------------------------------
 
 --
--- Table structure for table `car_brands`
+-- Table structure for table `brands`
 --
 
-CREATE TABLE `car_brands` (
+CREATE TABLE `brands` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `title` varchar(255) NOT NULL,
   `slug` varchar(255) NOT NULL,
@@ -120,10 +120,10 @@ CREATE TABLE `car_brands` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `car_brands`
+-- Dumping data for table `brands`
 --
 
-INSERT INTO `car_brands` (`id`, `title`, `slug`, `description`, `brand_image`, `created_at`, `updated_at`) VALUES
+INSERT INTO `brands` (`id`, `title`, `slug`, `description`, `brand_image`, `created_at`, `updated_at`) VALUES
 (1, 'BMW', 'bmw', NULL, '1759942765.webp', '2025-10-22 17:28:44', '2025-10-23 11:40:08'),
 (2, 'MINI', 'mini', NULL, '1761358498.webp', '2025-10-23 11:40:08', '2025-10-25 02:14:58'),
 (3, 'BMW MOTORRAD', 'bmw-motorrad', NULL, '1759991908.png', '2025-10-23 11:40:08', '2025-10-23 11:40:08');
@@ -157,10 +157,10 @@ INSERT INTO `car_models` (`id`, `car_brand_id`, `title`, `slug`, `year`, `descri
 -- --------------------------------------------------------
 
 --
--- Table structure for table `car_parts`
+-- Table structure for table `products`
 --
 
-CREATE TABLE `car_parts` (
+CREATE TABLE `products` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `car_brand_id` bigint(20) UNSIGNED DEFAULT NULL,
   `car_model_id` bigint(20) UNSIGNED DEFAULT NULL,
@@ -187,10 +187,10 @@ CREATE TABLE `car_parts` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `car_parts`
+-- Dumping data for table `products`
 --
 
-INSERT INTO `car_parts` (`id`, `car_brand_id`, `car_model_id`, `part_type_id`, `part_brand_id`, `title`, `slug`, `sku`, `part_number`, `vin_code`, `fav_product`, `original_price`, `sale_price`, `stock_type`, `stock_quantity`, `feature_image`, `gallery_images`, `description`, `short_description`, `meta_title`, `meta_description`, `created_at`, `updated_at`) VALUES
+INSERT INTO `products` (`id`, `car_brand_id`, `car_model_id`, `part_type_id`, `part_brand_id`, `title`, `slug`, `sku`, `part_number`, `vin_code`, `fav_product`, `original_price`, `sale_price`, `stock_type`, `stock_quantity`, `feature_image`, `gallery_images`, `description`, `short_description`, `meta_title`, `meta_description`, `created_at`, `updated_at`) VALUES
 (1, 1, NULL, 13, 5, 'BAGUE DE SECURITE', 'bague-de-securite', 'BH25', '07119902398', NULL, 0, 10.33, 7.75, 'in', 1, 'product-preview.jpg', '\"[]\"', 'BAGUE DE SECURITE', 'AUTOMATIC TR', 'BAGUE DE SECURITE', 'AUTOMATIC TR', '2025-12-06 04:41:05', '2025-12-06 04:41:05'),
 (2, 1, NULL, 1, 5, 'HEX BOLT', 'hex-bolt', 'BH27', '07119902806', NULL, 0, 6.15, 4.61, 'in', 5, 'product-preview.jpg', '\"[]\"', 'HEX BOLT', 'HYPOID AXLE', 'HYPOID AXLE', 'HYPOID AXLE', '2025-12-06 04:41:05', '2025-12-06 04:41:05'),
 (3, 3, NULL, 13, 7, 'COCK RING', 'cock-ring', 'BH35', '07119903479', NULL, 0, 3.20, 2.40, 'in', 1, 'product-preview.jpg', '\"[]\"', 'COCK RING', 'HYPOID AXLE', 'HYPOID AXLE', 'HYPOID AXLE', '2025-12-06 04:41:05', '2025-12-06 04:41:05'),
@@ -419,7 +419,7 @@ INSERT INTO `car_parts` (`id`, `car_brand_id`, `car_model_id`, `part_type_id`, `
 (226, 3, NULL, 13, 7, 'SEMI SPHERE', 'semi-sphere-3', 'BH1225', '11347721188', NULL, 0, 7.79, 5.84, 'in', 7, 'product-preview.jpg', '\"[]\"', 'SEMI SPHERE', NULL, NULL, NULL, '2025-12-06 04:41:07', '2025-12-06 04:41:07'),
 (227, 3, NULL, 13, 7, 'SEMI SPHERE', 'semi-sphere-4', 'BH1228', '11347721191', NULL, 0, 7.79, 5.84, 'in', 5, 'product-preview.jpg', '\"[]\"', 'SEMI SPHERE', NULL, NULL, NULL, '2025-12-06 04:41:07', '2025-12-06 04:41:07'),
 (228, 3, NULL, 13, 7, 'SEMI SPHERE', 'semi-sphere-5', 'BH1229', '11347721192', NULL, 0, 7.79, 5.84, 'in', 6, 'product-preview.jpg', '\"[]\"', 'SEMI SPHERE', NULL, NULL, NULL, '2025-12-06 04:41:07', '2025-12-06 04:41:07');
-INSERT INTO `car_parts` (`id`, `car_brand_id`, `car_model_id`, `part_type_id`, `part_brand_id`, `title`, `slug`, `sku`, `part_number`, `vin_code`, `fav_product`, `original_price`, `sale_price`, `stock_type`, `stock_quantity`, `feature_image`, `gallery_images`, `description`, `short_description`, `meta_title`, `meta_description`, `created_at`, `updated_at`) VALUES
+INSERT INTO `products` (`id`, `car_brand_id`, `car_model_id`, `part_type_id`, `part_brand_id`, `title`, `slug`, `sku`, `part_number`, `vin_code`, `fav_product`, `original_price`, `sale_price`, `stock_type`, `stock_quantity`, `feature_image`, `gallery_images`, `description`, `short_description`, `meta_title`, `meta_description`, `created_at`, `updated_at`) VALUES
 (229, 3, NULL, 13, 7, 'SEMI SPHERE', 'semi-sphere-6', 'BH1230', '11347721193', NULL, 0, 7.79, 5.84, 'in', 3, 'product-preview.jpg', '\"[]\"', 'SEMI SPHERE', NULL, NULL, NULL, '2025-12-06 04:41:07', '2025-12-06 04:41:07'),
 (230, 3, NULL, 13, 7, 'SEMI SPHERE', 'semi-sphere-7', 'BH1231', '11347721194', NULL, 0, 7.79, 5.84, 'in', 6, 'product-preview.jpg', '\"[]\"', 'SEMI SPHERE', NULL, NULL, NULL, '2025-12-06 04:41:07', '2025-12-06 04:41:07'),
 (231, 3, NULL, 13, 7, 'VALVE SEAL R', 'valve-seal-r', 'BH1236', '11348535530', NULL, 0, 10.39, 7.79, 'in', 16, 'product-preview.jpg', '\"[]\"', 'VALVE SEAL R', NULL, NULL, NULL, '2025-12-06 04:41:07', '2025-12-06 04:41:07'),
@@ -646,7 +646,7 @@ INSERT INTO `car_parts` (`id`, `car_brand_id`, `car_model_id`, `part_type_id`, `
 (452, 3, NULL, 13, 7, 'BOBINE', 'bobine', 'BH2017', '12137715846', NULL, 0, 151.26, 113.44, 'in', 2, 'product-preview.jpg', '\"[]\"', 'BOBINE', NULL, NULL, NULL, '2025-12-06 04:41:08', '2025-12-06 04:41:08'),
 (453, 3, NULL, 13, 7, 'BOBINE', 'bobine-2', 'BH2018', '12137715847', NULL, 0, 137.52, 103.14, 'in', 1, 'product-preview.jpg', '\"[]\"', 'BOBINE', NULL, NULL, NULL, '2025-12-06 04:41:08', '2025-12-06 04:41:08'),
 (454, 3, NULL, 13, 7, 'BOBINE ALLUMAGE', 'bobine-allumage', 'BH2020', '12137715853', NULL, 0, 164.57, 123.43, 'in', 2, 'product-preview.jpg', '\"[]\"', 'BOBINE ALLUMAGE', NULL, NULL, NULL, '2025-12-06 04:41:08', '2025-12-06 04:41:08');
-INSERT INTO `car_parts` (`id`, `car_brand_id`, `car_model_id`, `part_type_id`, `part_brand_id`, `title`, `slug`, `sku`, `part_number`, `vin_code`, `fav_product`, `original_price`, `sale_price`, `stock_type`, `stock_quantity`, `feature_image`, `gallery_images`, `description`, `short_description`, `meta_title`, `meta_description`, `created_at`, `updated_at`) VALUES
+INSERT INTO `products` (`id`, `car_brand_id`, `car_model_id`, `part_type_id`, `part_brand_id`, `title`, `slug`, `sku`, `part_number`, `vin_code`, `fav_product`, `original_price`, `sale_price`, `stock_type`, `stock_quantity`, `feature_image`, `gallery_images`, `description`, `short_description`, `meta_title`, `meta_description`, `created_at`, `updated_at`) VALUES
 (455, 3, NULL, 13, 7, 'IGNITION COI', 'ignition-coi-5', 'BH2021', '12138526677', NULL, 0, 190.01, 142.51, 'in', 1, 'product-preview.jpg', '\"[]\"', 'IGNITION COI', NULL, NULL, NULL, '2025-12-06 04:41:08', '2025-12-06 04:41:08'),
 (456, 1, NULL, 2, 5, 'IGNITION COI', 'ignition-coi-10', 'BH2028', '12138692611', NULL, 0, 85.25, 63.94, 'in', 5, 'product-preview.jpg', '\"[]\"', 'IGNITION COI', NULL, NULL, NULL, '2025-12-06 04:41:08', '2025-12-06 04:41:08'),
 (457, 1, NULL, 2, 5, 'IGNITION COI', 'ignition-coi-11', 'BH2029', '12139453463', NULL, 0, 106.44, 79.83, 'in', 6, 'product-preview.jpg', '\"[]\"', 'IGNITION COI', NULL, NULL, NULL, '2025-12-06 04:41:08', '2025-12-06 04:41:08'),
@@ -870,7 +870,7 @@ INSERT INTO `car_parts` (`id`, `car_brand_id`, `car_model_id`, `part_type_id`, `
 (675, 1, NULL, 2, 5, 'SUPPLY MODUL', 'supply-modul-7', 'BH2783', '16118077484', NULL, 0, 1083.85, 812.89, 'in', 1, 'product-preview.jpg', '\"[]\"', 'SUPPLY MODUL', NULL, NULL, NULL, '2025-12-06 04:41:09', '2025-12-06 04:41:09'),
 (676, 1, NULL, 2, 5, 'SUPPLY MODUL', 'supply-modul-8', 'BH2785', '16119429648', NULL, 0, 602.03, 451.52, 'in', 1, 'product-preview.jpg', '\"[]\"', 'SUPPLY MODUL', NULL, NULL, NULL, '2025-12-06 04:41:09', '2025-12-06 04:41:09'),
 (677, 1, NULL, 1, 5, 'O-RING', 'o-ring-72', 'BH2786', '16119494196', NULL, 0, 16.28, 12.21, 'in', 3, 'product-preview.jpg', '\"[]\"', 'O-RING', NULL, NULL, NULL, '2025-12-06 04:41:09', '2025-12-06 04:41:09');
-INSERT INTO `car_parts` (`id`, `car_brand_id`, `car_model_id`, `part_type_id`, `part_brand_id`, `title`, `slug`, `sku`, `part_number`, `vin_code`, `fav_product`, `original_price`, `sale_price`, `stock_type`, `stock_quantity`, `feature_image`, `gallery_images`, `description`, `short_description`, `meta_title`, `meta_description`, `created_at`, `updated_at`) VALUES
+INSERT INTO `products` (`id`, `car_brand_id`, `car_model_id`, `part_type_id`, `part_brand_id`, `title`, `slug`, `sku`, `part_number`, `vin_code`, `fav_product`, `original_price`, `sale_price`, `stock_type`, `stock_quantity`, `feature_image`, `gallery_images`, `description`, `short_description`, `meta_title`, `meta_description`, `created_at`, `updated_at`) VALUES
 (678, 2, NULL, 13, 6, 'PLASTIC FILL', 'plastic-fill', 'BH2787', '16119800690', NULL, 0, 496.80, 372.60, 'in', 1, 'product-preview.jpg', '\"[]\"', 'PLASTIC FILL', NULL, NULL, NULL, '2025-12-06 04:41:09', '2025-12-06 04:41:09'),
 (679, 3, NULL, 13, 7, 'HOSE, VALVE,', 'hose-valve', 'BH2806', '16137718338', NULL, 0, 74.36, 55.77, 'in', 1, 'product-preview.jpg', '\"[]\"', 'HOSE, VALVE,', NULL, NULL, NULL, '2025-12-06 04:41:09', '2025-12-06 04:41:09'),
 (680, 1, NULL, 13, 5, 'RUBBER SEAL', 'rubber-seal-4', 'BH2809', '16141182905', NULL, 0, 11.28, 8.46, 'in', 1, 'product-preview.jpg', '\"[]\"', 'RUBBER SEAL', NULL, NULL, NULL, '2025-12-06 04:41:09', '2025-12-06 04:41:09'),
@@ -1093,7 +1093,7 @@ INSERT INTO `car_parts` (`id`, `car_brand_id`, `car_model_id`, `part_type_id`, `
 (897, 1, NULL, 13, 5, 'TAILPIPE TIP', 'tailpipe-tip', 'BH3542', '18302354364', NULL, 0, 154.83, 116.13, 'in', 2, 'product-preview.jpg', '\"[]\"', 'TAILPIPE TIP', NULL, NULL, NULL, '2025-12-06 04:41:10', '2025-12-06 04:41:10'),
 (898, 1, NULL, 13, 5, 'TAILPIPE END', 'tailpipe-end', 'BH3543', '18302358110', NULL, 0, 547.90, 410.92, 'in', 4, 'product-preview.jpg', '\"[]\"', 'TAILPIPE END', NULL, NULL, NULL, '2025-12-06 04:41:10', '2025-12-06 04:41:10'),
 (899, 1, NULL, 13, 5, 'TRIM EXHAUST', 'trim-exhaust', 'BH3544', '18305B35D87', NULL, 0, 1238.33, 928.75, 'in', 4, 'product-preview.jpg', '\"[]\"', 'TRIM EXHAUST', NULL, NULL, NULL, '2025-12-06 04:41:10', '2025-12-06 04:41:10');
-INSERT INTO `car_parts` (`id`, `car_brand_id`, `car_model_id`, `part_type_id`, `part_brand_id`, `title`, `slug`, `sku`, `part_number`, `vin_code`, `fav_product`, `original_price`, `sale_price`, `stock_type`, `stock_quantity`, `feature_image`, `gallery_images`, `description`, `short_description`, `meta_title`, `meta_description`, `created_at`, `updated_at`) VALUES
+INSERT INTO `products` (`id`, `car_brand_id`, `car_model_id`, `part_type_id`, `part_brand_id`, `title`, `slug`, `sku`, `part_number`, `vin_code`, `fav_product`, `original_price`, `sale_price`, `stock_type`, `stock_quantity`, `feature_image`, `gallery_images`, `description`, `short_description`, `meta_title`, `meta_description`, `created_at`, `updated_at`) VALUES
 (900, 1, NULL, 1, 5, 'CLAMPING BUS', 'clamping-bus', 'BH3558', '18307560780', NULL, 0, 63.50, 47.63, 'in', 2, 'product-preview.jpg', '\"[]\"', 'CLAMPING BUS', NULL, NULL, NULL, '2025-12-06 04:41:10', '2025-12-06 04:41:10'),
 (901, 1, NULL, 13, 5, 'GASKET RING', 'gasket-ring-37', 'BH3560', '18307567685', NULL, 0, 24.68, 18.51, 'in', 10, 'product-preview.jpg', '\"[]\"', 'GASKET RING', NULL, NULL, NULL, '2025-12-06 04:41:10', '2025-12-06 04:41:10'),
 (902, 2, NULL, 13, 6, 'TAILPIPE TIP', 'tailpipe-tip-2', 'BH3563', '18307590303', NULL, 0, 116.68, 87.51, 'in', 1, 'product-preview.jpg', '\"[]\"', 'TAILPIPE TIP', NULL, NULL, NULL, '2025-12-06 04:41:10', '2025-12-06 04:41:10'),
@@ -1315,7 +1315,7 @@ INSERT INTO `car_parts` (`id`, `car_brand_id`, `car_model_id`, `part_type_id`, `
 (1118, 1, NULL, 1, 5, 'GUIDE SUPPOR', 'guide-suppor', 'BH4304', '31302284702', NULL, 0, 124.53, 93.40, 'in', 1, 'product-preview.jpg', '\"[]\"', 'GUIDE SUPPOR', NULL, NULL, NULL, '2025-12-06 04:41:13', '2025-12-06 04:41:13'),
 (1119, 2, NULL, 1, 6, 'GUIDE SUPPOR', 'guide-suppor-2', 'BH4311', '31305A04C10', NULL, 0, 164.67, 123.50, 'in', 8, 'product-preview.jpg', '\"[]\"', 'GUIDE SUPPOR', NULL, NULL, NULL, '2025-12-06 04:41:13', '2025-12-06 04:41:13'),
 (1120, 1, NULL, 1, 5, 'GUIDE SUPPOR', 'guide-suppor-3', 'BH4312', '31305A3D513', NULL, 0, 154.55, 115.91, 'in', 5, 'product-preview.jpg', '\"[]\"', 'GUIDE SUPPOR', NULL, NULL, NULL, '2025-12-06 04:41:13', '2025-12-06 04:41:13');
-INSERT INTO `car_parts` (`id`, `car_brand_id`, `car_model_id`, `part_type_id`, `part_brand_id`, `title`, `slug`, `sku`, `part_number`, `vin_code`, `fav_product`, `original_price`, `sale_price`, `stock_type`, `stock_quantity`, `feature_image`, `gallery_images`, `description`, `short_description`, `meta_title`, `meta_description`, `created_at`, `updated_at`) VALUES
+INSERT INTO `products` (`id`, `car_brand_id`, `car_model_id`, `part_type_id`, `part_brand_id`, `title`, `slug`, `sku`, `part_number`, `vin_code`, `fav_product`, `original_price`, `sale_price`, `stock_type`, `stock_quantity`, `feature_image`, `gallery_images`, `description`, `short_description`, `meta_title`, `meta_description`, `created_at`, `updated_at`) VALUES
 (1121, 1, NULL, 1, 5, 'GUIDE SUPPOR', 'guide-suppor-4', 'BH4319', '31306779604', NULL, 0, 125.10, 93.82, 'in', 1, 'product-preview.jpg', '\"[]\"', 'GUIDE SUPPOR', NULL, NULL, NULL, '2025-12-06 04:41:13', '2025-12-06 04:41:13'),
 (1122, 1, NULL, 1, 5, 'GUIDE SUPPOR', 'guide-suppor-5', 'BH4332', '31306851879', NULL, 0, 179.92, 134.94, 'in', 4, 'product-preview.jpg', '\"[]\"', 'GUIDE SUPPOR', NULL, NULL, NULL, '2025-12-06 04:41:13', '2025-12-06 04:41:13'),
 (1123, 1, NULL, 1, 5, 'GUIDE SUPPOR', 'guide-suppor-8', 'BH4347', '31306866259', NULL, 0, 98.30, 73.73, 'in', 2, 'product-preview.jpg', '\"[]\"', 'GUIDE SUPPOR', NULL, NULL, NULL, '2025-12-06 04:41:13', '2025-12-06 04:41:13'),
@@ -1537,7 +1537,7 @@ INSERT INTO `car_parts` (`id`, `car_brand_id`, `car_model_id`, `part_type_id`, `
 (1339, 1, NULL, 1, 5, 'STABILIZER S', 'stabilizer-s-2', 'BH5319', '33506861149', NULL, 0, 24.51, 18.38, 'in', 2, 'product-preview.jpg', '\"[]\"', 'STABILIZER S', NULL, NULL, NULL, '2025-12-06 04:41:14', '2025-12-06 04:41:14'),
 (1340, 1, NULL, 1, 5, 'STABILIZER R', 'stabilizer-r-4', 'BH5324', '33506861469', NULL, 0, 20.61, 15.46, 'in', 2, 'product-preview.jpg', '\"[]\"', 'STABILIZER R', NULL, NULL, NULL, '2025-12-06 04:41:14', '2025-12-06 04:41:14'),
 (1341, 1, NULL, 1, 5, 'SUPPORT BEAR', 'support-bear-2', 'BH5330', '33506866273', NULL, 0, 98.30, 73.73, 'in', 2, 'product-preview.jpg', '\"[]\"', 'SUPPORT BEAR', NULL, NULL, NULL, '2025-12-06 04:41:14', '2025-12-06 04:41:14');
-INSERT INTO `car_parts` (`id`, `car_brand_id`, `car_model_id`, `part_type_id`, `part_brand_id`, `title`, `slug`, `sku`, `part_number`, `vin_code`, `fav_product`, `original_price`, `sale_price`, `stock_type`, `stock_quantity`, `feature_image`, `gallery_images`, `description`, `short_description`, `meta_title`, `meta_description`, `created_at`, `updated_at`) VALUES
+INSERT INTO `products` (`id`, `car_brand_id`, `car_model_id`, `part_type_id`, `part_brand_id`, `title`, `slug`, `sku`, `part_number`, `vin_code`, `fav_product`, `original_price`, `sale_price`, `stock_type`, `stock_quantity`, `feature_image`, `gallery_images`, `description`, `short_description`, `meta_title`, `meta_description`, `created_at`, `updated_at`) VALUES
 (1342, 1, NULL, 1, 5, 'SPRING PAD L', 'spring-pad-l-2', 'BH5332', '33506875394', NULL, 0, 8.14, 6.10, 'in', 1, 'product-preview.jpg', '\"[]\"', 'SPRING PAD L', NULL, NULL, NULL, '2025-12-06 04:41:14', '2025-12-06 04:41:14'),
 (1343, 1, NULL, 1, 5, 'SPRING PAD U', 'spring-pad-u-2', 'BH5333', '33506875395', NULL, 0, 10.10, 7.58, 'in', 1, 'product-preview.jpg', '\"[]\"', 'SPRING PAD U', NULL, NULL, NULL, '2025-12-06 04:41:14', '2025-12-06 04:41:14'),
 (1344, 1, NULL, 1, 5, 'GUIDE SUPPOR', 'guide-suppor-19', 'BH5338', '33506884486', NULL, 0, 90.59, 67.94, 'in', 1, 'product-preview.jpg', '\"[]\"', 'GUIDE SUPPOR', NULL, NULL, NULL, '2025-12-06 04:41:14', '2025-12-06 04:41:14'),
@@ -1758,7 +1758,7 @@ INSERT INTO `car_parts` (`id`, `car_brand_id`, `car_model_id`, `part_type_id`, `
 (1559, 1, NULL, 13, 5, 'REPAIR KIT,', 'repair-kit-95', 'BH5882', '34217991043', NULL, 0, 686.61, 514.96, 'in', 1, 'product-preview.jpg', '\"[]\"', 'REPAIR KIT,', NULL, NULL, NULL, '2025-12-06 04:41:15', '2025-12-06 04:41:15'),
 (1560, 3, NULL, 13, 7, 'BRAKE PADS K', 'brake-pads-k-6', 'BH5885', '34218409671', NULL, 0, 72.59, 54.45, 'in', 2, 'product-preview.jpg', '\"[]\"', 'BRAKE PADS K', NULL, NULL, NULL, '2025-12-06 04:41:15', '2025-12-06 04:41:15'),
 (1561, 3, NULL, 13, 7, 'BRAKE PADS K', 'brake-pads-k-7', 'BH5886', '34218524952', NULL, 0, 72.59, 54.45, 'in', 1, 'product-preview.jpg', '\"[]\"', 'BRAKE PADS K', NULL, NULL, NULL, '2025-12-06 04:41:15', '2025-12-06 04:41:15');
-INSERT INTO `car_parts` (`id`, `car_brand_id`, `car_model_id`, `part_type_id`, `part_brand_id`, `title`, `slug`, `sku`, `part_number`, `vin_code`, `fav_product`, `original_price`, `sale_price`, `stock_type`, `stock_quantity`, `feature_image`, `gallery_images`, `description`, `short_description`, `meta_title`, `meta_description`, `created_at`, `updated_at`) VALUES
+INSERT INTO `products` (`id`, `car_brand_id`, `car_model_id`, `part_type_id`, `part_brand_id`, `title`, `slug`, `sku`, `part_number`, `vin_code`, `fav_product`, `original_price`, `sale_price`, `stock_type`, `stock_quantity`, `feature_image`, `gallery_images`, `description`, `short_description`, `meta_title`, `meta_description`, `created_at`, `updated_at`) VALUES
 (1562, 3, NULL, 13, 7, 'BRAKE PADS K', 'brake-pads-k-8', 'BH5888', '34218534821', NULL, 0, 64.28, 48.21, 'in', 1, 'product-preview.jpg', '\"[]\"', 'BRAKE PADS K', NULL, NULL, NULL, '2025-12-06 04:41:15', '2025-12-06 04:41:15'),
 (1563, 3, NULL, 13, 7, 'BRAKE PADS,', 'brake-pads-4', 'BH5889', '34218556442', NULL, 0, 72.59, 54.45, 'in', 1, 'product-preview.jpg', '\"[]\"', 'BRAKE PADS,', NULL, NULL, NULL, '2025-12-06 04:41:15', '2025-12-06 04:41:15'),
 (1564, 3, NULL, 13, 7, 'SET OF BRAKE', 'set-of-brake-8', 'BH5890', '34218562163', NULL, 0, 84.92, 63.69, 'in', 28, 'product-preview.jpg', '\"[]\"', 'SET OF BRAKE', NULL, NULL, NULL, '2025-12-06 04:41:15', '2025-12-06 04:41:15'),
@@ -1980,7 +1980,7 @@ INSERT INTO `car_parts` (`id`, `car_brand_id`, `car_model_id`, `part_type_id`, `
 (1780, 1, NULL, 3, 5, 'SIDE PANEL B', 'side-panel-b-18', 'BH6778', '41357298037', NULL, 0, 29.44, 22.08, 'in', 1, 'product-preview.jpg', '\"[]\"', 'SIDE PANEL B', NULL, NULL, NULL, '2025-12-06 04:41:17', '2025-12-06 04:41:17'),
 (1781, 1, NULL, 3, 5, 'SIDE PANEL,', 'side-panel-28', 'BH6783', '41357438441', NULL, 0, 391.28, 293.46, 'in', 2, 'product-preview.jpg', '\"[]\"', 'SIDE PANEL,', NULL, NULL, NULL, '2025-12-06 04:41:17', '2025-12-06 04:41:17'),
 (1782, 1, NULL, 3, 5, 'SIDE PANEL,', 'side-panel-29', 'BH6784', '41357438442', NULL, 0, 411.67, 308.75, 'in', 3, 'product-preview.jpg', '\"[]\"', 'SIDE PANEL,', NULL, NULL, NULL, '2025-12-06 04:41:17', '2025-12-06 04:41:17');
-INSERT INTO `car_parts` (`id`, `car_brand_id`, `car_model_id`, `part_type_id`, `part_brand_id`, `title`, `slug`, `sku`, `part_number`, `vin_code`, `fav_product`, `original_price`, `sale_price`, `stock_type`, `stock_quantity`, `feature_image`, `gallery_images`, `description`, `short_description`, `meta_title`, `meta_description`, `created_at`, `updated_at`) VALUES
+INSERT INTO `products` (`id`, `car_brand_id`, `car_model_id`, `part_type_id`, `part_brand_id`, `title`, `slug`, `sku`, `part_number`, `vin_code`, `fav_product`, `original_price`, `sale_price`, `stock_type`, `stock_quantity`, `feature_image`, `gallery_images`, `description`, `short_description`, `meta_title`, `meta_description`, `created_at`, `updated_at`) VALUES
 (1783, 1, NULL, 3, 5, 'BRACKET, SID', 'bracket-sid-5', 'BH6788', '41357475797', NULL, 0, 27.89, 20.92, 'in', 2, 'product-preview.jpg', '\"[]\"', 'BRACKET, SID', NULL, NULL, NULL, '2025-12-06 04:41:17', '2025-12-06 04:41:17'),
 (1784, 1, NULL, 3, 5, 'SIDE PANEL,', 'side-panel-30', 'BH6794', '41358052625', NULL, 0, 853.48, 640.11, 'in', 1, 'product-preview.jpg', '\"[]\"', 'SIDE PANEL,', NULL, NULL, NULL, '2025-12-06 04:41:17', '2025-12-06 04:41:17'),
 (1785, 1, NULL, 3, 5, 'SIDE PANEL B', 'side-panel-b-20', 'BH6795', '41358066937', NULL, 0, 30.39, 22.79, 'in', 1, 'product-preview.jpg', '\"[]\"', 'SIDE PANEL B', NULL, NULL, NULL, '2025-12-06 04:41:17', '2025-12-06 04:41:17'),
@@ -2203,7 +2203,7 @@ INSERT INTO `car_parts` (`id`, `car_brand_id`, `car_model_id`, `part_type_id`, `
 (2002, 2, NULL, 3, 6, 'SUPPORT, FOG', 'support-fog-3', 'BH7678', '51117360741', NULL, 0, 45.99, 34.49, 'in', 1, 'product-preview.jpg', '\"[]\"', 'SUPPORT, FOG', NULL, NULL, NULL, '2025-12-06 04:41:19', '2025-12-06 04:41:19'),
 (2003, 1, NULL, 3, 5, 'TRIM COVER,', 'trim-cover-7', 'BH7679', '51117363267', NULL, 0, 659.87, 494.90, 'in', 21, 'product-preview.jpg', '\"[]\"', 'TRIM COVER,', NULL, NULL, NULL, '2025-12-06 04:41:19', '2025-12-06 04:41:19'),
 (2004, 1, NULL, 3, 5, 'COVER, SPRAY', 'cover-spray-4', 'BH7681', '51117363394', NULL, 0, 25.50, 19.12, 'in', 3, 'product-preview.jpg', '\"[]\"', 'COVER, SPRAY', NULL, NULL, NULL, '2025-12-06 04:41:19', '2025-12-06 04:41:19');
-INSERT INTO `car_parts` (`id`, `car_brand_id`, `car_model_id`, `part_type_id`, `part_brand_id`, `title`, `slug`, `sku`, `part_number`, `vin_code`, `fav_product`, `original_price`, `sale_price`, `stock_type`, `stock_quantity`, `feature_image`, `gallery_images`, `description`, `short_description`, `meta_title`, `meta_description`, `created_at`, `updated_at`) VALUES
+INSERT INTO `products` (`id`, `car_brand_id`, `car_model_id`, `part_type_id`, `part_brand_id`, `title`, `slug`, `sku`, `part_number`, `vin_code`, `fav_product`, `original_price`, `sale_price`, `stock_type`, `stock_quantity`, `feature_image`, `gallery_images`, `description`, `short_description`, `meta_title`, `meta_description`, `created_at`, `updated_at`) VALUES
 (2005, 1, NULL, 3, 5, 'GRILL, AIR I', 'grill-air-i-5', 'BH7688', '51117369407', NULL, 0, 64.41, 48.31, 'in', 1, 'product-preview.jpg', '\"[]\"', 'GRILL, AIR I', NULL, NULL, NULL, '2025-12-06 04:41:19', '2025-12-06 04:41:19'),
 (2006, 1, NULL, 3, 5, 'IMPACT STRIP', 'impact-strip', 'BH7690', '51117369893', NULL, 0, 74.21, 55.66, 'in', 2, 'product-preview.jpg', '\"[]\"', 'IMPACT STRIP', NULL, NULL, NULL, '2025-12-06 04:41:19', '2025-12-06 04:41:19'),
 (2007, 1, NULL, 3, 5, 'INSERT, BUMP', 'insert-bump-7', 'BH7696', '51117371740', NULL, 0, 24.53, 18.40, 'in', 1, 'product-preview.jpg', '\"[]\"', 'INSERT, BUMP', NULL, NULL, NULL, '2025-12-06 04:41:19', '2025-12-06 04:41:19'),
@@ -2425,7 +2425,7 @@ INSERT INTO `car_parts` (`id`, `car_brand_id`, `car_model_id`, `part_type_id`, `
 (2223, 1, NULL, 3, 5, 'COVER, TOW F', 'cover-tow-f-4', 'BH8096', '51118072693', NULL, 0, 40.28, 30.21, 'in', 5, 'product-preview.jpg', '\"[]\"', 'COVER, TOW F', NULL, NULL, NULL, '2025-12-06 04:41:21', '2025-12-06 04:41:21'),
 (2224, 1, NULL, 3, 5, 'FLAP, TOWING', 'flap-towing-9', 'BH8098', '51118072810', NULL, 0, 55.52, 41.64, 'in', 1, 'product-preview.jpg', '\"[]\"', 'FLAP, TOWING', NULL, NULL, NULL, '2025-12-06 04:41:21', '2025-12-06 04:41:21'),
 (2225, 1, NULL, 3, 5, 'SPOILER FRON', 'spoiler-fron-3', 'BH8100', '51118072905', NULL, 0, 63.99, 47.99, 'in', 1, 'product-preview.jpg', '\"[]\"', 'SPOILER FRON', NULL, NULL, NULL, '2025-12-06 04:41:21', '2025-12-06 04:41:21');
-INSERT INTO `car_parts` (`id`, `car_brand_id`, `car_model_id`, `part_type_id`, `part_brand_id`, `title`, `slug`, `sku`, `part_number`, `vin_code`, `fav_product`, `original_price`, `sale_price`, `stock_type`, `stock_quantity`, `feature_image`, `gallery_images`, `description`, `short_description`, `meta_title`, `meta_description`, `created_at`, `updated_at`) VALUES
+INSERT INTO `products` (`id`, `car_brand_id`, `car_model_id`, `part_type_id`, `part_brand_id`, `title`, `slug`, `sku`, `part_number`, `vin_code`, `fav_product`, `original_price`, `sale_price`, `stock_type`, `stock_quantity`, `feature_image`, `gallery_images`, `description`, `short_description`, `meta_title`, `meta_description`, `created_at`, `updated_at`) VALUES
 (2226, 1, NULL, 3, 5, 'GRILL, SIDE,', 'grill-side-12', 'BH8101', '51118073667', NULL, 0, 241.21, 180.91, 'in', 1, 'product-preview.jpg', '\"[]\"', 'GRILL, SIDE,', NULL, NULL, NULL, '2025-12-06 04:41:21', '2025-12-06 04:41:21'),
 (2227, 1, NULL, 3, 5, 'GRILL, AIR I', 'grill-air-i-14', 'BH8106', '51118074783', NULL, 0, 64.80, 48.60, 'in', 2, 'product-preview.jpg', '\"[]\"', 'GRILL, AIR I', NULL, NULL, NULL, '2025-12-06 04:41:21', '2025-12-06 04:41:21'),
 (2228, 1, NULL, 3, 5, 'GRILL, AIR I', 'grill-air-i-15', 'BH8107', '51118074784', NULL, 0, 64.86, 48.64, 'in', 2, 'product-preview.jpg', '\"[]\"', 'GRILL, AIR I', NULL, NULL, NULL, '2025-12-06 04:41:21', '2025-12-06 04:41:21'),
@@ -2648,7 +2648,7 @@ INSERT INTO `car_parts` (`id`, `car_brand_id`, `car_model_id`, `part_type_id`, `
 (2445, 1, NULL, 3, 5, 'MOUNT, BUMPE', 'mount-bumpe-21', 'BH8708', '51128059876', NULL, 0, 121.33, 91.00, 'in', 1, 'product-preview.jpg', '\"[]\"', 'MOUNT, BUMPE', NULL, NULL, NULL, '2025-12-06 04:41:22', '2025-12-06 04:41:22'),
 (2446, 1, NULL, 3, 5, 'FLAP, TOWING', 'flap-towing-23', 'BH8713', '51128061606', NULL, 0, 29.26, 21.94, 'in', 2, 'product-preview.jpg', '\"[]\"', 'FLAP, TOWING', NULL, NULL, NULL, '2025-12-06 04:41:22', '2025-12-06 04:41:22'),
 (2447, 1, NULL, 3, 5, 'EMBLEM ADHER', 'emblem-adher-2', 'BH8714', '51128062191', NULL, 0, 73.37, 55.03, 'in', 2, 'product-preview.jpg', '\"[]\"', 'EMBLEM ADHER', NULL, NULL, NULL, '2025-12-06 04:41:22', '2025-12-06 04:41:22');
-INSERT INTO `car_parts` (`id`, `car_brand_id`, `car_model_id`, `part_type_id`, `part_brand_id`, `title`, `slug`, `sku`, `part_number`, `vin_code`, `fav_product`, `original_price`, `sale_price`, `stock_type`, `stock_quantity`, `feature_image`, `gallery_images`, `description`, `short_description`, `meta_title`, `meta_description`, `created_at`, `updated_at`) VALUES
+INSERT INTO `products` (`id`, `car_brand_id`, `car_model_id`, `part_type_id`, `part_brand_id`, `title`, `slug`, `sku`, `part_number`, `vin_code`, `fav_product`, `original_price`, `sale_price`, `stock_type`, `stock_quantity`, `feature_image`, `gallery_images`, `description`, `short_description`, `meta_title`, `meta_description`, `created_at`, `updated_at`) VALUES
 (2448, 1, NULL, 3, 5, 'SET OF MOUNT', 'set-of-mount-12', 'BH8715', '51128062594', NULL, 0, 53.59, 40.19, 'in', 2, 'product-preview.jpg', '\"[]\"', 'SET OF MOUNT', NULL, NULL, NULL, '2025-12-06 04:41:22', '2025-12-06 04:41:22'),
 (2449, 1, NULL, 3, 5, 'FLAP, TOWING', 'flap-towing-24', 'BH8716', '51128062757', NULL, 0, 31.41, 23.56, 'in', 1, 'product-preview.jpg', '\"[]\"', 'FLAP, TOWING', NULL, NULL, NULL, '2025-12-06 04:41:22', '2025-12-06 04:41:22'),
 (2450, 1, NULL, 3, 5, 'COVER, TOW F', 'cover-tow-f-11', 'BH8719', '51128064834', NULL, 0, 101.89, 76.42, 'in', 2, 'product-preview.jpg', '\"[]\"', 'COVER, TOW F', NULL, NULL, NULL, '2025-12-06 04:41:22', '2025-12-06 04:41:22'),
@@ -2873,7 +2873,7 @@ INSERT INTO `car_parts` (`id`, `car_brand_id`, `car_model_id`, `part_type_id`, `
 (2669, 3, NULL, 13, 7, 'LETTERING LE', 'lettering-le', 'BH9407', '51148526075', NULL, 0, 85.84, 64.38, 'in', 1, 'product-preview.jpg', '\"[]\"', 'LETTERING LE', NULL, NULL, NULL, '2025-12-06 04:41:23', '2025-12-06 04:41:23'),
 (2670, 3, NULL, 13, 7, 'LETTERING RI', 'lettering-ri', 'BH9408', '51148526076', NULL, 0, 85.84, 64.38, 'in', 1, 'product-preview.jpg', '\"[]\"', 'LETTERING RI', NULL, NULL, NULL, '2025-12-06 04:41:23', '2025-12-06 04:41:23'),
 (2671, 3, NULL, 13, 7, 'BADGE', 'badge-6', 'BH9409', '51148527401', NULL, 0, 62.77, 47.08, 'in', 2, 'product-preview.jpg', '\"[]\"', 'BADGE', NULL, NULL, NULL, '2025-12-06 04:41:23', '2025-12-06 04:41:23');
-INSERT INTO `car_parts` (`id`, `car_brand_id`, `car_model_id`, `part_type_id`, `part_brand_id`, `title`, `slug`, `sku`, `part_number`, `vin_code`, `fav_product`, `original_price`, `sale_price`, `stock_type`, `stock_quantity`, `feature_image`, `gallery_images`, `description`, `short_description`, `meta_title`, `meta_description`, `created_at`, `updated_at`) VALUES
+INSERT INTO `products` (`id`, `car_brand_id`, `car_model_id`, `part_type_id`, `part_brand_id`, `title`, `slug`, `sku`, `part_number`, `vin_code`, `fav_product`, `original_price`, `sale_price`, `stock_type`, `stock_quantity`, `feature_image`, `gallery_images`, `description`, `short_description`, `meta_title`, `meta_description`, `created_at`, `updated_at`) VALUES
 (2672, 3, NULL, 13, 7, 'LETTERING LE', 'lettering-le-2', 'BH9410', '51148544497', NULL, 0, 96.26, 72.19, 'in', 1, 'product-preview.jpg', '\"[]\"', 'LETTERING LE', NULL, NULL, NULL, '2025-12-06 04:41:23', '2025-12-06 04:41:23'),
 (2673, 3, NULL, 13, 7, 'LETTERING RI', 'lettering-ri-2', 'BH9411', '51148544498', NULL, 0, 95.17, 71.38, 'in', 1, 'product-preview.jpg', '\"[]\"', 'LETTERING RI', NULL, NULL, NULL, '2025-12-06 04:41:23', '2025-12-06 04:41:23'),
 (2674, 1, NULL, 3, 5, 'LABEL', 'label-23', 'BH9415', '51148737323', NULL, 0, 94.17, 70.63, 'in', 1, 'product-preview.jpg', '\"[]\"', 'LABEL', NULL, NULL, NULL, '2025-12-06 04:41:23', '2025-12-06 04:41:23'),
@@ -3095,7 +3095,7 @@ INSERT INTO `car_parts` (`id`, `car_brand_id`, `car_model_id`, `part_type_id`, `
 (2890, 1, NULL, 3, 5, 'STOP, TRUNK', 'stop-trunk-4', 'BH10702', '51247318694', NULL, 0, 51.15, 38.36, 'in', 1, 'product-preview.jpg', '\"[]\"', 'STOP, TRUNK', NULL, NULL, NULL, '2025-12-06 04:41:25', '2025-12-06 04:41:25'),
 (2891, 2, NULL, 1, 6, 'GAS PRESSURI', 'gas-pressuri-10', 'BH10703', '51247318896', NULL, 0, 61.83, 46.37, 'in', 2, 'product-preview.jpg', '\"[]\"', 'GAS PRESSURI', NULL, NULL, NULL, '2025-12-06 04:41:25', '2025-12-06 04:41:25'),
 (2892, 2, NULL, 3, 6, 'TRAVEL STOP', 'travel-stop', 'BH10707', '51247340383', NULL, 0, 12.28, 9.21, 'in', 2, 'product-preview.jpg', '\"[]\"', 'TRAVEL STOP', NULL, NULL, NULL, '2025-12-06 04:41:25', '2025-12-06 04:41:25');
-INSERT INTO `car_parts` (`id`, `car_brand_id`, `car_model_id`, `part_type_id`, `part_brand_id`, `title`, `slug`, `sku`, `part_number`, `vin_code`, `fav_product`, `original_price`, `sale_price`, `stock_type`, `stock_quantity`, `feature_image`, `gallery_images`, `description`, `short_description`, `meta_title`, `meta_description`, `created_at`, `updated_at`) VALUES
+INSERT INTO `products` (`id`, `car_brand_id`, `car_model_id`, `part_type_id`, `part_brand_id`, `title`, `slug`, `sku`, `part_number`, `vin_code`, `fav_product`, `original_price`, `sale_price`, `stock_type`, `stock_quantity`, `feature_image`, `gallery_images`, `description`, `short_description`, `meta_title`, `meta_description`, `created_at`, `updated_at`) VALUES
 (2893, 1, NULL, 3, 5, 'STOP, TRUNK', 'stop-trunk-5', 'BH10708', '51247342899', NULL, 0, 50.75, 38.06, 'in', 4, 'product-preview.jpg', '\"[]\"', 'STOP, TRUNK', NULL, NULL, NULL, '2025-12-06 04:41:25', '2025-12-06 04:41:25'),
 (2894, 1, NULL, 3, 5, 'STOP, TRUNK', 'stop-trunk-6', 'BH10709', '51247342900', NULL, 0, 50.75, 38.06, 'in', 4, 'product-preview.jpg', '\"[]\"', 'STOP, TRUNK', NULL, NULL, NULL, '2025-12-06 04:41:25', '2025-12-06 04:41:25'),
 (2895, 1, NULL, 1, 5, 'BOOT LID/TAI', 'boot-lidtai-2', 'BH10710', '51247345700', NULL, 0, 29.48, 22.11, 'in', 1, 'product-preview.jpg', '\"[]\"', 'BOOT LID/TAI', NULL, NULL, NULL, '2025-12-06 04:41:25', '2025-12-06 04:41:25'),
@@ -3316,7 +3316,7 @@ INSERT INTO `car_parts` (`id`, `car_brand_id`, `car_model_id`, `part_type_id`, `
 (3110, 1, NULL, 1, 5, 'TRIM COVER,', 'trim-cover-41', 'BH11765', '51417234801', NULL, 0, 64.40, 48.30, 'in', 1, 'product-preview.jpg', '\"[]\"', 'TRIM COVER,', NULL, NULL, NULL, '2025-12-06 04:41:27', '2025-12-06 04:41:27'),
 (3111, 1, NULL, 1, 5, 'COVER, SWITC', 'cover-switc', 'BH11768', '51417258391', NULL, 0, 43.65, 32.73, 'in', 1, 'product-preview.jpg', '\"[]\"', 'COVER, SWITC', NULL, NULL, NULL, '2025-12-06 04:41:27', '2025-12-06 04:41:27'),
 (3112, 1, NULL, 1, 5, 'SUPPORT, PUL', 'support-pul-5', 'BH11773', '51417279313', NULL, 0, 91.67, 68.76, 'in', 1, 'product-preview.jpg', '\"[]\"', 'SUPPORT, PUL', NULL, NULL, NULL, '2025-12-06 04:41:27', '2025-12-06 04:41:27');
-INSERT INTO `car_parts` (`id`, `car_brand_id`, `car_model_id`, `part_type_id`, `part_brand_id`, `title`, `slug`, `sku`, `part_number`, `vin_code`, `fav_product`, `original_price`, `sale_price`, `stock_type`, `stock_quantity`, `feature_image`, `gallery_images`, `description`, `short_description`, `meta_title`, `meta_description`, `created_at`, `updated_at`) VALUES
+INSERT INTO `products` (`id`, `car_brand_id`, `car_model_id`, `part_type_id`, `part_brand_id`, `title`, `slug`, `sku`, `part_number`, `vin_code`, `fav_product`, `original_price`, `sale_price`, `stock_type`, `stock_quantity`, `feature_image`, `gallery_images`, `description`, `short_description`, `meta_title`, `meta_description`, `created_at`, `updated_at`) VALUES
 (3113, 1, NULL, 1, 5, 'SUPPORT, PUL', 'support-pul-8', 'BH11779', '51417292244', NULL, 0, 216.95, 162.71, 'in', 1, 'product-preview.jpg', '\"[]\"', 'SUPPORT, PUL', NULL, NULL, NULL, '2025-12-06 04:41:27', '2025-12-06 04:41:27'),
 (3114, 1, NULL, 1, 5, 'DOOR TRIM PA', 'door-trim-pa', 'BH11783', '51417394527', NULL, 0, 1556.44, 1167.33, 'in', 1, 'product-preview.jpg', '\"[]\"', 'DOOR TRIM PA', NULL, NULL, NULL, '2025-12-06 04:41:27', '2025-12-06 04:41:27'),
 (3115, 1, NULL, 1, 5, 'SUPPORT, PUL', 'support-pul-9', 'BH11785', '51417417507', NULL, 0, 93.81, 70.35, 'in', 2, 'product-preview.jpg', '\"[]\"', 'SUPPORT, PUL', NULL, NULL, NULL, '2025-12-06 04:41:27', '2025-12-06 04:41:27'),
@@ -3537,7 +3537,7 @@ INSERT INTO `car_parts` (`id`, `car_brand_id`, `car_model_id`, `part_type_id`, `
 (3330, 2, NULL, 3, 6, 'V-BRACE FOR', 'v-brace-for-3', 'BH12515', '51647435400', NULL, 0, 86.04, 64.53, 'in', 1, 'product-preview.jpg', '\"[]\"', 'V-BRACE FOR', NULL, NULL, NULL, '2025-12-06 04:41:28', '2025-12-06 04:41:28'),
 (3331, 1, NULL, 3, 5, 'CROSSLINK, F', 'crosslink-f-5', 'BH12516', '51647435938', NULL, 0, 193.96, 145.47, 'in', 2, 'product-preview.jpg', '\"[]\"', 'CROSSLINK, F', NULL, NULL, NULL, '2025-12-06 04:41:28', '2025-12-06 04:41:28'),
 (3332, 1, NULL, 1, 5, 'Y-BRACE', 'y-brace', 'BH12517', '51647444558', NULL, 0, 22.61, 16.96, 'in', 2, 'product-preview.jpg', '\"[]\"', 'Y-BRACE', NULL, NULL, NULL, '2025-12-06 04:41:28', '2025-12-06 04:41:28');
-INSERT INTO `car_parts` (`id`, `car_brand_id`, `car_model_id`, `part_type_id`, `part_brand_id`, `title`, `slug`, `sku`, `part_number`, `vin_code`, `fav_product`, `original_price`, `sale_price`, `stock_type`, `stock_quantity`, `feature_image`, `gallery_images`, `description`, `short_description`, `meta_title`, `meta_description`, `created_at`, `updated_at`) VALUES
+INSERT INTO `products` (`id`, `car_brand_id`, `car_model_id`, `part_type_id`, `part_brand_id`, `title`, `slug`, `sku`, `part_number`, `vin_code`, `fav_product`, `original_price`, `sale_price`, `stock_type`, `stock_quantity`, `feature_image`, `gallery_images`, `description`, `short_description`, `meta_title`, `meta_description`, `created_at`, `updated_at`) VALUES
 (3333, 1, NULL, 3, 5, 'SUPPORT FOR', 'support-for-5', 'BH12518', '51647445101', NULL, 0, 54.69, 41.02, 'in', 1, 'product-preview.jpg', '\"[]\"', 'SUPPORT FOR', NULL, NULL, NULL, '2025-12-06 04:41:28', '2025-12-06 04:41:28'),
 (3334, 1, NULL, 3, 5, 'SUPPORT FOR', 'support-for-6', 'BH12519', '51647445102', NULL, 0, 55.70, 41.77, 'in', 2, 'product-preview.jpg', '\"[]\"', 'SUPPORT FOR', NULL, NULL, NULL, '2025-12-06 04:41:28', '2025-12-06 04:41:28'),
 (3335, 1, NULL, 3, 5, 'AIR DUCT, BO', 'air-duct-bo-2', 'BH12520', '51647459189', NULL, 0, 148.32, 111.24, 'in', 2, 'product-preview.jpg', '\"[]\"', 'AIR DUCT, BO', NULL, NULL, NULL, '2025-12-06 04:41:28', '2025-12-06 04:41:28'),
@@ -3758,7 +3758,7 @@ INSERT INTO `car_parts` (`id`, `car_brand_id`, `car_model_id`, `part_type_id`, `
 (3550, 1, NULL, 3, 5, 'AIR DUCT, EX', 'air-duct-ex-5', 'BH13295', '51748064145', NULL, 0, 37.36, 28.02, 'in', 2, 'product-preview.jpg', '\"[]\"', 'AIR DUCT, EX', NULL, NULL, NULL, '2025-12-06 04:41:30', '2025-12-06 04:41:30'),
 (3551, 1, NULL, 3, 5, 'AIR DUCT, EX', 'air-duct-ex-6', 'BH13296', '51748064146', NULL, 0, 37.36, 28.02, 'in', 2, 'product-preview.jpg', '\"[]\"', 'AIR DUCT, EX', NULL, NULL, NULL, '2025-12-06 04:41:30', '2025-12-06 04:41:30'),
 (3552, 1, NULL, 3, 5, 'COVER AIR DU', 'cover-air-du', 'BH13298', '51748079721', NULL, 0, 42.77, 32.08, 'in', 1, 'product-preview.jpg', '\"[]\"', 'COVER AIR DU', NULL, NULL, NULL, '2025-12-06 04:41:30', '2025-12-06 04:41:30');
-INSERT INTO `car_parts` (`id`, `car_brand_id`, `car_model_id`, `part_type_id`, `part_brand_id`, `title`, `slug`, `sku`, `part_number`, `vin_code`, `fav_product`, `original_price`, `sale_price`, `stock_type`, `stock_quantity`, `feature_image`, `gallery_images`, `description`, `short_description`, `meta_title`, `meta_description`, `created_at`, `updated_at`) VALUES
+INSERT INTO `products` (`id`, `car_brand_id`, `car_model_id`, `part_type_id`, `part_brand_id`, `title`, `slug`, `sku`, `part_number`, `vin_code`, `fav_product`, `original_price`, `sale_price`, `stock_type`, `stock_quantity`, `feature_image`, `gallery_images`, `description`, `short_description`, `meta_title`, `meta_description`, `created_at`, `updated_at`) VALUES
 (3553, 1, NULL, 3, 5, 'COVER AIR DU', 'cover-air-du-2', 'BH13299', '51748079722', NULL, 0, 42.77, 32.08, 'in', 1, 'product-preview.jpg', '\"[]\"', 'COVER AIR DU', NULL, NULL, NULL, '2025-12-06 04:41:30', '2025-12-06 04:41:30'),
 (3554, 1, NULL, 3, 5, 'AIR ROUTING', 'air-routing', 'BH13300', '51748081237', NULL, 0, 114.34, 85.76, 'in', 1, 'product-preview.jpg', '\"[]\"', 'AIR ROUTING', NULL, NULL, NULL, '2025-12-06 04:41:30', '2025-12-06 04:41:30'),
 (3555, 1, NULL, 3, 5, 'AIR DUCT, EX', 'air-duct-ex-7', 'BH13301', '51748086034', NULL, 0, 70.25, 52.69, 'in', 1, 'product-preview.jpg', '\"[]\"', 'AIR DUCT, EX', NULL, NULL, NULL, '2025-12-06 04:41:30', '2025-12-06 04:41:30'),
@@ -3978,7 +3978,7 @@ INSERT INTO `car_parts` (`id`, `car_brand_id`, `car_model_id`, `part_type_id`, `
 (3769, 1, NULL, 3, 5, 'RUNNING BOAR', 'running-boar-5', 'BH13865', '51777468101', NULL, 0, 236.22, 177.16, 'in', 1, 'product-preview.jpg', '\"[]\"', 'RUNNING BOAR', NULL, NULL, NULL, '2025-12-06 04:41:31', '2025-12-06 04:41:31'),
 (3770, 1, NULL, 3, 5, 'RUNNING BOAR', 'running-boar-6', 'BH13866', '51777468102', NULL, 0, 236.22, 177.16, 'in', 3, 'product-preview.jpg', '\"[]\"', 'RUNNING BOAR', NULL, NULL, NULL, '2025-12-06 04:41:31', '2025-12-06 04:41:31'),
 (3771, 1, NULL, 3, 5, 'INSERT, ROCK', 'insert-rock-3', 'BH13867', '51777468103', NULL, 0, 40.19, 30.14, 'in', 1, 'product-preview.jpg', '\"[]\"', 'INSERT, ROCK', NULL, NULL, NULL, '2025-12-06 04:41:31', '2025-12-06 04:41:31');
-INSERT INTO `car_parts` (`id`, `car_brand_id`, `car_model_id`, `part_type_id`, `part_brand_id`, `title`, `slug`, `sku`, `part_number`, `vin_code`, `fav_product`, `original_price`, `sale_price`, `stock_type`, `stock_quantity`, `feature_image`, `gallery_images`, `description`, `short_description`, `meta_title`, `meta_description`, `created_at`, `updated_at`) VALUES
+INSERT INTO `products` (`id`, `car_brand_id`, `car_model_id`, `part_type_id`, `part_brand_id`, `title`, `slug`, `sku`, `part_number`, `vin_code`, `fav_product`, `original_price`, `sale_price`, `stock_type`, `stock_quantity`, `feature_image`, `gallery_images`, `description`, `short_description`, `meta_title`, `meta_description`, `created_at`, `updated_at`) VALUES
 (3772, 1, NULL, 3, 5, 'INSERT, ROCK', 'insert-rock-4', 'BH13868', '51777468104', NULL, 0, 40.19, 30.14, 'in', 3, 'product-preview.jpg', '\"[]\"', 'INSERT, ROCK', NULL, NULL, NULL, '2025-12-06 04:41:31', '2025-12-06 04:41:31'),
 (3773, 1, NULL, 3, 5, 'TRIM MOLDING', 'trim-molding-2', 'BH13869', '51777468830', NULL, 0, 135.70, 101.77, 'in', 1, 'product-preview.jpg', '\"[]\"', 'TRIM MOLDING', NULL, NULL, NULL, '2025-12-06 04:41:31', '2025-12-06 04:41:31'),
 (3774, 1, NULL, 3, 5, 'BRACKET SIDE', 'bracket-side', 'BH13870', '51777469385', NULL, 0, 30.80, 23.10, 'in', 1, 'product-preview.jpg', '\"[]\"', 'BRACKET SIDE', NULL, NULL, NULL, '2025-12-06 04:41:31', '2025-12-06 04:41:31'),
@@ -4200,7 +4200,7 @@ INSERT INTO `car_parts` (`id`, `car_brand_id`, `car_model_id`, `part_type_id`, `
 (3990, 1, NULL, 2, 5, 'HORN, HIGH P', 'horn-high-p-13', 'BH14709', '61337850336', NULL, 0, 60.48, 45.36, 'in', 4, 'product-preview.jpg', '\"[]\"', 'HORN, HIGH P', NULL, NULL, NULL, '2025-12-06 04:41:33', '2025-12-06 04:41:33'),
 (3991, 1, NULL, 2, 5, 'HORN, LOW PI', 'horn-low-pi-12', 'BH14710', '61337850337', NULL, 0, 60.74, 45.55, 'in', 2, 'product-preview.jpg', '\"[]\"', 'HORN, LOW PI', NULL, NULL, NULL, '2025-12-06 04:41:33', '2025-12-06 04:41:33'),
 (3992, 1, NULL, 2, 5, 'AIR HORN, HI', 'air-horn-hi-2', 'BH14713', '61338496201', NULL, 0, 116.95, 87.71, 'in', 2, 'product-preview.jpg', '\"[]\"', 'AIR HORN, HI', NULL, NULL, NULL, '2025-12-06 04:41:33', '2025-12-06 04:41:33');
-INSERT INTO `car_parts` (`id`, `car_brand_id`, `car_model_id`, `part_type_id`, `part_brand_id`, `title`, `slug`, `sku`, `part_number`, `vin_code`, `fav_product`, `original_price`, `sale_price`, `stock_type`, `stock_quantity`, `feature_image`, `gallery_images`, `description`, `short_description`, `meta_title`, `meta_description`, `created_at`, `updated_at`) VALUES
+INSERT INTO `products` (`id`, `car_brand_id`, `car_model_id`, `part_type_id`, `part_brand_id`, `title`, `slug`, `sku`, `part_number`, `vin_code`, `fav_product`, `original_price`, `sale_price`, `stock_type`, `stock_quantity`, `feature_image`, `gallery_images`, `description`, `short_description`, `meta_title`, `meta_description`, `created_at`, `updated_at`) VALUES
 (3993, 1, NULL, 2, 5, 'AIR HORN, LO', 'air-horn-lo-2', 'BH14714', '61338496202', NULL, 0, 92.74, 69.56, 'in', 1, 'product-preview.jpg', '\"[]\"', 'AIR HORN, LO', NULL, NULL, NULL, '2025-12-06 04:41:33', '2025-12-06 04:41:33'),
 (3994, 1, NULL, 2, 5, 'HORN, HIGH P', 'horn-high-p-14', 'BH14715', '61338496203', NULL, 0, 96.47, 72.35, 'in', 1, 'product-preview.jpg', '\"[]\"', 'HORN, HIGH P', NULL, NULL, NULL, '2025-12-06 04:41:33', '2025-12-06 04:41:33'),
 (3995, 1, NULL, 2, 5, 'HORN, LOW PI', 'horn-low-pi-14', 'BH14716', '61338496204', NULL, 0, 96.47, 72.35, 'in', 1, 'product-preview.jpg', '\"[]\"', 'HORN, LOW PI', NULL, NULL, NULL, '2025-12-06 04:41:33', '2025-12-06 04:41:33'),
@@ -4420,7 +4420,7 @@ INSERT INTO `car_parts` (`id`, `car_brand_id`, `car_model_id`, `part_type_id`, `
 (4209, 2, NULL, 3, 6, 'ADDITIONAL T', 'additional-t-3', 'BH15417', '63137406369', NULL, 0, 56.48, 42.36, 'in', 2, 'product-preview.jpg', '\"[]\"', 'ADDITIONAL T', NULL, NULL, NULL, '2025-12-06 04:41:36', '2025-12-06 04:41:36'),
 (4210, 1, NULL, 3, 5, 'AUXILIARY TU', 'auxiliary-tu-2', 'BH15420', '63137461785', NULL, 0, 49.10, 36.82, 'in', 1, 'product-preview.jpg', '\"[]\"', 'AUXILIARY TU', NULL, NULL, NULL, '2025-12-06 04:41:36', '2025-12-06 04:41:36'),
 (4211, 3, NULL, 13, 7, 'LED INDICAT', 'led-indicat', 'BH15440', '63138522499', NULL, 0, 95.85, 71.89, 'in', 1, 'product-preview.jpg', '\"[]\"', 'LED INDICAT', NULL, NULL, NULL, '2025-12-06 04:41:36', '2025-12-06 04:41:36');
-INSERT INTO `car_parts` (`id`, `car_brand_id`, `car_model_id`, `part_type_id`, `part_brand_id`, `title`, `slug`, `sku`, `part_number`, `vin_code`, `fav_product`, `original_price`, `sale_price`, `stock_type`, `stock_quantity`, `feature_image`, `gallery_images`, `description`, `short_description`, `meta_title`, `meta_description`, `created_at`, `updated_at`) VALUES
+INSERT INTO `products` (`id`, `car_brand_id`, `car_model_id`, `part_type_id`, `part_brand_id`, `title`, `slug`, `sku`, `part_number`, `vin_code`, `fav_product`, `original_price`, `sale_price`, `stock_type`, `stock_quantity`, `feature_image`, `gallery_images`, `description`, `short_description`, `meta_title`, `meta_description`, `created_at`, `updated_at`) VALUES
 (4212, 3, NULL, 13, 7, 'LAMP LENS', 'lamp-lens', 'BH15443', '63138534351', NULL, 0, 22.88, 17.16, 'in', 1, 'product-preview.jpg', '\"[]\"', 'LAMP LENS', NULL, NULL, NULL, '2025-12-06 04:41:36', '2025-12-06 04:41:36'),
 (4213, 3, NULL, 13, 7, 'LED TURN SIG', 'led-turn-sig', 'BH15445', '63138556874', NULL, 0, 270.01, 202.51, 'in', 1, 'product-preview.jpg', '\"[]\"', 'LED TURN SIG', NULL, NULL, NULL, '2025-12-06 04:41:36', '2025-12-06 04:41:36'),
 (4214, 1, NULL, 3, 5, 'REFLECTOR LE', 'reflector-le', 'BH15449', '63146915039', NULL, 0, 28.58, 21.44, 'in', 1, 'product-preview.jpg', '\"[]\"', 'REFLECTOR LE', NULL, NULL, NULL, '2025-12-06 04:41:36', '2025-12-06 04:41:36'),
@@ -4641,7 +4641,7 @@ INSERT INTO `car_parts` (`id`, `car_brand_id`, `car_model_id`, `part_type_id`, `
 (4429, 1, NULL, 1, 5, 'WATER HOSE I', 'water-hose-i-2', 'BH16242', '64539119168', NULL, 0, 24.62, 18.46, 'in', 2, 'product-preview.jpg', '\"[]\"', 'WATER HOSE I', NULL, NULL, NULL, '2025-12-06 04:41:37', '2025-12-06 04:41:37'),
 (4430, 1, NULL, 1, 5, 'SUCTION PIPE', 'suction-pipe-3', 'BH16244', '64539209722', NULL, 0, 86.80, 65.10, 'in', 1, 'product-preview.jpg', '\"[]\"', 'SUCTION PIPE', NULL, NULL, NULL, '2025-12-06 04:41:37', '2025-12-06 04:41:37'),
 (4431, 1, NULL, 1, 5, 'SUCTION PIPE', 'suction-pipe-4', 'BH16245', '64539209723', NULL, 0, 151.44, 113.58, 'in', 2, 'product-preview.jpg', '\"[]\"', 'SUCTION PIPE', NULL, NULL, NULL, '2025-12-06 04:41:37', '2025-12-06 04:41:37');
-INSERT INTO `car_parts` (`id`, `car_brand_id`, `car_model_id`, `part_type_id`, `part_brand_id`, `title`, `slug`, `sku`, `part_number`, `vin_code`, `fav_product`, `original_price`, `sale_price`, `stock_type`, `stock_quantity`, `feature_image`, `gallery_images`, `description`, `short_description`, `meta_title`, `meta_description`, `created_at`, `updated_at`) VALUES
+INSERT INTO `products` (`id`, `car_brand_id`, `car_model_id`, `part_type_id`, `part_brand_id`, `title`, `slug`, `sku`, `part_number`, `vin_code`, `fav_product`, `original_price`, `sale_price`, `stock_type`, `stock_quantity`, `feature_image`, `gallery_images`, `description`, `short_description`, `meta_title`, `meta_description`, `created_at`, `updated_at`) VALUES
 (4432, 1, NULL, 1, 5, 'PRESSURE HOS', 'pressure-hos-5', 'BH16246', '64539209724', NULL, 0, 138.83, 104.12, 'in', 1, 'product-preview.jpg', '\"[]\"', 'PRESSURE HOS', NULL, NULL, NULL, '2025-12-06 04:41:37', '2025-12-06 04:41:37'),
 (4433, 1, NULL, 1, 5, 'PRESSURE HOS', 'pressure-hos-6', 'BH16248', '64539209727', NULL, 0, 122.63, 91.97, 'in', 3, 'product-preview.jpg', '\"[]\"', 'PRESSURE HOS', NULL, NULL, NULL, '2025-12-06 04:41:37', '2025-12-06 04:41:37'),
 (4434, 2, NULL, 1, 6, 'RADIATEUR A/C', 'radiateur-ac', 'BH16256', '64539228607', NULL, 0, 752.85, 564.63, 'in', 1, 'product-preview.jpg', '\"[]\"', 'RADIATEUR A/C', NULL, NULL, NULL, '2025-12-06 04:41:37', '2025-12-06 04:41:37'),
@@ -4861,7 +4861,7 @@ INSERT INTO `car_parts` (`id`, `car_brand_id`, `car_model_id`, `part_type_id`, `
 (4648, 3, NULL, 13, 7, 'POLO SHIRT \'', 'polo-shirt-4', 'BH16896', '76898351601', NULL, 0, 93.04, 69.78, 'in', 5, 'product-preview.jpg', '\"[]\"', 'POLO SHIRT \'', NULL, NULL, NULL, '2025-12-06 04:41:39', '2025-12-06 04:41:39'),
 (4649, 3, NULL, 13, 7, 'POLOSHIRT BM', 'poloshirt-bm', 'BH16897', '76898351610', NULL, 0, 76.16, 57.12, 'in', 9, 'product-preview.jpg', '\"[]\"', 'POLOSHIRT BM', NULL, NULL, NULL, '2025-12-06 04:41:39', '2025-12-06 04:41:39'),
 (4650, 3, NULL, 13, 7, 'POLOSHIRT BM', 'poloshirt-bm-2', 'BH16898', '76898351620', NULL, 0, 76.16, 57.12, 'in', 5, 'product-preview.jpg', '\"[]\"', 'POLOSHIRT BM', NULL, NULL, NULL, '2025-12-06 04:41:39', '2025-12-06 04:41:39');
-INSERT INTO `car_parts` (`id`, `car_brand_id`, `car_model_id`, `part_type_id`, `part_brand_id`, `title`, `slug`, `sku`, `part_number`, `vin_code`, `fav_product`, `original_price`, `sale_price`, `stock_type`, `stock_quantity`, `feature_image`, `gallery_images`, `description`, `short_description`, `meta_title`, `meta_description`, `created_at`, `updated_at`) VALUES
+INSERT INTO `products` (`id`, `car_brand_id`, `car_model_id`, `part_type_id`, `part_brand_id`, `title`, `slug`, `sku`, `part_number`, `vin_code`, `fav_product`, `original_price`, `sale_price`, `stock_type`, `stock_quantity`, `feature_image`, `gallery_images`, `description`, `short_description`, `meta_title`, `meta_description`, `created_at`, `updated_at`) VALUES
 (4651, 3, NULL, 13, 7, 'CAP WITH LOG', 'cap-with-log', 'BH16901', '76898352726', NULL, 0, 28.38, 21.29, 'in', 1, 'product-preview.jpg', '\"[]\"', 'CAP WITH LOG', NULL, NULL, NULL, '2025-12-06 04:41:39', '2025-12-06 04:41:39'),
 (4652, 3, NULL, 13, 7, 'T-SHIRT \'MAK', 't-shirt-mak', 'BH16902', '76898352835', NULL, 0, 15.77, 11.83, 'in', 3, 'product-preview.jpg', '\"[]\"', 'T-SHIRT \'MAK', NULL, NULL, NULL, '2025-12-06 04:41:39', '2025-12-06 04:41:39'),
 (4653, 3, NULL, 13, 7, 'T-SHIRT \'MAK', 't-shirt-mak-2', 'BH16903', '76898352836', NULL, 0, 15.77, 11.83, 'in', 4, 'product-preview.jpg', '\"[]\"', 'T-SHIRT \'MAK', NULL, NULL, NULL, '2025-12-06 04:41:39', '2025-12-06 04:41:39'),
@@ -5080,7 +5080,7 @@ INSERT INTO `car_parts` (`id`, `car_brand_id`, `car_model_id`, `part_type_id`, `
 (4866, 1, NULL, 11, 5, 'BMW NOTEBOOK', 'bmw-notebook', 'BH17120', '80242454636', NULL, 0, 11.00, 8.25, 'in', 3, '80-24-2-454-636_01.jpg', '\"[\\\"80-24-2-454-636_02.jpg\\\",\\\"80-24-2-454-636_03.jpg\\\",\\\"80-24-2-454-636_04.jpg\\\"]\"', 'BMW NOTEBOOK', NULL, NULL, NULL, '2025-12-06 04:41:40', '2025-12-06 04:41:40'),
 (4867, 1, NULL, 11, 5, 'BMW M CUP', 'bmw-m-cup', 'BH17117', '80232454743', NULL, 0, 34.60, 25.95, 'in', 1, '80-23-2-454-743_01.jpg', '\"[\\\"80-23-2-454-743_02.jpg\\\",\\\"80-23-2-454-743_03.jpg\\\"]\"', 'BMW M CUP', NULL, NULL, NULL, '2025-12-06 04:41:40', '2025-12-06 04:41:40'),
 (4868, 1, NULL, 11, 5, 'BMW THERMO M', 'bmw-thermo-m', 'BH17115', '80232454640', NULL, 0, 63.97, 47.98, 'in', 1, '80-23-2-454-640_01.jpg', '\"[]\"', 'BMW THERMO M', NULL, NULL, NULL, '2025-12-06 04:41:40', '2025-12-06 04:41:40');
-INSERT INTO `car_parts` (`id`, `car_brand_id`, `car_model_id`, `part_type_id`, `part_brand_id`, `title`, `slug`, `sku`, `part_number`, `vin_code`, `fav_product`, `original_price`, `sale_price`, `stock_type`, `stock_quantity`, `feature_image`, `gallery_images`, `description`, `short_description`, `meta_title`, `meta_description`, `created_at`, `updated_at`) VALUES
+INSERT INTO `products` (`id`, `car_brand_id`, `car_model_id`, `part_type_id`, `part_brand_id`, `title`, `slug`, `sku`, `part_number`, `vin_code`, `fav_product`, `original_price`, `sale_price`, `stock_type`, `stock_quantity`, `feature_image`, `gallery_images`, `description`, `short_description`, `meta_title`, `meta_description`, `created_at`, `updated_at`) VALUES
 (4869, 1, NULL, 3, 5, 'LOWER STRAP,', 'lower-strap', 'BH16590', '72117313297', NULL, 0, 151.61, 113.71, 'in', 2, '72-11-7-313-297_01.jpg', '\"[\\\"72-11-7-313-297_02.jpg\\\",\\\"72-11-7-313-297_03.jpg\\\",\\\"72-11-7-313-297_04.jpg\\\"]\"', 'LOWER STRAP,', NULL, NULL, NULL, '2025-12-06 04:41:40', '2025-12-06 04:41:40'),
 (4870, 1, NULL, 1, 5, 'CLAMPING', 'clamping', 'BH16579', '72111862636', NULL, 0, 1.60, 1.20, 'in', 1, '72-11-1-862-636_01.jpg', '\"[]\"', 'CLAMPING', NULL, NULL, NULL, '2025-12-06 04:41:40', '2025-12-06 04:41:40'),
 (4871, 1, NULL, 13, 5, 'CLAMP', 'clamp-33', 'BH16543', '71121126859', NULL, 0, 2.53, 1.90, 'in', 2, '71-12-1-126-859_01.jpg', '\"[]\"', 'CLAMP', NULL, NULL, NULL, '2025-12-06 04:41:40', '2025-12-06 04:41:40'),
@@ -5272,7 +5272,7 @@ INSERT INTO `car_parts` (`id`, `car_brand_id`, `car_model_id`, `part_type_id`, `
 (5057, 1, NULL, 1, 5, 'WIPER BLADE', 'wiper-blade-15', 'BH14910', '61627954693', NULL, 0, 41.56, 31.17, 'in', 6, '61-62-7-954-693_01.jpg', '\"[]\"', 'WIPER BLADE', NULL, NULL, NULL, '2025-12-06 04:41:42', '2025-12-06 04:41:42'),
 (5058, 1, NULL, 1, 5, 'WIPER BLADE', 'wiper-blade-14', 'BH14908', '61627474264', NULL, 0, 33.72, 25.29, 'in', 3, '61-62-7-474-264_01.jpg', '\"[\\\"61-62-7-474-264_02.jpg\\\",\\\"61-62-7-474-264_03.jpg\\\"]\"', 'WIPER BLADE', NULL, NULL, NULL, '2025-12-06 04:41:42', '2025-12-06 04:41:42'),
 (5059, 1, NULL, 1, 5, 'WIPER BLADE', 'wiper-blade-13', 'BH14905', '61627442093', NULL, 0, 54.69, 41.02, 'in', 9, '61-62-7-442-093_01.jpg', '\"[]\"', 'WIPER BLADE', NULL, NULL, NULL, '2025-12-06 04:41:42', '2025-12-06 04:41:42');
-INSERT INTO `car_parts` (`id`, `car_brand_id`, `car_model_id`, `part_type_id`, `part_brand_id`, `title`, `slug`, `sku`, `part_number`, `vin_code`, `fav_product`, `original_price`, `sale_price`, `stock_type`, `stock_quantity`, `feature_image`, `gallery_images`, `description`, `short_description`, `meta_title`, `meta_description`, `created_at`, `updated_at`) VALUES
+INSERT INTO `products` (`id`, `car_brand_id`, `car_model_id`, `part_type_id`, `part_brand_id`, `title`, `slug`, `sku`, `part_number`, `vin_code`, `fav_product`, `original_price`, `sale_price`, `stock_type`, `stock_quantity`, `feature_image`, `gallery_images`, `description`, `short_description`, `meta_title`, `meta_description`, `created_at`, `updated_at`) VALUES
 (5060, 1, NULL, 1, 5, 'WIPER BLADE', 'wiper-blade-12', 'BH14902', '61627407273', NULL, 0, 41.56, 31.17, 'in', 3, '61-62-7-407-273_01.jpg', '\"[]\"', 'WIPER BLADE', NULL, NULL, NULL, '2025-12-06 04:41:42', '2025-12-06 04:41:42'),
 (5061, 1, NULL, 1, 5, 'WIPER BLADE', 'wiper-blade-11', 'BH14900', '61627356223', NULL, 0, 35.75, 26.81, 'in', 6, '61-62-7-356-223_01.jpg', '\"[]\"', 'WIPER BLADE', NULL, NULL, NULL, '2025-12-06 04:41:42', '2025-12-06 04:41:42'),
 (5062, 1, NULL, 1, 5, 'WIPER BLADE', 'wiper-blade-9', 'BH14897', '61627294429', NULL, 0, 34.50, 25.87, 'in', 3, '61-62-7-294-429_01.jpg', '\"[\\\"61-62-7-294-429_02.jpg\\\",\\\"61-62-7-294-429_03.jpg\\\"]\"', 'WIPER BLADE', NULL, NULL, NULL, '2025-12-06 04:41:42', '2025-12-06 04:41:42'),
@@ -5467,7 +5467,7 @@ INSERT INTO `car_parts` (`id`, `car_brand_id`, `car_model_id`, `part_type_id`, `
 (5251, 2, NULL, 3, 6, 'PARE BOUE DR', 'pare-boue-dr', 'BH12860', '51717207578', NULL, 0, 109.46, 82.09, 'in', 1, '51-71-7-207-578_01.jpg', '\"[]\"', 'PARE BOUE DR', NULL, NULL, NULL, '2025-12-06 04:41:43', '2025-12-06 04:41:43'),
 (5252, 1, NULL, 3, 5, 'COVER, WHEEL', 'cover-wheel-14', 'BH12846', '51717186728', NULL, 0, 96.19, 72.14, 'in', 3, '51-71-7-186-728_01.jpg', '\"[]\"', 'COVER, WHEEL', NULL, NULL, NULL, '2025-12-06 04:41:43', '2025-12-06 04:41:43'),
 (5253, 1, NULL, 3, 5, 'BULKHEAD ENGINE', 'bulkhead-engine', 'BH12825', '51717169419', NULL, 0, 123.07, 92.30, 'in', 6, '51-71-7-169-419_01.jpg', '\"[\\\"51-71-7-169-419_02.jpg\\\",\\\"51-71-7-169-419_03.jpg\\\",\\\"51-71-7-169-419_04.jpg\\\"]\"', 'BULKHEAD ENGINE', NULL, NULL, NULL, '2025-12-06 04:41:43', '2025-12-06 04:41:43');
-INSERT INTO `car_parts` (`id`, `car_brand_id`, `car_model_id`, `part_type_id`, `part_brand_id`, `title`, `slug`, `sku`, `part_number`, `vin_code`, `fav_product`, `original_price`, `sale_price`, `stock_type`, `stock_quantity`, `feature_image`, `gallery_images`, `description`, `short_description`, `meta_title`, `meta_description`, `created_at`, `updated_at`) VALUES
+INSERT INTO `products` (`id`, `car_brand_id`, `car_model_id`, `part_type_id`, `part_brand_id`, `title`, `slug`, `sku`, `part_number`, `vin_code`, `fav_product`, `original_price`, `sale_price`, `stock_type`, `stock_quantity`, `feature_image`, `gallery_images`, `description`, `short_description`, `meta_title`, `meta_description`, `created_at`, `updated_at`) VALUES
 (5254, 1, NULL, 3, 5, 'COVER, WHEEL', 'cover-wheel-9', 'BH12822', '51717169413', NULL, 0, 108.19, 81.14, 'in', 3, '51-71-7-169-413_01.jpg', '\"[\\\"51-71-7-169-413_02.jpg\\\",\\\"51-71-7-169-413_03.jpg\\\"]\"', 'COVER, WHEEL', NULL, NULL, NULL, '2025-12-06 04:41:44', '2025-12-06 04:41:44'),
 (5255, 1, NULL, 3, 5, 'COVER', 'cover-4', 'BH12819', '51717167811', NULL, 0, 9.76, 7.32, 'in', 2, '51-71-7-167-811_01.jpg', '\"[]\"', 'COVER', NULL, NULL, NULL, '2025-12-06 04:41:44', '2025-12-06 04:41:44'),
 (5256, 1, NULL, 3, 5, 'SUPPORT LIFT', 'support-lift-2', 'BH12818', '51717164761', NULL, 0, 25.31, 18.98, 'in', 1, '51-71-7-164-761_01.jpg', '\"[]\"', 'SUPPORT LIFT', NULL, NULL, NULL, '2025-12-06 04:41:44', '2025-12-06 04:41:44'),
@@ -5656,7 +5656,7 @@ INSERT INTO `car_parts` (`id`, `car_brand_id`, `car_model_id`, `part_type_id`, `
 (5439, 1, NULL, 13, 5, 'SET OF CAMER', 'set-of-camer', 'BH9916', '51168496622', NULL, 0, 40.30, 30.23, 'in', 1, '51-16-8-496-622_01.jpg', '\"[]\"', 'SET OF CAMER', NULL, NULL, NULL, '2025-12-06 04:41:45', '2025-12-06 04:41:45'),
 (5440, 1, NULL, 3, 5, 'COVERING PRI', 'covering-pri-3', 'BH9902', '51168256322', NULL, 0, 108.49, 81.37, 'in', 3, '51-16-8-256-322_01.jpg', '\"[\\\"51-16-8-256-322_02.jpg\\\",\\\"51-16-8-256-322_03.jpg\\\",\\\"51-16-8-256-322_04.jpg\\\"]\"', 'COVERING PRI', NULL, NULL, NULL, '2025-12-06 04:41:45', '2025-12-06 04:41:45'),
 (5441, 1, NULL, 1, 5, 'EXPANDING RI', 'expanding-ri-13', 'BH9874', '51168197908', NULL, 0, 0.59, 0.44, 'in', 12, '51-16-8-197-908_01.jpg', '\"[]\"', 'EXPANDING RI', NULL, NULL, NULL, '2025-12-06 04:41:45', '2025-12-06 04:41:45');
-INSERT INTO `car_parts` (`id`, `car_brand_id`, `car_model_id`, `part_type_id`, `part_brand_id`, `title`, `slug`, `sku`, `part_number`, `vin_code`, `fav_product`, `original_price`, `sale_price`, `stock_type`, `stock_quantity`, `feature_image`, `gallery_images`, `description`, `short_description`, `meta_title`, `meta_description`, `created_at`, `updated_at`) VALUES
+INSERT INTO `products` (`id`, `car_brand_id`, `car_model_id`, `part_type_id`, `part_brand_id`, `title`, `slug`, `sku`, `part_number`, `vin_code`, `fav_product`, `original_price`, `sale_price`, `stock_type`, `stock_quantity`, `feature_image`, `gallery_images`, `description`, `short_description`, `meta_title`, `meta_description`, `created_at`, `updated_at`) VALUES
 (5442, 1, NULL, 13, 5, 'CATCH', 'catch', 'BH9869', '51168177889', NULL, 0, 5.56, 4.17, 'in', 2, '51-16-8-177-889_01.jpg', '\"[\\\"51-16-8-177-889_02.jpg\\\",\\\"51-16-8-177-889_03.jpg\\\",\\\"51-16-8-177-889_04.jpg\\\"]\"', 'CATCH', NULL, NULL, NULL, '2025-12-06 04:41:45', '2025-12-06 04:41:45'),
 (5443, 1, NULL, 3, 5, 'HOUSING LOWE', 'housing-lowe-4', 'BH9806', '51167468254', NULL, 0, 71.46, 53.60, 'in', 2, '51-16-7-468-254_01.jpg', '\"[]\"', 'HOUSING LOWE', NULL, NULL, NULL, '2025-12-06 04:41:45', '2025-12-06 04:41:45'),
 (5444, 1, NULL, 13, 5, 'SUPPORTING R', 'supporting-r-4', 'BH9803', '51167468242', NULL, 0, 75.22, 56.42, 'in', 1, '51-16-7-468-242_01.jpg', '\"[]\"', 'SUPPORTING R', NULL, NULL, NULL, '2025-12-06 04:41:45', '2025-12-06 04:41:45'),
@@ -5851,7 +5851,7 @@ INSERT INTO `car_parts` (`id`, `car_brand_id`, `car_model_id`, `part_type_id`, `
 (5633, 1, NULL, 13, 5, 'INSERT, BUMP', 'insert-bump-2', 'BH7307', '51117134098', NULL, 0, 7.93, 5.94, 'in', 6, '51-11-7-134-098_01.jpg', '\"[\\\"51-11-7-134-098_02.jpg\\\",\\\"51-11-7-134-098_03.jpg\\\",\\\"51-11-7-134-098_04.jpg\\\"]\"', 'INSERT, BUMP', NULL, NULL, NULL, '2025-12-06 04:41:46', '2025-12-06 04:41:46'),
 (5634, 1, NULL, 13, 5, 'INSERT, BUMP', 'insert-bump', 'BH7306', '51117134097', NULL, 0, 7.88, 5.91, 'in', 2, '51-11-7-134-097_01.jpg', '\"[\\\"51-11-7-134-097_02.jpg\\\",\\\"51-11-7-134-097_03.jpg\\\",\\\"51-11-7-134-097_04.jpg\\\"]\"', 'INSERT, BUMP', NULL, NULL, NULL, '2025-12-06 04:41:46', '2025-12-06 04:41:46'),
 (5635, 1, NULL, 13, 5, 'FINISHER, RO', 'finisher-ro', 'BH7304', '51117134091', NULL, 0, 7.49, 5.62, 'in', 1, '51-11-7-134-091_01.jpg', '\"[]\"', 'FINISHER, RO', NULL, NULL, NULL, '2025-12-06 04:41:46', '2025-12-06 04:41:46');
-INSERT INTO `car_parts` (`id`, `car_brand_id`, `car_model_id`, `part_type_id`, `part_brand_id`, `title`, `slug`, `sku`, `part_number`, `vin_code`, `fav_product`, `original_price`, `sale_price`, `stock_type`, `stock_quantity`, `feature_image`, `gallery_images`, `description`, `short_description`, `meta_title`, `meta_description`, `created_at`, `updated_at`) VALUES
+INSERT INTO `products` (`id`, `car_brand_id`, `car_model_id`, `part_type_id`, `part_brand_id`, `title`, `slug`, `sku`, `part_number`, `vin_code`, `fav_product`, `original_price`, `sale_price`, `stock_type`, `stock_quantity`, `feature_image`, `gallery_images`, `description`, `short_description`, `meta_title`, `meta_description`, `created_at`, `updated_at`) VALUES
 (5636, 2, NULL, 13, 6, 'SPOILER', 'spoiler', 'BH7301', '51117130315', NULL, 0, 55.29, 41.47, 'in', 3, '51-11-7-130-315_01.jpg', '\"[\\\"51-11-7-130-315_02.jpg\\\",\\\"51-11-7-130-315_03.jpg\\\"]\"', 'SPOILER', NULL, NULL, NULL, '2025-12-06 04:41:46', '2025-12-06 04:41:46'),
 (5637, 2, NULL, 13, 6, 'ENJOLIVEUR', 'enjoliveur', 'BH7293', '51117127931', NULL, 0, 49.64, 37.23, 'in', 1, '51-11-7-127-931_01.jpg', '\"[\\\"51-11-7-127-931_02.jpg\\\",\\\"51-11-7-127-931_03.jpg\\\"]\"', 'ENJOLIVEUR', NULL, NULL, NULL, '2025-12-06 04:41:46', '2025-12-06 04:41:46'),
 (5638, 1, NULL, 13, 5, 'GRILLE LEFT', 'grille-left', 'BH7285', '51117117757', NULL, 0, 95.29, 71.47, 'in', 1, '51-11-7-117-757_01.jpg', '\"[]\"', 'GRILLE LEFT', NULL, NULL, NULL, '2025-12-06 04:41:46', '2025-12-06 04:41:46'),
@@ -6043,7 +6043,7 @@ INSERT INTO `car_parts` (`id`, `car_brand_id`, `car_model_id`, `part_type_id`, `
 (5824, 1, NULL, 1, 5, 'BRAKE DISC,', 'brake-disc-52', 'BH5801', '34212283803', NULL, 0, 424.55, 318.41, 'in', 1, '34-21-2-283-803_01.jpg', '\"[]\"', 'BRAKE DISC,', NULL, NULL, NULL, '2025-12-06 04:41:47', '2025-12-06 04:41:47'),
 (5825, 1, NULL, 13, 5, 'CLIP', 'clip-10', 'BH5790', '34211159963', NULL, 0, 19.30, 14.48, 'in', 4, '34-21-1-159-963_01.jpg', '\"[]\"', 'CLIP', NULL, NULL, NULL, '2025-12-06 04:41:47', '2025-12-06 04:41:47'),
 (5826, 1, NULL, 13, 5, 'LEVER', 'lever', 'BH5789', '34211159812', NULL, 0, 4.78, 3.59, 'in', 27, '34-21-1-159-812_01.jpg', '\"[]\"', 'LEVER', NULL, NULL, NULL, '2025-12-06 04:41:47', '2025-12-06 04:41:47');
-INSERT INTO `car_parts` (`id`, `car_brand_id`, `car_model_id`, `part_type_id`, `part_brand_id`, `title`, `slug`, `sku`, `part_number`, `vin_code`, `fav_product`, `original_price`, `sale_price`, `stock_type`, `stock_quantity`, `feature_image`, `gallery_images`, `description`, `short_description`, `meta_title`, `meta_description`, `created_at`, `updated_at`) VALUES
+INSERT INTO `products` (`id`, `car_brand_id`, `car_model_id`, `part_type_id`, `part_brand_id`, `title`, `slug`, `sku`, `part_number`, `vin_code`, `fav_product`, `original_price`, `sale_price`, `stock_type`, `stock_quantity`, `feature_image`, `gallery_images`, `description`, `short_description`, `meta_title`, `meta_description`, `created_at`, `updated_at`) VALUES
 (5827, 1, NULL, 1, 5, 'CLIP', 'clip-9', 'BH5781', '34211157046', NULL, 0, 19.96, 14.97, 'in', 3, '34-21-1-157-046_01.jpg', '\"[\\\"34-21-1-157-046_02.jpg\\\",\\\"34-21-1-157-046_03.jpg\\\"]\"', 'CLIP', NULL, NULL, NULL, '2025-12-06 04:41:47', '2025-12-06 04:41:47'),
 (5828, 1, NULL, 1, 5, 'REPAIR KIT,', 'repair-kit-61', 'BH5742', '34206888831', NULL, 0, 186.78, 140.08, 'in', 1, '34-20-6-888-831_01.jpg', '\"[]\"', 'REPAIR KIT,', NULL, NULL, NULL, '2025-12-06 04:41:47', '2025-12-06 04:41:47'),
 (5829, 1, NULL, 1, 5, 'CLIP', 'clip-8', 'BH5732', '34206864449', NULL, 0, 14.19, 10.64, 'in', 1, '34-20-6-864-449_01.jpg', '\"[]\"', 'CLIP', NULL, NULL, NULL, '2025-12-06 04:41:47', '2025-12-06 04:41:47'),
@@ -6241,7 +6241,7 @@ INSERT INTO `car_parts` (`id`, `car_brand_id`, `car_model_id`, `part_type_id`, `
 (6021, 1, NULL, 1, 5, 'ANGULAR CONT', 'angular-cont', 'BH4301', '31226783913', NULL, 0, 114.65, 85.99, 'in', 1, '31-22-6-783-913_01.jpg', '\"[]\"', 'ANGULAR CONT', NULL, NULL, NULL, '2025-12-06 04:41:50', '2025-12-06 04:41:50'),
 (6022, 1, NULL, 1, 5, 'CARRIER, LEF', 'carrier-lef', 'BH4240', '31206884385', NULL, 0, 598.20, 448.65, 'in', 1, '31-20-6-884-385_01.jpg', '\"[]\"', 'CARRIER, LEF', NULL, NULL, NULL, '2025-12-06 04:41:50', '2025-12-06 04:41:50'),
 (6023, 1, NULL, 1, 5, 'WHEEL HUB WI', 'wheel-hub-wi-4', 'BH4236', '31206876840', NULL, 0, 294.27, 220.70, 'in', 3, '31-20-6-876-840_01.jpg', '\"[\\\"31-20-6-876-840_02.jpg\\\",\\\"31-20-6-876-840_03.jpg\\\"]\"', 'WHEEL HUB WI', NULL, NULL, NULL, '2025-12-06 04:41:50', '2025-12-06 04:41:50');
-INSERT INTO `car_parts` (`id`, `car_brand_id`, `car_model_id`, `part_type_id`, `part_brand_id`, `title`, `slug`, `sku`, `part_number`, `vin_code`, `fav_product`, `original_price`, `sale_price`, `stock_type`, `stock_quantity`, `feature_image`, `gallery_images`, `description`, `short_description`, `meta_title`, `meta_description`, `created_at`, `updated_at`) VALUES
+INSERT INTO `products` (`id`, `car_brand_id`, `car_model_id`, `part_type_id`, `part_brand_id`, `title`, `slug`, `sku`, `part_number`, `vin_code`, `fav_product`, `original_price`, `sale_price`, `stock_type`, `stock_quantity`, `feature_image`, `gallery_images`, `description`, `short_description`, `meta_title`, `meta_description`, `created_at`, `updated_at`) VALUES
 (6024, 1, NULL, 1, 5, 'ROUND COLLAR', 'round-collar', 'BH4235', '31206872920', NULL, 0, 6.89, 5.17, 'in', 4, '31-20-6-872-920_01.jpg', '\"[]\"', 'ROUND COLLAR', NULL, NULL, NULL, '2025-12-06 04:41:50', '2025-12-06 04:41:50'),
 (6025, 1, NULL, 1, 5, 'COLLAR SCREW', 'collar-screw-2', 'BH4229', '31206855906', NULL, 0, 4.05, 3.04, 'in', 8, '31-20-6-855-906_01.jpg', '\"[]\"', 'COLLAR SCREW', NULL, NULL, NULL, '2025-12-06 04:41:50', '2025-12-06 04:41:50'),
 (6026, 1, NULL, 13, 5, 'DUST PROTECT', 'dust-protect', 'BH4224', '31206751740', NULL, 0, 3.92, 2.94, 'in', 1, '31-20-6-751-740_01.jpg', '\"[]\"', 'DUST PROTECT', NULL, NULL, NULL, '2025-12-06 04:41:50', '2025-12-06 04:41:50'),
@@ -6434,7 +6434,7 @@ INSERT INTO `car_parts` (`id`, `car_brand_id`, `car_model_id`, `part_type_id`, `
 (6213, 1, NULL, 13, 5, 'COOLANT HOSE', 'coolant-hose-20', 'BH3173', '17127576369', NULL, 0, 431.00, 323.25, 'in', 3, '17-12-7-576-369_01.jpg', '\"[\\\"17-12-7-576-369_02.jpg\\\",\\\"17-12-7-576-369_03.jpg\\\",\\\"17-12-7-576-369_04.jpg\\\"]\"', 'COOLANT HOSE', NULL, NULL, NULL, '2025-12-06 04:41:51', '2025-12-06 04:41:51'),
 (6214, 1, NULL, 3, 5, 'COOLANT HOSE', 'coolant-hose-17', 'BH3166', '17127575428', NULL, 0, 67.60, 50.70, 'in', 1, '17-12-7-575-428_01.jpg', '\"[\\\"17-12-7-575-428_02.jpg\\\",\\\"17-12-7-575-428_03.jpg\\\",\\\"17-12-7-575-428_04.jpg\\\"]\"', 'COOLANT HOSE', NULL, NULL, NULL, '2025-12-06 04:41:51', '2025-12-06 04:41:51'),
 (6215, 1, NULL, 3, 5, 'COOLANT HOSE', 'coolant-hose-16', 'BH3165', '17127575427', NULL, 0, 127.11, 95.33, 'in', 1, '17-12-7-575-427_01.jpg', '\"[]\"', 'COOLANT HOSE', NULL, NULL, NULL, '2025-12-06 04:41:51', '2025-12-06 04:41:51');
-INSERT INTO `car_parts` (`id`, `car_brand_id`, `car_model_id`, `part_type_id`, `part_brand_id`, `title`, `slug`, `sku`, `part_number`, `vin_code`, `fav_product`, `original_price`, `sale_price`, `stock_type`, `stock_quantity`, `feature_image`, `gallery_images`, `description`, `short_description`, `meta_title`, `meta_description`, `created_at`, `updated_at`) VALUES
+INSERT INTO `products` (`id`, `car_brand_id`, `car_model_id`, `part_type_id`, `part_brand_id`, `title`, `slug`, `sku`, `part_number`, `vin_code`, `fav_product`, `original_price`, `sale_price`, `stock_type`, `stock_quantity`, `feature_image`, `gallery_images`, `description`, `short_description`, `meta_title`, `meta_description`, `created_at`, `updated_at`) VALUES
 (6216, 1, NULL, 3, 5, 'HOSE FROM RA', 'hose-from-ra-2', 'BH3158', '17127564480', NULL, 0, 86.98, 65.23, 'in', 2, '17-12-7-564-480_01.jpg', '\"[\\\"17-12-7-564-480_02.jpg\\\",\\\"17-12-7-564-480_03.jpg\\\"]\"', 'HOSE FROM RA', NULL, NULL, NULL, '2025-12-06 04:41:51', '2025-12-06 04:41:51'),
 (6217, 1, NULL, 3, 5, 'COOLANT HOSE', 'coolant-hose-15', 'BH3157', '17127560968', NULL, 0, 111.31, 83.48, 'in', 4, '17-12-7-560-968_01.jpg', '\"[\\\"17-12-7-560-968_02.jpg\\\",\\\"17-12-7-560-968_03.jpg\\\",\\\"17-12-7-560-968_04.jpg\\\"]\"', 'COOLANT HOSE', NULL, NULL, NULL, '2025-12-06 04:41:51', '2025-12-06 04:41:51'),
 (6218, 1, NULL, 3, 5, 'VENT PIPE', 'vent-pipe-17', 'BH3156', '17127555290', NULL, 0, 51.14, 38.35, 'in', 3, '17-12-7-555-290_01.jpg', '\"[\\\"17-12-7-555-290_02.jpg\\\",\\\"17-12-7-555-290_03.jpg\\\"]\"', 'VENT PIPE', NULL, NULL, NULL, '2025-12-06 04:41:51', '2025-12-06 04:41:51'),
@@ -6621,7 +6621,7 @@ INSERT INTO `car_parts` (`id`, `car_brand_id`, `car_model_id`, `part_type_id`, `
 (6399, 1, NULL, 2, 5, 'TEMPERATURE', 'temperature', 'BH2319', '13621433076', NULL, 0, 41.14, 30.85, 'in', 2, '13-62-1-433-076_01.jpg', '\"[\\\"13-62-1-433-076_02.jpg\\\",\\\"13-62-1-433-076_03.jpg\\\",\\\"13-62-1-433-076_04.jpg\\\"]\"', 'TEMPERATURE', NULL, NULL, NULL, '2025-12-06 04:41:52', '2025-12-06 04:41:52'),
 (6400, 1, NULL, 1, 5, 'GASKET', 'gasket-36', 'BH2317', '13548632344', NULL, 0, 11.46, 8.59, 'in', 4, '13-54-8-632-344_01.jpg', '\"[]\"', 'GASKET', NULL, NULL, NULL, '2025-12-06 04:41:52', '2025-12-06 04:41:52'),
 (6401, 1, NULL, 1, 5, 'GASKET', 'gasket-35', 'BH2310', '13547563377', NULL, 0, 9.39, 7.04, 'in', 3, '13-54-7-563-377_01.jpg', '\"[\\\"13-54-7-563-377_02.jpg\\\",\\\"13-54-7-563-377_03.jpg\\\"]\"', 'GASKET', NULL, NULL, NULL, '2025-12-06 04:41:52', '2025-12-06 04:41:52');
-INSERT INTO `car_parts` (`id`, `car_brand_id`, `car_model_id`, `part_type_id`, `part_brand_id`, `title`, `slug`, `sku`, `part_number`, `vin_code`, `fav_product`, `original_price`, `sale_price`, `stock_type`, `stock_quantity`, `feature_image`, `gallery_images`, `description`, `short_description`, `meta_title`, `meta_description`, `created_at`, `updated_at`) VALUES
+INSERT INTO `products` (`id`, `car_brand_id`, `car_model_id`, `part_type_id`, `part_brand_id`, `title`, `slug`, `sku`, `part_number`, `vin_code`, `fav_product`, `original_price`, `sale_price`, `stock_type`, `stock_quantity`, `feature_image`, `gallery_images`, `description`, `short_description`, `meta_title`, `meta_description`, `created_at`, `updated_at`) VALUES
 (6402, 1, NULL, 13, 5, 'RUBBER BOOT', 'rubber-boot-2', 'BH2306', '13547514880', NULL, 0, 45.93, 34.45, 'in', 2, '13-54-7-514-880_01.jpg', '\"[\\\"13-54-7-514-880_02.jpg\\\",\\\"13-54-7-514-880_03.jpg\\\"]\"', 'RUBBER BOOT', NULL, NULL, NULL, '2025-12-06 04:41:52', '2025-12-06 04:41:52'),
 (6403, 1, NULL, 13, 5, 'RUBBER BOOT', 'rubber-boot', 'BH2302', '13541740931', NULL, 0, 24.73, 18.55, 'in', 1, '13-54-1-740-931_01.jpg', '\"[\\\"13-54-1-740-931_02.jpg\\\",\\\"13-54-1-740-931_03.jpg\\\",\\\"13-54-1-740-931_04.jpg\\\"]\"', 'RUBBER BOOT', NULL, NULL, NULL, '2025-12-06 04:41:52', '2025-12-06 04:41:52'),
 (6404, 1, NULL, 13, 5, 'TUBE ELBOW', 'tube-elbow-2', 'BH2299', '13541438759', NULL, 0, 42.17, 31.63, 'in', 1, '13-54-1-438-759_01.jpg', '\"[\\\"13-54-1-438-759_02.jpg\\\",\\\"13-54-1-438-759_03.jpg\\\",\\\"13-54-1-438-759_04.jpg\\\"]\"', 'TUBE ELBOW', NULL, NULL, NULL, '2025-12-06 04:41:52', '2025-12-06 04:41:52'),
@@ -6810,7 +6810,7 @@ INSERT INTO `car_parts` (`id`, `car_brand_id`, `car_model_id`, `part_type_id`, `
 (6587, 1, NULL, 1, 5, 'HOSE, CYLIND', 'hose-cylind-3', 'BH1646', '11537552339', NULL, 0, 79.10, 59.32, 'in', 1, '11-53-7-552-339_01.jpg', '\"[\\\"11-53-7-552-339_02.jpg\\\",\\\"11-53-7-552-339_03.jpg\\\",\\\"11-53-7-552-339_04.jpg\\\"]\"', 'HOSE, CYLIND', NULL, NULL, NULL, '2025-12-06 04:41:53', '2025-12-06 04:41:53'),
 (6588, 1, NULL, 1, 5, 'THERMOSTAT', 'thermostat-2', 'BH1645', '11537550172', NULL, 0, 217.22, 162.91, 'in', 4, '11-53-7-550-172_01.jpg', '\"[\\\"11-53-7-550-172_02.jpg\\\",\\\"11-53-7-550-172_03.jpg\\\"]\"', 'THERMOSTAT', NULL, NULL, NULL, '2025-12-06 04:41:53', '2025-12-06 04:41:53'),
 (6589, 1, NULL, 1, 5, 'THERMOSTAT', 'thermostat', 'BH1644', '11537549476', NULL, 0, 219.01, 164.26, 'in', 1, '11-53-7-549-476_01.jpg', '\"[\\\"11-53-7-549-476_02.jpg\\\",\\\"11-53-7-549-476_03.jpg\\\",\\\"11-53-7-549-476_04.jpg\\\"]\"', 'THERMOSTAT', NULL, NULL, NULL, '2025-12-06 04:41:53', '2025-12-06 04:41:53');
-INSERT INTO `car_parts` (`id`, `car_brand_id`, `car_model_id`, `part_type_id`, `part_brand_id`, `title`, `slug`, `sku`, `part_number`, `vin_code`, `fav_product`, `original_price`, `sale_price`, `stock_type`, `stock_quantity`, `feature_image`, `gallery_images`, `description`, `short_description`, `meta_title`, `meta_description`, `created_at`, `updated_at`) VALUES
+INSERT INTO `products` (`id`, `car_brand_id`, `car_model_id`, `part_type_id`, `part_brand_id`, `title`, `slug`, `sku`, `part_number`, `vin_code`, `fav_product`, `original_price`, `sale_price`, `stock_type`, `stock_quantity`, `feature_image`, `gallery_images`, `description`, `short_description`, `meta_title`, `meta_description`, `created_at`, `updated_at`) VALUES
 (6590, 1, NULL, 1, 5, 'HOSE, THERMO', 'hose-thermo-2', 'BH1637', '11537545665', NULL, 0, 47.25, 35.44, 'in', 12, '11-53-7-545-665_01.jpg', '\"[\\\"11-53-7-545-665_02.jpg\\\",\\\"11-53-7-545-665_03.jpg\\\",\\\"11-53-7-545-665_04.jpg\\\"]\"', 'HOSE, THERMO', NULL, NULL, NULL, '2025-12-06 04:41:53', '2025-12-06 04:41:53'),
 (6591, 1, NULL, 1, 5, 'GASKET', 'gasket-25', 'BH1636', '11537545302', NULL, 0, 19.14, 14.35, 'in', 2, '11-53-7-545-302_01.jpg', '\"[]\"', 'GASKET', NULL, NULL, NULL, '2025-12-06 04:41:53', '2025-12-06 04:41:53'),
 (6592, 1, NULL, 1, 5, 'O-RING', 'o-ring-49', 'BH1635', '11537545278', NULL, 0, 5.66, 4.25, 'in', 2, '11-53-7-545-278_01.jpg', '\"[]\"', 'O-RING', NULL, NULL, NULL, '2025-12-06 04:41:53', '2025-12-06 04:41:53'),
@@ -7002,7 +7002,7 @@ INSERT INTO `car_parts` (`id`, `car_brand_id`, `car_model_id`, `part_type_id`, `
 (6778, 1, NULL, 1, 5, 'RIBBED V-BELT', 'ribbed-v-belt-2', 'BH1060', '11287628279', NULL, 0, 128.86, 96.64, 'in', 3, '11-28-7-628-279_01.jpg', '\"[]\"', 'RIBBED V-BELT', NULL, NULL, NULL, '2025-12-06 04:41:54', '2025-12-06 04:41:54'),
 (6779, 1, NULL, 1, 5, 'RIBBED V-BEL', 'ribbed-v-bel-3', 'BH1059', '11287618848', NULL, 0, 38.39, 28.80, 'in', 5, '11-28-7-618-848_01.jpg', '\"[]\"', 'RIBBED V-BEL', NULL, NULL, NULL, '2025-12-06 04:41:54', '2025-12-06 04:41:54'),
 (6780, 1, NULL, 1, 5, 'MECHANICAL B', 'mechanical-b-3', 'BH1055', '11287594969', NULL, 0, 190.39, 142.79, 'in', 2, '11-28-7-594-969_01.jpg', '\"[\\\"11-28-7-594-969_02.jpg\\\",\\\"11-28-7-594-969_03.jpg\\\",\\\"11-28-7-594-969_04.jpg\\\"]\"', 'MECHANICAL B', NULL, NULL, NULL, '2025-12-06 04:41:54', '2025-12-06 04:41:54');
-INSERT INTO `car_parts` (`id`, `car_brand_id`, `car_model_id`, `part_type_id`, `part_brand_id`, `title`, `slug`, `sku`, `part_number`, `vin_code`, `fav_product`, `original_price`, `sale_price`, `stock_type`, `stock_quantity`, `feature_image`, `gallery_images`, `description`, `short_description`, `meta_title`, `meta_description`, `created_at`, `updated_at`) VALUES
+INSERT INTO `products` (`id`, `car_brand_id`, `car_model_id`, `part_type_id`, `part_brand_id`, `title`, `slug`, `sku`, `part_number`, `vin_code`, `fav_product`, `original_price`, `sale_price`, `stock_type`, `stock_quantity`, `feature_image`, `gallery_images`, `description`, `short_description`, `meta_title`, `meta_description`, `created_at`, `updated_at`) VALUES
 (6781, 1, NULL, 1, 5, 'MECHANICAL B', 'mechanical-b-2', 'BH1047', '11287565225', NULL, 0, 164.58, 123.43, 'in', 7, '11-28-7-565-225_01.jpg', '\"[\\\"11-28-7-565-225_02.jpg\\\",\\\"11-28-7-565-225_03.jpg\\\",\\\"11-28-7-565-225_04.jpg\\\"]\"', 'MECHANICAL B', NULL, NULL, NULL, '2025-12-06 04:41:54', '2025-12-06 04:41:54'),
 (6782, 1, NULL, 1, 5, 'MECHANICAL B', 'mechanical-b', 'BH1046', '11287563927', NULL, 0, 156.07, 117.05, 'in', 1, '11-28-7-563-927_01.jpg', '\"[]\"', 'MECHANICAL B', NULL, NULL, NULL, '2025-12-06 04:41:54', '2025-12-06 04:41:54'),
 (6783, 1, NULL, 1, 5, 'DEFLECTION P', 'deflection-p-6', 'BH1045', '11287559887', NULL, 0, 75.39, 56.54, 'in', 1, '11-28-7-559-887_01.jpg', '\"[\\\"11-28-7-559-887_02.jpg\\\",\\\"11-28-7-559-887_03.jpg\\\"]\"', 'DEFLECTION P', NULL, NULL, NULL, '2025-12-06 04:41:54', '2025-12-06 04:41:54'),
@@ -7194,7 +7194,7 @@ INSERT INTO `car_parts` (`id`, `car_brand_id`, `car_model_id`, `part_type_id`, `
 (6969, 1, NULL, 1, 5, 'EXPANDING RI', 'expanding-ri-5', 'BH484', '07147293278', NULL, 0, 2.63, 1.97, 'in', 37, '07-14-7-293-278_01.jpg', '\"[]\"', 'EXPANDING RI', NULL, NULL, NULL, '2025-12-06 04:41:55', '2025-12-06 04:41:55'),
 (6970, 1, NULL, 1, 5, 'EXPANDING RI', 'expanding-ri-4', 'BH479', '07147281961', NULL, 0, 0.60, 0.45, 'in', 27, '07-14-7-281-961_01.jpg', '\"[]\"', 'EXPANDING RI', NULL, NULL, NULL, '2025-12-06 04:41:55', '2025-12-06 04:41:55'),
 (6971, 1, NULL, 1, 5, 'FILLISTER HE', 'fillister-he-16', 'BH478', '07147270744', NULL, 0, 0.73, 0.55, 'in', 8, '07-14-7-270-744_01.jpg', '\"[\\\"07-14-7-270-744_02.jpg\\\",\\\"07-14-7-270-744_03.jpg\\\",\\\"07-14-7-270-744_04.jpg\\\"]\"', 'FILLISTER HE', NULL, NULL, NULL, '2025-12-06 04:41:55', '2025-12-06 04:41:55');
-INSERT INTO `car_parts` (`id`, `car_brand_id`, `car_model_id`, `part_type_id`, `part_brand_id`, `title`, `slug`, `sku`, `part_number`, `vin_code`, `fav_product`, `original_price`, `sale_price`, `stock_type`, `stock_quantity`, `feature_image`, `gallery_images`, `description`, `short_description`, `meta_title`, `meta_description`, `created_at`, `updated_at`) VALUES
+INSERT INTO `products` (`id`, `car_brand_id`, `car_model_id`, `part_type_id`, `part_brand_id`, `title`, `slug`, `sku`, `part_number`, `vin_code`, `fav_product`, `original_price`, `sale_price`, `stock_type`, `stock_quantity`, `feature_image`, `gallery_images`, `description`, `short_description`, `meta_title`, `meta_description`, `created_at`, `updated_at`) VALUES
 (6972, 1, NULL, 1, 5, 'BLIND RIVET', 'blind-rivet-4', 'BH475', '07147265827', NULL, 0, 1.13, 0.85, 'in', 8, '07-14-7-265-827_01.jpg', '\"[]\"', 'BLIND RIVET', NULL, NULL, NULL, '2025-12-06 04:41:55', '2025-12-06 04:41:55'),
 (6973, 1, NULL, 1, 5, 'EXPANDING NU', 'expanding-nu-3', 'BH474', '07147265039', NULL, 0, 1.76, 1.32, 'in', 1, '07-14-7-265-039_01.jpg', '\"[\\\"07-14-7-265-039_02.jpg\\\",\\\"07-14-7-265-039_03.jpg\\\",\\\"07-14-7-265-039_04.jpg\\\"]\"', 'EXPANDING NU', NULL, NULL, NULL, '2025-12-06 04:41:55', '2025-12-06 04:41:55'),
 (6974, 1, NULL, 1, 5, 'PLUG', 'plug', 'BH473', '07147255351', NULL, 0, 2.66, 2.00, 'in', 5, '07-14-7-255-351_01.jpg', '\"[]\"', 'PLUG', NULL, NULL, NULL, '2025-12-06 04:41:55', '2025-12-06 04:41:55'),
@@ -7353,10 +7353,10 @@ INSERT INTO `car_parts` (`id`, `car_brand_id`, `car_model_id`, `part_type_id`, `
 -- --------------------------------------------------------
 
 --
--- Table structure for table `car_parts_brands`
+-- Table structure for table `sub_categories`
 --
 
-CREATE TABLE `car_parts_brands` (
+CREATE TABLE `sub_categories` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `title` varchar(255) NOT NULL,
   `slug` varchar(255) NOT NULL,
@@ -7367,10 +7367,10 @@ CREATE TABLE `car_parts_brands` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `car_parts_brands`
+-- Dumping data for table `sub_categories`
 --
 
-INSERT INTO `car_parts_brands` (`id`, `title`, `slug`, `description`, `brand_image`, `created_at`, `updated_at`) VALUES
+INSERT INTO `sub_categories` (`id`, `title`, `slug`, `description`, `brand_image`, `created_at`, `updated_at`) VALUES
 (5, 'Genuine BMW', 'genuine-bmw', NULL, '1761498020.webp', '2025-10-23 11:41:11', '2025-10-26 17:00:20'),
 (6, 'Genuine MINI', 'genuine-mini', NULL, '1761358441.webp', '2025-10-23 11:41:11', '2025-10-25 02:14:01'),
 (7, 'Genuine BMW MOTORRAD', 'genuine-bmw-motorrad', NULL, '1761358404.png', '2025-10-23 11:41:11', '2025-10-25 02:13:24'),
@@ -7536,15 +7536,15 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (214, '0001_01_01_000000_create_users_table', 1),
 (215, '0001_01_01_000001_create_cache_table', 1),
 (216, '0001_01_01_000002_create_jobs_table', 1),
-(217, '2025_08_08_065911_create_car_brands_table', 1),
+(217, '2025_08_08_065911_create_brands_table', 1),
 (218, '2025_08_08_070639_create_car_part_types_table', 1),
 (219, '2025_08_08_075942_create_car_models_table', 1),
 (220, '2025_08_13_140225_create_post_category_table', 1),
 (221, '2025_08_13_140304_create_post_table', 1),
 (222, '2025_09_07_104739_create_addresses_table', 1),
 (223, '2025_09_09_005514_create_orders_table', 1),
-(224, '2025_09_19_085056_create_car_parts_brands_table', 1),
-(225, '2025_09_20_181855_create_car_parts_table', 1),
+(224, '2025_09_19_085056_create_sub_categories_table', 1),
+(225, '2025_09_20_181855_create_products_table', 1),
 (226, '2025_10_06_194323_create_site_setting_table', 1),
 (227, '2025_10_17_034903_create_contacts_table', 1),
 (228, '2025_10_20_122041_create_reviews_table', 1);
@@ -7930,11 +7930,11 @@ ALTER TABLE `carts`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `car_brands`
+-- Indexes for table `brands`
 --
-ALTER TABLE `car_brands`
+ALTER TABLE `brands`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `car_brands_slug_unique` (`slug`);
+  ADD UNIQUE KEY `brands_slug_unique` (`slug`);
 
 --
 -- Indexes for table `car_models`
@@ -7945,23 +7945,23 @@ ALTER TABLE `car_models`
   ADD KEY `car_models_car_brand_id_foreign` (`car_brand_id`);
 
 --
--- Indexes for table `car_parts`
+-- Indexes for table `products`
 --
-ALTER TABLE `car_parts`
+ALTER TABLE `products`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `car_parts_slug_unique` (`slug`),
-  ADD UNIQUE KEY `car_parts_sku_unique` (`sku`),
-  ADD KEY `car_parts_car_brand_id_foreign` (`car_brand_id`),
-  ADD KEY `car_parts_car_model_id_foreign` (`car_model_id`),
-  ADD KEY `car_parts_part_type_id_foreign` (`part_type_id`),
-  ADD KEY `car_parts_part_brand_id_foreign` (`part_brand_id`);
+  ADD UNIQUE KEY `products_slug_unique` (`slug`),
+  ADD UNIQUE KEY `products_sku_unique` (`sku`),
+  ADD KEY `products_car_brand_id_foreign` (`car_brand_id`),
+  ADD KEY `products_car_model_id_foreign` (`car_model_id`),
+  ADD KEY `products_part_type_id_foreign` (`part_type_id`),
+  ADD KEY `products_part_brand_id_foreign` (`part_brand_id`);
 
 --
--- Indexes for table `car_parts_brands`
+-- Indexes for table `sub_categories`
 --
-ALTER TABLE `car_parts_brands`
+ALTER TABLE `sub_categories`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `car_parts_brands_slug_unique` (`slug`);
+  ADD UNIQUE KEY `sub_categories_slug_unique` (`slug`);
 
 --
 -- Indexes for table `car_part_types`
@@ -8085,9 +8085,9 @@ ALTER TABLE `carts`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=151;
 
 --
--- AUTO_INCREMENT for table `car_brands`
+-- AUTO_INCREMENT for table `brands`
 --
-ALTER TABLE `car_brands`
+ALTER TABLE `brands`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
@@ -8097,15 +8097,15 @@ ALTER TABLE `car_models`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
--- AUTO_INCREMENT for table `car_parts`
+-- AUTO_INCREMENT for table `products`
 --
-ALTER TABLE `car_parts`
+ALTER TABLE `products`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7126;
 
 --
--- AUTO_INCREMENT for table `car_parts_brands`
+-- AUTO_INCREMENT for table `sub_categories`
 --
-ALTER TABLE `car_parts_brands`
+ALTER TABLE `sub_categories`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
@@ -8200,16 +8200,16 @@ ALTER TABLE `addresses`
 -- Constraints for table `car_models`
 --
 ALTER TABLE `car_models`
-  ADD CONSTRAINT `car_models_car_brand_id_foreign` FOREIGN KEY (`car_brand_id`) REFERENCES `car_brands` (`id`) ON DELETE SET NULL;
+  ADD CONSTRAINT `car_models_car_brand_id_foreign` FOREIGN KEY (`car_brand_id`) REFERENCES `brands` (`id`) ON DELETE SET NULL;
 
 --
--- Constraints for table `car_parts`
+-- Constraints for table `products`
 --
-ALTER TABLE `car_parts`
-  ADD CONSTRAINT `car_parts_car_brand_id_foreign` FOREIGN KEY (`car_brand_id`) REFERENCES `car_brands` (`id`) ON DELETE SET NULL,
-  ADD CONSTRAINT `car_parts_car_model_id_foreign` FOREIGN KEY (`car_model_id`) REFERENCES `car_models` (`id`) ON DELETE SET NULL,
-  ADD CONSTRAINT `car_parts_part_brand_id_foreign` FOREIGN KEY (`part_brand_id`) REFERENCES `car_parts_brands` (`id`) ON DELETE SET NULL,
-  ADD CONSTRAINT `car_parts_part_type_id_foreign` FOREIGN KEY (`part_type_id`) REFERENCES `car_part_types` (`id`) ON DELETE SET NULL;
+ALTER TABLE `products`
+  ADD CONSTRAINT `products_car_brand_id_foreign` FOREIGN KEY (`car_brand_id`) REFERENCES `brands` (`id`) ON DELETE SET NULL,
+  ADD CONSTRAINT `products_car_model_id_foreign` FOREIGN KEY (`car_model_id`) REFERENCES `car_models` (`id`) ON DELETE SET NULL,
+  ADD CONSTRAINT `products_part_brand_id_foreign` FOREIGN KEY (`part_brand_id`) REFERENCES `sub_categories` (`id`) ON DELETE SET NULL,
+  ADD CONSTRAINT `products_part_type_id_foreign` FOREIGN KEY (`part_type_id`) REFERENCES `car_part_types` (`id`) ON DELETE SET NULL;
 
 --
 -- Constraints for table `orders`

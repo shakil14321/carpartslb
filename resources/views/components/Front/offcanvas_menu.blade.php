@@ -25,19 +25,19 @@
                     <p class="text-white">Menu items not found.</p>
                 @endif
                 <li class="offcanvas__menu_li">
-                    <a class="offcanvas__menu_item" href="javascript:void(0)">Browse By Part Brands</a>
+                    <a class="offcanvas__menu_item" href="javascript:void(0)">Browse By Sub Categoriess</a>
                     <ul class="offcanvas__sub_menu">
                         @php
                             $setting = \App\Models\SiteSetting::first();
-                            $carBrandQuantity = $setting ? $setting->brand_quantity : 0;
-                            $carPartBrands = \App\Models\CarPartBrand::take($carBrandQuantity)->get();
+                            $brandQuantity = $setting ? $setting->brand_quantity : 0;
+                            $SubCategoriess = \App\Models\SubCategories::take($brandQuantity)->get();
                         @endphp
 
-                        @if ($carPartBrands->count() > 0)
-                            @foreach ($carPartBrands as $carPartBrand)
+                        @if ($SubCategoriess->count() > 0)
+                            @foreach ($SubCategoriess as $SubCategories)
                                 <li class="offcanvas__sub_menu_li"><a
-                                        href="{{ route('partBrand.view', $carPartBrand->slug) }}"
-                                        class="offcanvas__sub_menu_item">{{ $carPartBrand->title }}</a></li>
+                                        href="{{ route('partBrand.view', $SubCategories->slug) }}"
+                                        class="offcanvas__sub_menu_item">{{ $SubCategories->title }}</a></li>
                             @endforeach
                         @else
                             <p class="product__card--title text-white">Car brands not found.</p>

@@ -177,7 +177,7 @@
                                 <div id="product_grid" class="tab_pane active show">
                                     <div class="product__section--inner">
                                         <div class="row mb--n30" id="car-parts-container">
-                                            @include('front.partials.car_parts_list', [
+                                            @include('front.partials.products_list', [
                                                 'carParts' => $carParts,
                                             ])
                                         </div>

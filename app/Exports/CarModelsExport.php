@@ -9,10 +9,10 @@ class CarModelsExport implements FromCollection, WithHeadings
 {
     public function collection()
     {
-        return CarModel::join('car_brands', 'car_models.car_brand_id', '=', 'car_brands.id')
+        return CarModel::join('brands', 'car_models.car_brand_id', '=', 'brands.id')
             ->select(
                 'car_models.id',
-                'car_brands.title as car_brand_name', // brand ka naam
+                'brands.title as car_brand_name', // brand ka naam
                 'car_models.title',
                 'car_models.slug',
                 'car_models.year',

@@ -39,6 +39,10 @@ return [
     'key' => env('GOOGLE_MAPS_API_KEY'),
 ],
 
+    'fwi' => [
+        'base_url' => env('FWI_API_URL'),
+    ],
+
 
 
 ];

@@ -162,11 +162,11 @@
                                 </select>
                             </div>
 
-                            <!-- Part Brand Dropdown -->
+                            <!-- Sub Categories Dropdown -->
                             <div class="form-group">
-                                <label for="brand_id">Part Brand</label>
+                                <label for="brand_id">Sub Categories</label>
                                 <select class="form-control" id="brand_id" name="car_brand_id">
-                                    <option selected disabled>Select Part Brand</option>
+                                    <option selected disabled>Select Sub Categories</option>
                                     @foreach ($partBrands as $partBrand)
                                         <option value="{{ $partBrand->id }}">{{ $partBrand->title }}</option>
                                     @endforeach
@@ -175,11 +175,11 @@
 
                             <!-- Brand Dropdown -->
                             <div class="form-group">
-                                <label for="brand_id">Car Brand</label>
+                                <label for="brand_id">Brand</label>
                                 <select class="form-control" id="brand_id" name="car_brand_id">
-                                    <option selected disabled>Select Car Brand</option>
-                                    @foreach ($carBrands as $carBrand)
-                                        <option value="{{ $carBrand->id }}">{{ $carBrand->title }}</option>
+                                    <option selected disabled>Select Brand</option>
+                                    @foreach ($brands as $brand)
+                                        <option value="{{ $brand->id }}">{{ $brand->title }}</option>
                                     @endforeach
                                 </select>
                             </div>

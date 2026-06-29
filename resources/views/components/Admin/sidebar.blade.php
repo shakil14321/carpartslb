@@ -60,6 +60,40 @@
                  </ul>
              </li>
 
+
+             <li class="treeview {{ request()->routeIs('fwi-products.*') ? 'menu-open active' : '' }}">
+                 <a href="#">
+                     <i class="fa fa-cloud-download"></i>
+                     <span>FWI Products</span>
+                     <i class="fa fa-angle-left pull-right"></i>
+                 </a>
+
+                 <ul class="treeview-menu" style="{{ request()->routeIs('fwi-products.*') ? 'display:block;' : '' }}">
+
+                     <li class="{{ request()->routeIs('fwi-products.index') ? 'active' : '' }}">
+                         <a href="{{ route('fwi-products.index') }}">
+                             <i class="fa fa-circle-o"></i>
+                             All Products
+                         </a>
+                     </li>
+
+{{--                     <li>--}}
+{{--                         <a href="#" onclick="event.preventDefault(); document.getElementById('sync-fwi-products').submit();">--}}
+{{--                             <i class="fa fa-refresh"></i>--}}
+{{--                             Sync Products--}}
+{{--                         </a>--}}
+
+{{--                         <form id="sync-fwi-products"--}}
+{{--                               action="{{ route('fwi-products.sync') }}"--}}
+{{--                               method="POST"--}}
+{{--                               style="display:none;">--}}
+{{--                             @csrf--}}
+{{--                         </form>--}}
+{{--                     </li>--}}
+
+                 </ul>
+             </li>
+
              <!-- Media links -->
              <li
                  class="treeview {{ request()->routeIs('featureImage.*') || request()->routeIs('galleryImage.*') || request()->routeIs('categoryImage.*') || request()->routeIs('brandImage.*') || request()->routeIs('modelImage.*') || request()->routeIs('userImage.*') ? 'menu-open active' : '' }}">
@@ -76,6 +110,7 @@
                      <li class="{{ request()->routeIs('galleryImage.view') ? 'active' : '' }}"><a
                              href="{{ route('galleryImage.view') }}"><i class="fa fa-circle-o"></i> Gallery Images</a>
                      </li>
+
                      <li class="{{ request()->routeIs('categoryImage.view') ? 'active' : '' }}"><a
                              href="{{ route('categoryImage.view') }}"><i class="fa fa-circle-o"></i> Categories
                              Images</a></li>
@@ -107,12 +142,12 @@
              <li class="treeview {{ request()->routeIs('part-brand.*') ? 'menu-open active' : '' }}">
                  <a href="#">
                      <i class="fa fa-tags"></i>
-                     <span>Part Brands</span>
+                     <span>Sub Categoriess</span>
                      <i class="fa fa-angle-left pull-right"></i>
                  </a>
                  <ul class="treeview-menu" style="{{ request()->routeIs('part-brand.*') ? 'display: block;' : '' }}">
                      <li class="{{ request()->routeIs('part-brand.index') ? 'active' : '' }}"><a
-                             href="{{ route('part-brand.index') }}"><i class="fa fa-circle-o"></i> All Part Brands</a>
+                             href="{{ route('part-brand.index') }}"><i class="fa fa-circle-o"></i> All Sub Categoriess</a>
                      </li>
                      <li class="{{ request()->routeIs('part-brand.create') ? 'active' : '' }}"><a
                              href="{{ route('part-brand.create') }}"><i class="fa fa-circle-o"></i> Add New</a></li>

@@ -1,7 +1,7 @@
 <?php
 namespace App\Http\Controllers;
 
-use App\Models\CarBrand;
+use App\Models\brand;
 use App\Models\SiteSetting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
@@ -32,9 +32,9 @@ class SiteSettingController extends Controller
 
     public function brand(){
         $setting = SiteSetting::first();
-        $carBrands = CarBrand::latest()->get();
+        $brands = brand::latest()->get();
 
-        return view('admin.siteSetting.brand', compact('setting', 'carBrands'));
+        return view('admin.siteSetting.brand', compact('setting', 'brands'));
     }
 
     public function homeText(){

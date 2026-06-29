@@ -2,7 +2,7 @@
 
 namespace App\Exports;
 
-use App\Models\CarPart;
+use App\Models\products;
 use Maatwebsite\Excel\Concerns\FromQuery;
 use Maatwebsite\Excel\Concerns\WithMapping;
 use Maatwebsite\Excel\Concerns\WithHeadings;
@@ -12,17 +12,17 @@ class CarPartsExport implements FromQuery, WithMapping, WithHeadings
     public function query()
     {
         // You can filter data if needed
-        return CarPart::query()->with(['carBrand', 'carModel', 'carPartType']);
+        return products::query()->with(['brand', 'carModel', 'carPartType']);
     }
 
     public function map($carPart): array
     {
          return [
             $carPart->id,
-            optional($carPart->carBrand)->title,
+            optional($carPart->brand)->title,
             optional($carPart->carModel)->title,
             optional($carPart->carPartType)->title,
-            optional($carPart->carPartBrand)->title,
+            optional($carPart->SubCategories)->title,
             $carPart->title,
             $carPart->slug,
             $carPart->sku,
@@ -49,7 +49,7 @@ class CarPartsExport implements FromQuery, WithMapping, WithHeadings
             'Car Brand Name',
             'Car Model Name',
             'Part Type Name',
-            'Part Brand Name',
+            'Sub Categories Name',
             'Title',
             'Slug',
             'SKU',

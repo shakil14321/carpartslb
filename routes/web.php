@@ -12,7 +12,7 @@ use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\AddressController;
 use App\Http\Controllers\CarPartController;
-use App\Http\Controllers\CarBrandController;
+use App\Http\Controllers\brandController;
 use App\Http\Controllers\CarModelController;
 use App\Http\Controllers\SiteSettingController;
 use App\Http\Controllers\CarPartTypeController;
@@ -22,6 +22,7 @@ use App\Http\Controllers\Frontend\Auth\LoginController;
 use App\Http\Controllers\Frontend\Auth\RegisterController;
 use App\Http\Controllers\Frontend\Auth\VerificationController;
 use App\Http\Controllers\Frontend\Auth\PasswordResetController;
+use App\Http\Controllers\Admin\FwiProductController;
 
 use App\Http\Controllers\ShippingController;
 
@@ -33,7 +34,7 @@ Route::get('/product/{slug}', [CarPartController::class, 'show'])->name('product
 Route::get('/category/{slug}', [PageController::class, 'shopType'])->name('type.view');
 Route::get('/categories', [PageController::class, 'partType'])->name('types.view');
 Route::get('/brand/{slug}', [PageController::class, 'brandBy'])->name('brand.view');
-Route::get('/brands', [PageController::class, 'carBrands'])->name('carBrands.view');
+Route::get('/brands', [PageController::class, 'brands'])->name('brands.view');
 Route::get('/part-brand/{slug}', [PageController::class, 'partBrandBy'])->name('partBrand.view');
 Route::get('/part-brands', [PageController::class, 'partBrand'])->name('partBrands.view');
 Route::get('/shop', [PageController::class, 'shop'])->name('shop');
@@ -124,7 +125,7 @@ Route::prefix('panel')->middleware(['auth', 'role:admin|author', 'prevent-back-h
 
     Route::resource('/post', PostController::class);
     Route::resource('/category', PostCategoryController::class);
-    Route::resource('/brand', CarBrandController::class);
+    Route::resource('/brand', brandController::class);
     Route::resource('/part-brand', CarPartsBrandsController::class);
     Route::resource('/model', CarModelController::class);
     Route::resource('/type', CarPartTypeController::class);
@@ -136,8 +137,8 @@ Route::prefix('panel')->middleware(['auth', 'role:admin|author', 'prevent-back-h
     // Search routes
     Route::get('/pro/search', [CarPartController::class, 'productSearchAdmin'])->name('productSearch.admin');
     Route::get('t/search', [CarPartTypeController::class, 'productTypeSearchAdmin'])->name('typeSearch.admin');
-    Route::get('b/search', [CarBrandController::class, 'carBrandSearch'])->name('carBrandSearch.admin');
-    Route::get('pb/search', [CarPartsBrandsController::class, 'carPartBrandSearch'])->name('carPartBrandSearch.admin');
+    Route::get('b/search', [brandController::class, 'brandSearch'])->name('brandSearch.admin');
+    Route::get('pb/search', [CarPartsBrandsController::class, 'SubCategoriesSearch'])->name('SubCategoriesSearch.admin');
     Route::get('m/search', [CarModelController::class, 'modelSearch'])->name('modelSearch.admin');
 
     // Cache routes
@@ -152,9 +153,9 @@ Route::prefix('panel')->middleware(['auth', 'role:admin|author', 'prevent-back-h
     Route::post('product/delete-selected', [CarPartController::class, 'deleteSelected'])->name('product.deleteSelected');
 
     // Mulitiple car brands delete routes
-    Route::post('brand/delete-selected', [CarBrandController::class, 'deleteSelected'])->name('brand.deleteSelected');
+    Route::post('brand/delete-selected', [brandController::class, 'deleteSelected'])->name('brand.deleteSelected');
 
-    // Mulitiple part brands delete routes
+    // Mulitiple Sub Categoriess delete routes
     Route::post('part-brand/delete-selected', [CarPartsBrandsController::class, 'deleteSelected'])->name('partBrand.deleteSelected');
 
     // Mulitiple models delete routes
@@ -294,6 +295,16 @@ Route::prefix('panel')->middleware(['auth', 'role:admin', 'prevent-back-history'
     Route::delete('/orders/delete-all', [OrderController::class, 'deleteAll'])->name('orders.deleteAll');
 
 
+    Route::get('/fwi-products', [FwiProductController::class, 'index'])
+        ->name('fwi-products.index');
+
+    Route::post('/fwi-products/sync', [FwiProductController::class, 'sync'])
+        ->name('fwi-products.sync');
+    Route::get('/fwi-products/{sourceProductId}/add', [FwiProductController::class, 'add'])
+        ->name('fwi-products.add');
+
+    Route::post('/fwi-products/{sourceProductId}/store', [FwiProductController::class, 'storeToCarPart'])
+        ->name('fwi-products.store');
 
     // Standard shipping
 
@@ -315,7 +326,7 @@ Route::prefix('panel')->middleware(['auth', 'role:admin', 'prevent-back-history'
         // Route::delete('/delete/{id}', [ShippingController::class, 'distanceDelete'])->name('shipping.distance.delete');
     //     Route::post('/get-distance', [ShippingController::class, 'getDistance'])
     // ->name('shipping.distance');
-    
+
 
     });
 
@@ -345,9 +356,9 @@ Route::prefix('panel')->middleware(['auth', 'role:admin', 'prevent-back-history'
     Route::post('/import', [CarPartController::class, 'importExcel'])->name('import');
     Route::get('/export', [CarPartController::class, 'exportExcel'])->name('export');
 
-    Route::get('/brands-import', [CarBrandController::class, 'importBrandView'])->name('brands.import');
-    Route::post('/brand-import', [CarBrandController::class, 'importExcel'])->name('brand.import');
-    Route::get('/brand-export', [CarBrandController::class, 'exportExcel'])->name('brand.export');
+    Route::get('/brands-import', [brandController::class, 'importBrandView'])->name('brands.import');
+    Route::post('/brand-import', [brandController::class, 'importExcel'])->name('brand.import');
+    Route::get('/brand-export', [brandController::class, 'exportExcel'])->name('brand.export');
 
     Route::get('/part-brands-import', [CarPartsBrandsController::class, 'importBrandView'])->name('partBrands.import');
     Route::post('/part-brand-import', [CarPartsBrandsController::class, 'importExcel'])->name('partBrand.import');

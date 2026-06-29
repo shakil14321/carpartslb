@@ -23,7 +23,7 @@
                     <a href="{{ route('brand.index') }}" class="btn btn-primary btn-sm">All Brands</a>
                 </div><!-- /.box-header -->
                 <!-- form start -->
-                <form role="form" action="{{ route('brand.update', $carBrand->id) }}" method="POST"
+                <form role="form" action="{{ route('brand.update', $brand->id) }}" method="POST"
                     enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
@@ -32,11 +32,11 @@
                             <label for="input-title">Brand Name</label>
                             <input type="text" class="form-control brand-name" id="input-title"
                                 placeholder="Enter car brand name" name="title"
-                                value="{{ old('title', $carBrand->title) }}">
+                                value="{{ old('title', $brand->title) }}">
                         </div>
                         <div class="input-group">
                             <input type="text" class="form-control" id="input-slug" placeholder="Slug will generate"
-                                name="slug" value="{{ old('slug', $carBrand->slug) }}" readonly>
+                                name="slug" value="{{ old('slug', $brand->slug) }}" readonly>
                             <div class="input-group-btn">
                                 <button type="button" class="btn btn-warning" id="slug-edit-button">Edit</button>
                                 <button type="button" class="btn btn-success" id="slug-edit-save-button">Save</button>
@@ -60,7 +60,7 @@
                                         </div><!-- /.box-header -->
                                         <div class='box-body pad'>
 
-                                            <textarea class="textarea summernote" name="description">{{ old('description', $carBrand->description) }}</textarea>
+                                            <textarea class="textarea summernote" name="description">{{ old('description', $brand->description) }}</textarea>
 
                                         </div>
                                     </div>
@@ -70,10 +70,10 @@
 
                         <div class="form-group">
                             <label for="imageFile">Brand Image</label>
-                            <input type="file" id="imageFile" name="brand_image" value="{{ old('$carBrand->brand_image') }}">
+                            <input type="file" id="imageFile" name="brand_image" value="{{ old('$brand->brand_image') }}">
                             <br>
-                            <img src="{{ ($carBrand->brand_image) ? asset('images/brands/' . $carBrand->brand_image) : asset('images/brands/demo.png') ; }}"
-                                    alt="{{ $carBrand->brand_image }}" class="edit-add-image" id="brandImagePreview">
+                            <img src="{{ ($brand->brand_image) ? asset('images/brands/' . $brand->brand_image) : asset('images/brands/demo.png') ; }}"
+                                    alt="{{ $brand->brand_image }}" class="edit-add-image" id="brandImagePreview">
                         </div>
                     </div><!-- /.box-body -->
 

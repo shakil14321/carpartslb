@@ -3,8 +3,8 @@
 namespace Database\Seeders;
 
 use Carbon\Factory;
-use App\Models\CarPart;
-use App\Models\CarBrand;
+use App\Models\products;
+use App\Models\brand;
 use App\Models\CarModel;
 use App\Models\CarPartType;
 use Illuminate\Support\Str;
@@ -18,7 +18,7 @@ class CarPartSeeder extends Seeder
      */
     public function run(): void
 {
-    $brands = CarBrand::all();
+    $brands = brand::all();
     $models = CarModel::all();
     $partTypes = CarPartType::all();
 
@@ -38,7 +38,7 @@ class CarPartSeeder extends Seeder
         $sku = strtoupper(Str::random(3)) . '-' . strtoupper(Str::random(3)) . '-' . rand(100, 999);
         $partNumber = strtoupper(Str::random(8));
 
-        CarPart::create([
+        products::create([
             'car_brand_id' => $brand->id,
             'car_model_id' => $model->id,
             'part_type_id' => $partType->id,

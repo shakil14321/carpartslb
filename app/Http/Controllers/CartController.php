@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Address;
-use App\Models\CarPart;
+use App\Models\products;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Cart;
@@ -104,7 +104,7 @@ class CartController extends Controller
         $cart = session()->get('cart', []); // get cart from session, default empty array
 
         $productId = $request->product_id;
-        $product = CarPart::where('id', $productId)->first();
+        $product = products::where('id', $productId)->first();
 
         if (isset($cart[$productId])) {
             // Product already in cart, increment quantity

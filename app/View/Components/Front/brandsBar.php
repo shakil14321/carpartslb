@@ -5,7 +5,7 @@ namespace App\View\Components\Front;
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
-use App\Models\CarBrand;
+use App\Models\brand;
 
 class brandsBar extends Component
 {
@@ -13,11 +13,11 @@ class brandsBar extends Component
      * Create a new component instance.
      */
 
-    public $carBrands;
+    public $brands;
 
-    public function __construct($carBrands = null)
+    public function __construct($brands = null)
     {
-        $this->carBrands = $carBrands ?? CarBrand::latest()->get();
+        $this->brands = $brands ?? brand::latest()->get();
     }
 
     /**

@@ -19,15 +19,15 @@
                 </div>
                 @endif
                 <div class="main-flex">
-                    <h3 class="box-title">Add New Part Brand</h3>
-                    <a href="{{ route('part-brand.index') }}" class="btn btn-primary btn-sm">All Part Brands</a>
+                    <h3 class="box-title">Add New Sub Categories</h3>
+                    <a href="{{ route('part-brand.index') }}" class="btn btn-primary btn-sm">All Sub Categoriess</a>
                 </div><!-- /.box-header -->
                 <!-- form start -->
                 <form role="form" action="{{ route('part-brand.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="box-body">
                         <div class="form-group">
-                            <label for="input-title">Part Brand Name</label>
+                            <label for="input-title">Sub Categories Name</label>
                             <input type="text" class="form-control brand-name" id="input-title"
                                 placeholder="Enter car brand name" name="title" value="{{ old('title') }}">
                         </div>
@@ -44,7 +44,7 @@
                         <section class="content">
 
                             <div class='row'>
-                                <label for="brandName">Part Brand Description (Optional)</label>
+                                <label for="brandName">Sub Categories Description (Optional)</label>
                                 <div class='col-md-12'>
                                     <div class='box'>
                                         <div class='box-header'>
@@ -66,7 +66,7 @@
                         </section><!-- /.content -->
 
                         <div class="form-group">
-                            <label for="imageFile">Part Brand Image (Optional)</label>
+                            <label for="imageFile">Sub Categories Image (Optional)</label>
                             <input type="file" id="imageFile" name="brand_image">
                             <br>
                             <img src="{{ old('brand_image') ? asset('images/brands/' . old('brand_image')) : asset('images/brands/demo.png')  }}"
@@ -75,7 +75,7 @@
                     </div><!-- /.box-body -->
 
                     <div class="box-footer">
-                        <button type="submit" class="btn btn-primary">Add Part Brand</button>
+                        <button type="submit" class="btn btn-primary">Add Sub Categories</button>
                     </div>
                 </form>
             </div><!-- /.box -->

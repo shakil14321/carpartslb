@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\CarPart;
-use App\Models\CarBrand;
-use App\Models\CarPartBrand;
+use App\Models\product;
+use App\Models\Brand;
+use App\Models\SubCategories;
 use App\Models\SiteSetting;
 use App\Models\CarPartType;
 use Illuminate\Http\Request;
@@ -18,15 +18,27 @@ class PageController extends Controller
     public function index(){
         $title = 'Auto Parts Accessories';
         $meta_des = 'At CarPartsLB, we specialize in providing genuine and high-quality spare parts for BMW, MINI, and BMW Motorrad. As trusted auto parts resellers in Lebanon, we focus on reliability, affordability, and performance to keep your vehicle running at its best.';
-        $carParts = CarPart::where('fav_product', 1)->latest()->take(10)->get();
-        $latestParts = CarPart::latest()->get();
+        $carParts = product::where('fav_product', 1)
+            ->latest()
+            ->take(12)
+            ->get();
+
+        if ($carParts->count() < 12) {
+            $extraParts = product::whereNotIn('id', $carParts->pluck('id'))
+                ->latest()
+                ->take(12 - $carParts->count())
+                ->get();
+
+            $carParts = $carParts->merge($extraParts);
+        }
+        $latestParts = product::latest()->get();
 
         $setting = SiteSetting::first();
-        $carBrandQuantity = $setting ? $setting->brand_quantity : 0;
+        $brandQuantity = $setting ? $setting->brand_quantity : 0;
 
         $carPartTypes = CarPartType::withCount('carPart')->get();
-        $carBrands = CarBrand::take($carBrandQuantity)->get();
-        $carPartBrands = CarPartBrand::take($carBrandQuantity)->get();
+        $Brands = Brand::take($brandQuantity)->get();
+        $subCategories = SubCategories::latest()->paginate(100);
 
         $partType10 =  CarPartType::withCount('carPart')->skip(0)->take(10)->get();
         $partType20 =  CarPartType::withCount('carPart')->skip(11)->take(10)->get();
@@ -37,7 +49,7 @@ class PageController extends Controller
         $partType70 =  CarPartType::withCount('carPart')->skip(61)->take(9)->get();
         $partType80 =  CarPartType::withCount('carPart')->skip(70)->take(10)->get();
 
-        return view('front.pages.home', compact('carParts', 'latestParts', 'carPartTypes', 'carBrands', 'carPartBrands', 'partType10', 'partType20', 'partType30', 'partType40', 'partType50', 'partType60', 'partType70', 'partType80', 'title', 'meta_des', 'setting'));
+        return view('front.pages.home', compact('carParts', 'latestParts', 'carPartTypes', 'Brands', 'subCategories', 'partType10', 'partType20', 'partType30', 'partType40', 'partType50', 'partType60', 'partType70', 'partType80', 'title', 'meta_des', 'setting'));
     }
 
     // About us page
@@ -63,29 +75,29 @@ class PageController extends Controller
         return view('front.pages.types', compact('partTypes'));
     }
 
-    // All part brands page
+    // All Sub Categoriess page
     public function partBrand(){
-        $partBrands = CarPartBrand::latest()->paginate(100);
+        $partBrands = SubCategories::latest()->paginate(100);
 
         return view('front.pages.part-brands', compact('partBrands'));
     }
 
     // All car brands page
-    public function carBrands(){
-        $carBrands = CarBrand::latest()->paginate(100);
+    public function brands(){
+        $brands = Brand::latest()->paginate(100);
 
-        return view('front.pages.brands', compact('carBrands'));
+        return view('front.pages.brands', compact('brands'));
     }
 
     // It is shop page.
     public function shop(Request $request){
         $carPartTypes = CarPartType::withCount('carPart')->get();
-        $carPartsFav = CarPart::latest()->where('fav_product', 1)->get();
+        $carPartsFav = products::latest()->where('fav_product', 1)->get();
 
-        $query = CarPart::query();
+        $query = products::query();
 
-        $rawMinPrice = CarPart::min('sale_price') ?? 0;
-        $rawMaxPrice = CarPart::max('sale_price');
+        $rawMinPrice = products::min('sale_price') ?? 0;
+        $rawMaxPrice = products::max('sale_price');
 
         $globalMinPrice = floor($rawMinPrice); // round down
         $globalMaxPrice = ceil($rawMaxPrice);  // round up
@@ -115,11 +127,11 @@ class PageController extends Controller
 
         // --- Pagination ---
         $carParts = $query->paginate(90)->appends($request->only(['sort', 'min_price', 'max_price']));
-        $carParts->load(['carBrand', 'carModel', 'carPartType']);
+        $carParts->load(['brand', 'carModel', 'carPartType']);
 
         // --- AJAX support ---
         if ($request->ajax()) {
-            return view('front.partials.car_parts_list', compact('carParts'))->render();
+            return view('front.partials.products_list', compact('carParts'))->render();
         }
 
         return view('front.pages.shop', compact('carParts', 'carPartTypes', 'carPartsFav', 'globalMinPrice', 'globalMaxPrice', 'minPrice', 'maxPrice'));
@@ -128,14 +140,14 @@ class PageController extends Controller
     // Product show by categories. It is carPart archive page.
     public function shopType(Request $request, $slug) {
         $carPartTypes = CarPartType::withCount('carPart')->get();
-        $carPartsFav = CarPart::where('fav_product', 10)->get();
+        $carPartsFav = product::where('fav_product', 10)->get();
 
         $partType = CarPartType::where('slug', $slug)->firstOrFail();
 
-        $query = CarPart::where('part_type_id', $partType->id);
+        $query = product::where('part_type_id', $partType->id);
 
-        $rawMinPrice = CarPart::min('sale_price') ?? 0;
-        $rawMaxPrice = CarPart::max('sale_price');
+        $rawMinPrice = product::min('sale_price') ?? 0;
+        $rawMaxPrice = product::max('sale_price');
 
         $globalMinPrice = floor($rawMinPrice); // round down
         $globalMaxPrice = ceil($rawMaxPrice);  // round up
@@ -174,31 +186,69 @@ class PageController extends Controller
         $carParts = $query->paginate(12)->appends($request->all());
 
         if ($request->ajax()) {
-            return view('front.partials.car_parts_list', compact('carParts'))->render();
+            return view('front.partials.products_list', compact('carParts'))->render();
         }
 
         return view('front.pages.type', compact('partType', 'carParts', 'carPartTypes', 'carPartsFav', 'globalMinPrice', 'globalMaxPrice', 'minPrice', 'maxPrice'));
     }
 
     // Product show by car brand. It is brand archive page.
+//    public function brandBy(Request $request, $slug) {
+//        $carPartTypes = CarPartType::withCount('carPart')->get();
+//        $carPartsFav = products::where('fav_product', 10)->get();
+//
+//        $brand = Brand::where('slug', $slug)->firstOrFail();
+//
+//        $query = products::where('car_brand_id', $brand->id);
+//
+//        // Price filter logic
+//        if ($request->filled('min_price')) {
+//            $query->where('sale_price', '>=', $request->min_price);
+//        }
+//        if ($request->filled('max_price')) {
+//            $query->where('sale_price', '<=', $request->max_price);
+//        }
+//
+//        // Sorting
+//        $sort = $request->query('sort', '1');
+//        if ($sort === '2') {
+//            $query->orderBy('sale_price', 'asc');
+//        } elseif ($sort === '3') {
+//            $query->orderBy('sale_price', 'desc');
+//        } elseif ($sort === '4') {
+//            $query->orderBy('rating', 'desc');
+//        } else {
+//            $query->latest();
+//        }
+//
+//        $carParts = $query->paginate(12)->appends($request->all());
+//
+//        if ($request->ajax()) {
+//            return view('front.partials.products_list', compact('carParts'))->render();
+//        }
+//
+//        return view('front.pages.brand', compact('brand', 'carParts', 'carPartTypes', 'carPartsFav'));
+//    }
+
+
     public function brandBy(Request $request, $slug) {
         $carPartTypes = CarPartType::withCount('carPart')->get();
-        $carPartsFav = CarPart::where('fav_product', 10)->get();
+        $carPartsFav = product::where('fav_product', 10)->get();
 
-        $carBrand = CarBrand::where('slug', $slug)->firstOrFail();
+        $brand = Brand::where('slug', $slug)->firstOrFail();
 
-        $query = CarPart::where('car_brand_id', $carBrand->id);
+        $query = product::where('car_brand_id', $brand->id);
 
-        // Price filter logic
         if ($request->filled('min_price')) {
             $query->where('sale_price', '>=', $request->min_price);
         }
+
         if ($request->filled('max_price')) {
             $query->where('sale_price', '<=', $request->max_price);
         }
 
-        // Sorting
         $sort = $request->query('sort', '1');
+
         if ($sort === '2') {
             $query->orderBy('sale_price', 'asc');
         } elseif ($sort === '3') {
@@ -212,29 +262,29 @@ class PageController extends Controller
         $carParts = $query->paginate(12)->appends($request->all());
 
         if ($request->ajax()) {
-            return view('front.partials.car_parts_list', compact('carParts'))->render();
+            return view('front.partials.products_list', compact('carParts'))->render();
         }
 
-        return view('front.pages.brand', compact('carBrand', 'carParts', 'carPartTypes', 'carPartsFav'));
+        return view('front.pages.brand', compact('brand', 'carParts', 'carPartTypes', 'carPartsFav'));
     }
 
-    // Product show by part brands
+    // Product show by Sub Categoriess
     public function partBrandBy(Request $request, $slug) {
         $carPartTypes = CarPartType::withCount('carPart')->get();
-        $carPartsFav = CarPart::where('fav_product', 10)->get();
+        $carPartsFav = product::where('fav_product', 10)->get();
 
         $setting = SiteSetting::first();
 
-        $partBrand = CarPartBrand::where('slug', $slug)->firstOrFail();
+        $partBrand = SubCategories::where('slug', $slug)->firstOrFail();
         $title = $partBrand->title;
         $meta_des = "Buy genuine {$partBrand->title} parts at CarPartsLB. High-quality, affordable, and reliable original spare parts for perfect performance.";
 
 
 
-        $query = CarPart::where('part_brand_id', $partBrand->id);
+        $query = product::where('part_brand_id', $partBrand->id);
 
-        $rawMinPrice = CarPart::min('sale_price') ?? 0;
-        $rawMaxPrice = CarPart::max('sale_price');
+        $rawMinPrice = product::min('sale_price') ?? 0;
+        $rawMaxPrice = product::max('sale_price');
 
         $globalMinPrice = floor($rawMinPrice); // round down
         $globalMaxPrice = ceil($rawMaxPrice);  // round up
@@ -272,7 +322,7 @@ class PageController extends Controller
         $carParts = $query->paginate(12)->appends($request->all());
 
         if ($request->ajax()) {
-            return view('front.partials.car_parts_list', compact('carParts'))->render();
+            return view('front.partials.products_list', compact('carParts'))->render();
         }
 
         return view('front.pages.part-brand', compact('setting','partBrand', 'carParts', 'carPartTypes', 'carPartsFav', 'title', 'meta_des', 'globalMinPrice', 'globalMaxPrice', 'minPrice', 'maxPrice'));
@@ -296,9 +346,9 @@ class PageController extends Controller
     // Search results Blade page
     public function searchPage(Request $request) {
         $carPartTypes = CarPartType::withCount('carPart')->get();
-        $carPartsFav = CarPart::where('fav_product', 10)->get();
+        $carPartsFav = product::where('fav_product', 10)->get();
 
-        $query = CarPart::query();
+        $query = product::query();
 
         // --- Search filter ---
         $search = $request->input('query');
@@ -310,7 +360,7 @@ class PageController extends Controller
                 ->orWhereHas('carPartType', function($sub) use ($search) {
                     $sub->where('title', 'like', "%{$search}%");
                 })
-                ->orWhereHas('carBrand', function($sub) use ($search) {
+                ->orWhereHas('brand', function($sub) use ($search) {
                     $sub->where('title', 'like', "%{$search}%");
                 });
             });
@@ -354,11 +404,11 @@ class PageController extends Controller
         $carParts = $query->paginate(12)->appends(
             $request->only(['query','sort','min_price','max_price'])
         );
-        $carParts->load(['carBrand', 'carModel', 'carPartType']);
+        $carParts->load(['brand', 'carModel', 'carPartType']);
 
         // --- AJAX support ---
         if ($request->ajax()) {
-            return view('front.partials.car_parts_list', compact('carParts'))->render();
+            return view('front.partials.products_list', compact('carParts'))->render();
         }
 
         return view('front.pages.search', compact('carParts', 'carPartTypes', 'carPartsFav', 'search', 'globalMinPrice', 'globalMaxPrice', 'minPrice', 'maxPrice'));
@@ -371,17 +421,17 @@ class PageController extends Controller
              return response()->json([]);
          }
 
-         $results = CarPart::query()
+         $results = product::query()
              ->where('title', 'like', "%{$query}%")
              ->orWhere('part_number', 'like', "%{$query}%")
              ->orWhere('vin_code', 'like', "%{$query}%")
              ->orWhereHas('carPartType', function($q) use ($query) {
                  $q->where('title', 'like', "%{$query}%");
              })
-             ->orWhereHas('carBrand', function($q) use ($query) {
+             ->orWhereHas('brand', function($q) use ($query) {
                  $q->where('title', 'like', "%{$query}%");
              })
-             ->with(['carBrand', 'carPartType'])
+             ->with(['brand', 'carPartType'])
              ->paginate(5);
 
          // Highlight matches
@@ -390,7 +440,7 @@ class PageController extends Controller
              $item->title = $highlight($item->title);
              $item->part_number = $highlight($item->part_number);
              $item->vin_code = $highlight($item->vin_code);
-             $item->car_brand_name = $item->carBrand ? $highlight($item->carBrand->title) : '-';
+             $item->car_brand_name = $item->brand ? $highlight($item->brand->title) : '-';
              $item->car_part_type_name = $item->carPartType ? $highlight($item->carPartType->title) : '-';
              return $item;
          });

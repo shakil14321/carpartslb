@@ -92,7 +92,7 @@
                                         <th>Name</th>
                                         <th>Category</th>
                                         <th>Stock</th>
-                                        <th>Part Brand</th>
+                                        <th>Sub Categories</th>
                                         <th>Part Number</th>
                                         <th>Action</th>
                                     </tr>
@@ -113,7 +113,7 @@
                                                 <td>{{ $carPart->part_type_id ? $carPart->carPartType->title : 'None' }}
                                                 </td>
                                                 <td>{{ $carPart->stock_type == 'in' ? 'In Stock' : 'Out of Stock' }}</td>
-                                                <td>{{ $carPart->part_brand_id ? $carPart->carPartBrand->title : 'None' }}
+                                                <td>{{ $carPart->part_brand_id ? $carPart->SubCategories->title : 'None' }}
                                                 </td>
                                                 <td>{{ $carPart->part_number ?? 'None' }}
                                                 </td>

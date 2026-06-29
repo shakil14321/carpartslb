@@ -19,9 +19,9 @@
                 </div>
             @endif
 
-            @foreach ($carBrands as $carBrand)
+            @foreach ($brands as $brand)
                 <!-- Delete confirmation modal -->
-                <div class="modal fade" id="deleteModal{{ $carBrand->id }}" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal fade" id="deleteModal{{ $brand->id }}" tabindex="-1" role="dialog" aria-hidden="true">
                     <div class="modal-dialog modal-danger" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
@@ -35,7 +35,7 @@
                             </div>
                             <div class="modal-footer modal-buttons">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                                <form action="{{ route('brand.destroy', $carBrand->id) }}" method="POST">
+                                <form action="{{ route('brand.destroy', $brand->id) }}" method="POST">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="btn btn-danger" id="confirmDelete">Delete</button>
@@ -51,7 +51,7 @@
             <div class="container-fluid" style="margin:0 0 10px 0;">
                 <div class="row">
                     <div class="col-10 col-sm-8 col-md-6 col-offset-1 col-sm-offset-2 col-md-offset-3">
-                        <form action="{{ route('carBrandSearch.admin') }}" method="GET" class="w-100">
+                        <form action="{{ route('brandSearch.admin') }}" method="GET" class="w-100">
                             <div class="input-group">
                                 <input type="text" name="q" class="form-control" value="{{ $q ?? '' }}"
                                     placeholder="Search...">
@@ -92,23 +92,23 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @if ($carBrands->count() > 0)
-                                        @foreach ($carBrands as $carBrand)
+                                    @if ($brands->count() > 0)
+                                        @foreach ($brands as $brand)
                                             <tr>
                                                 <td>
-                                                    <input type="checkbox" name="ids[]" value="{{ $carBrand->id }}"
+                                                    <input type="checkbox" name="ids[]" value="{{ $brand->id }}"
                                                         class="checkbox">
                                                 </td>
                                                 <td>{{ $loop->iteration }}</td>
-                                                <td><img src="{{ $carBrand->brand_image ? asset('images/brands/' . $carBrand->brand_image) : asset('images/brands/demo.png') }}"
-                                                        alt="{{ $carBrand->brand_image }}" class="table-brand-image"></td>
-                                                <td><a href="#" class="all-title">{{ $carBrand->title }}</a></td>
+                                                <td><img src="{{ $brand->brand_image ? asset('images/brands/' . $brand->brand_image) : asset('images/brands/demo.png') }}"
+                                                        alt="{{ $brand->brand_image }}" class="table-brand-image"></td>
+                                                <td><a href="#" class="all-title">{{ $brand->title }}</a></td>
                                                 <td>
                                                     <div class="action-container">
-                                                        <a href="{{ route('brand.edit', $carBrand->id) }}"
+                                                        <a href="{{ route('brand.edit', $brand->id) }}"
                                                             class="edit-icon"><i class="fa fa-edit"></i></a>
-                                                        <span class="delete-icon fa fa-trash-o" data-toggle="modal" data-target="#deleteModal{{ $carBrand->id }}" data-id="{{ $carBrand->id }}"><i></i></span>
-                                                        <a href="{{ route('brand.view', $carBrand->slug) }}"
+                                                        <span class="delete-icon fa fa-trash-o" data-toggle="modal" data-target="#deleteModal{{ $brand->id }}" data-id="{{ $brand->id }}"><i></i></span>
+                                                        <a href="{{ route('brand.view', $brand->slug) }}"
                                                             class="view-icon"><i class="fa fa-eye"></i></a>
                                                     </div>
                                                 </td>
@@ -131,7 +131,7 @@
                             </table>
                         </form>
                         <!-- Pagination Links -->
-                        {{ $carBrands->links('pagination::bootstrap-4') }}
+                        {{ $brands->links('pagination::bootstrap-4') }}
                     </div><!-- /.box-body -->
                 </div><!-- /.box -->
             </div><!-- /.col -->

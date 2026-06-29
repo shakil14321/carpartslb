@@ -3,7 +3,7 @@
 namespace App\Imports;
 
 use App\Models\CarModel;
-use App\Models\CarBrand;
+use App\Models\brand;
 use Illuminate\Support\Str;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
@@ -13,7 +13,7 @@ class CarModelsImport implements ToModel, WithHeadingRow
     public function model(array $row)
     {
        // brand name se brand ka record nikalo
-        $brand = CarBrand::where('title', $row['car_brand_name'])->first();
+        $brand = brand::where('title', $row['car_brand_name'])->first();
 
         $slug = Str::slug($row['slug']);
         $originalSlug = $slug;

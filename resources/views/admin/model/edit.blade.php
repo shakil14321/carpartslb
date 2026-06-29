@@ -72,10 +72,10 @@
                         <div class="form-group">
                             <label>Choose Brand</label>
                             <select class="form-control" name="car_brand_id">
-                                @foreach($carBrands as $carBrand)
-                                <option value="{{ $carBrand->id }}" {{ old('car_brand_id', $carModel->car_brand_id) ==
-                                    $carBrand->id ? 'selected' : '' }}>
-                                    {{ $carBrand->title }}
+                                @foreach($brands as $brand)
+                                <option value="{{ $brand->id }}" {{ old('car_brand_id', $carModel->car_brand_id) ==
+                                    $brand->id ? 'selected' : '' }}>
+                                    {{ $brand->title }}
                                 </option>
                                 @endforeach
                             </select>

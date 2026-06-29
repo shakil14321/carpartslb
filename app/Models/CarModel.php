@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
-use App\Models\CarPart;
-use App\Models\CarBrand;
+use App\Models\products;
+use App\Models\brand;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
@@ -22,12 +22,12 @@ class CarModel extends Model
         'model_image'
     ];
 
-    public function carBrand(){
-        return $this->belongsTo(CarBrand::class);
+    public function brand(){
+        return $this->belongsTo(brand::class);
     }
 
     public function carPart(){
-        return $this->hasMany(CarPart::class, 'car_model_id');
+        return $this->hasMany(product::class, 'car_model_id');
      }
 
      public static function generateSlug($title, $ignoreId = null)

@@ -20,9 +20,9 @@
             @endif
 
             <div class="col-xs-12">
-                @foreach ($carPartBrands as $carPartBrand)
+                @foreach ($SubCategoriess as $SubCategories)
                     <!-- Delete confirmation modal -->
-                    <div class="modal fade" id="deleteModal{{ $carPartBrand->id }}" tabindex="-1" role="dialog"
+                    <div class="modal fade" id="deleteModal{{ $SubCategories->id }}" tabindex="-1" role="dialog"
                         aria-hidden="true">
                         <div class="modal-dialog modal-danger" role="document">
                             <div class="modal-content">
@@ -37,7 +37,7 @@
                                 </div>
                                 <div class="modal-footer modal-buttons">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                                    <form action="{{ route('part-brand.destroy', $carPartBrand->id) }}" method="POST">
+                                    <form action="{{ route('part-brand.destroy', $SubCategories->id) }}" method="POST">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-danger" id="confirmDelete">Delete</button>
@@ -53,7 +53,7 @@
                 <div class="container-fluid" style="margin:0 0 10px 0;">
                     <div class="row">
                         <div class="col-10 col-sm-8 col-md-6 col-offset-1 col-sm-offset-2 col-md-offset-3">
-                            <form action="{{ route('carPartBrandSearch.admin') }}" method="GET" class="w-100">
+                            <form action="{{ route('SubCategoriesSearch.admin') }}" method="GET" class="w-100">
                                 <div class="input-group">
                                     <input type="text" name="q" class="form-control" value="{{ $q ?? '' }}"
                                         placeholder="Search...">
@@ -70,8 +70,8 @@
 
                 <div class="box">
                     <div class="main-flex">
-                        <h3 class="box-title">All Part Brands</h3>
-                        <a href="{{ route('part-brand.create') }}" class="btn btn-primary btn-sm">Add New Part Brand</a>
+                        <h3 class="box-title">All Sub Categoriess</h3>
+                        <a href="{{ route('part-brand.create') }}" class="btn btn-primary btn-sm">Add New Sub Categories</a>
                     </div><!-- /.box-header -->
                     <div class="box-body">
                         <form action="{{ route('partBrand.deleteSelected') }}" method="POST">
@@ -92,28 +92,28 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @if ($carPartBrands->count() > 0)
-                                        @foreach ($carPartBrands as $carPartBrand)
+                                    @if ($SubCategoriess->count() > 0)
+                                        @foreach ($SubCategoriess as $SubCategories)
                                             <tr>
                                                 <td>
-                                                    <input type="checkbox" name="ids[]" value="{{ $carPartBrand->id }}"
+                                                    <input type="checkbox" name="ids[]" value="{{ $SubCategories->id }}"
                                                         class="checkbox">
                                                 </td>
                                                 <td>{{ $loop->iteration }}</td>
-                                                <td><img src="{{ $carPartBrand->brand_image ? asset('images/brands/' . $carPartBrand->brand_image) : asset('images/brands/demo.png') }}"
-                                                        alt="{{ $carPartBrand->brand_image }}" class="table-brand-image">
+                                                <td><img src="{{ $SubCategories->brand_image ? asset('images/brands/' . $SubCategories->brand_image) : asset('images/brands/demo.png') }}"
+                                                        alt="{{ $SubCategories->brand_image }}" class="table-brand-image">
                                                 </td>
-                                                <td><a href="#" class="all-title">{{ $carPartBrand->title }}</a></td>
+                                                <td><a href="#" class="all-title">{{ $SubCategories->title }}</a></td>
                                                 <td>
                                                     <div class="action-container">
-                                                        <a href="{{ route('part-brand.edit', $carPartBrand->id) }}"
+                                                        <a href="{{ route('part-brand.edit', $SubCategories->id) }}"
                                                             class="edit-icon"><i class="fa fa-edit"></i></a>
                                                         <a href="">
                                                             <span class="delete-icon fa fa-trash-o" data-toggle="modal"
-                                                                data-target="#deleteModal{{ $carPartBrand->id }}"
-                                                                data-id="{{ $carPartBrand->id }}"><i></i></span>
+                                                                data-target="#deleteModal{{ $SubCategories->id }}"
+                                                                data-id="{{ $SubCategories->id }}"><i></i></span>
                                                         </a>
-                                                        <a href="{{ route('partBrand.view', $carPartBrand->slug) }}"
+                                                        <a href="{{ route('partBrand.view', $SubCategories->slug) }}"
                                                             class="view-icon"><i class="fa fa-eye"></i></a>
                                                     </div>
                                                 </td>
@@ -136,7 +136,7 @@
                             </table>
                         </form>
                         <!-- Pagination Links -->
-                        {{ $carPartBrands->links('pagination::bootstrap-4') }}
+                        {{ $SubCategoriess->links('pagination::bootstrap-4') }}
                     </div><!-- /.box-body -->
                 </div><!-- /.box -->
             </div><!-- /.col -->

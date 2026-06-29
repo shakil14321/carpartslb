@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\CarBrand;
+use App\Models\brand;
 use App\Models\CarModel;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
@@ -21,8 +21,8 @@ class CarModelController extends Controller
     }
 
     public function create(){
-        $carBrands = CarBrand::all();
-        return view('admin.model.create', compact('carBrands'));
+        $brands = brand::all();
+        return view('admin.model.create', compact('brands'));
     }
 
     public function show($id){
@@ -32,7 +32,7 @@ class CarModelController extends Controller
 
     public function store(Request $request){
         $validation = Validator::make($request->all(), [
-            "car_brand_id" => "nullable|integer|exists:car_brands,id",
+            "car_brand_id" => "nullable|integer|exists:brands,id",
             "title" => "required|string",
             "year" => "nullable|integer",
             "description" => "nullable|string",
@@ -66,15 +66,15 @@ class CarModelController extends Controller
 
     public function edit($id){
         $carModel = CarModel::find($id);
-        $carBrands = CarBrand::all();
-        return view('admin.model.edit', compact('carModel', 'carBrands'));
+        $brands = brand::all();
+        return view('admin.model.edit', compact('carModel', 'brands'));
     }
 
     public function update(Request $request, $id){
         $carModel = CarModel::findOrFail($id);
 
         $validation = Validator::make($request->all(), [
-            "car_brand_id" => "nullable|integer|exists:car_brands,id",
+            "car_brand_id" => "nullable|integer|exists:brands,id",
             "title" => "required|string",
             "year" => "nullable|integer",
             "description" => "nullable|string",
@@ -158,17 +158,17 @@ class CarModelController extends Controller
 
         return redirect()->route('model.index')->with('success', 'Car Models imported successfully');
     }
-    
+
     public function deleteSelected(Request $request){
         $ids = $request->input('ids');
-        
+
         if(empty($ids)){
             return redirect()->route('model.index')->with('errors', 'Record not found.');
         }
-        
+
         // Get Models
         $carModels = CarModel::whereIn('id', $ids)->get();
-        
+
         foreach ($carModels as $model) {
         if (!empty($model->model_image)) {
             $imagePath = public_path('images/models/' . $model->model_image);
@@ -185,20 +185,20 @@ class CarModelController extends Controller
     return redirect()->route('model.index')
         ->with('success', 'Selected Car Models Deleted Successfully!');
     }
-    
+
     public function modelSearch(Request $request){
         $q = trim($request->input);
-        
+
         if($q === ''){
             return redirect()->back()->with('error', 'Write something in search box.');
         }
-        
+
         $carModels = CarModel::query()
         ->where('title', 'LIKE', "%{$q}%")
         ->latest()
         ->paginate(100)
         ->appends(['q' => $request->query('q')]);
-        
+
         return view('admin.model.search', compact('carModels', 'q'));
     }
 }

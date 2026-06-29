@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\CarBrand;
+use App\Models\brand;
 use App\Models\CarModel;
 use App\Models\CarModelBrand;
 use Illuminate\Database\Seeder;
@@ -15,7 +15,7 @@ class CarModelBrandSeeder extends Seeder
      */
     public function run(): void
     {
-        $toyota = CarBrand::where('name', 'Toyota')->first();
+        $toyota = brand::where('name', 'Toyota')->first();
         $corolla = CarModel::where('name', 'Corolla')->first();
 
         if ($toyota && $corolla) {

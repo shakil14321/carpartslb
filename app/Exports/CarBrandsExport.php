@@ -2,15 +2,15 @@
 
 namespace App\Exports;
 
-use App\Models\CarBrand;
+use App\Models\Brand;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 
-class CarBrandsExport implements FromCollection, WithHeadings
+class brandsExport implements FromCollection, WithHeadings
 {
     public function collection()
     {
-        return CarBrand::select('id', 'title', 'slug', 'description', 'brand_image', 'created_at', 'updated_at')->get();
+        return Brand::select('id', 'title', 'slug', 'description', 'brand_image', 'created_at', 'updated_at')->get();
     }
 
     public function headings(): array

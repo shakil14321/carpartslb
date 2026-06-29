@@ -190,7 +190,7 @@
                     <div class="product__details--info">
                         <form action="#">
                             <h2 class="product__details--info__title mb-15">{{ ucwords($carPart->title ?? '') }}</h2>
-                            {{-- <p>{{ $carPart->carPartBrand->title }}</p>
+                            {{-- <p>{{ $carPart->SubCategories->title }}</p>
                         <div>
                             <img src="#" alt="" />
                         </div> --}}
@@ -285,8 +285,8 @@
                                         <span>{{ $carPart->stock_quantity ?? '' }}</span>
                                     </p> --}}
                                         <div class="part_brnad_image_sec">
-                                            <img src="{{ asset('images/brands/' . ($carPart->carPartBrand->brand_image ?? 'demo.png')) }}"
-                                                alt="{{ $carPart->carPartBrand->title ?? 'Brand Image' }}"
+                                            <img src="{{ asset('images/brands/' . ($carPart->SubCategories->brand_image ?? 'demo.png')) }}"
+                                                alt="{{ $carPart->SubCategories->title ?? 'Brand Image' }}"
                                                 style="width:120px; height:60px; border-radius:10px;" />
                                         </div>
                                     </div>
@@ -712,7 +712,7 @@
                                         <div class="d-flex justify-content-between">
                                             <div>
                                                 <p class="oth_brand_title"><span class="oth_p">Brand:</span> <span
-                                                        class="rating__review--text">{{ ucwords($related->carBrand->title ?? '') }}</span>
+                                                        class="rating__review--text">{{ ucwords($related->brand->title ?? '') }}</span>
                                                 </p>
 
                                                 {{-- <p class="oth_p_m"><span class="oth_p">Type:</span> <span class="rating__review--text">{{
@@ -722,8 +722,8 @@
                                                 </p>
                                             </div>
                                             <div class="part_brnad_image_sec">
-                                                <img src="{{ asset('images/brands/' . ($related->carPartBrand->brand_image ?? 'demo.png')) }}"
-                                                    alt="{{ $related->carPartBrand->title ?? 'Brand Image' }}"
+                                                <img src="{{ asset('images/brands/' . ($related->SubCategories->brand_image ?? 'demo.png')) }}"
+                                                    alt="{{ $related->SubCategories->title ?? 'Brand Image' }}"
                                                     style="width:120px; height:60px; border:1px solid #a7a8a3; border-radius:10px;" />
                                             </div>
                                         </div>

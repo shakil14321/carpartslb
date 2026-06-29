@@ -7,7 +7,7 @@
     <div class="container">
         <div class="row justify-content-center align-items-center">
             <div class="col-10 col-md-4 text-center">
-                <div class="brand_heading text-center section__heading--maintitle px-3"><h2>Select By Part Brands</h2></div>
+                <div class="brand_heading text-center section__heading--maintitle px-3"><h2>Select By Sub Categoriess</h2></div>
             </div>
         </div>
         <div class="row">
@@ -22,7 +22,7 @@
                 @endforeach
 
             @else
-            <h3 class="product__card--title">Part Brands not found.</h3>
+            <h3 class="product__card--title">Sub Categoriess not found.</h3>
             @endif
 
         </div>
